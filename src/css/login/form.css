@@ -1,0 +1,58 @@
+.form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    background-color: var(--backgroundCard);
+    color: var(--textColor);
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 0.5rem 0;
+}
+
+.form-label {
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    width: 100%;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+}
+
+.form-input {
+    width: 100%;
+    padding: 0.5rem;
+    margin-top: 0.5rem;
+    border: none;
+    border-radius: 4px;
+    background-color: var(--backgroundInput);
+    width: 250px;
+    color: var(--textColor);
+}
+
+.form-submit {
+    cursor: pointer;
+    width: 100%;
+    padding: 0.7rem;
+    margin-top: 1rem;
+    background-color: var(--primaryColor);
+    border: none;
+    border-radius: 4px;
+    font-size: 1rem;
+    font-weight: bold;
+    color: var(--textColor);
+    transition: background-color 0.3s;
+    text-transform: uppercase;
+}
+
+.form-submit:hover {
+    background-color: var(--primaryDarkColor);
+}

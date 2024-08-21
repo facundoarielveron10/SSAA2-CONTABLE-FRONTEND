@@ -1,9 +1,14 @@
 ---
+// CSS
+import '../css/login/login.css'
+
+// COMPONENTS
 import Layout from '../layouts/Layout.astro';
+import Form from '../components/login/Form.jsx';
 ---
 
 <Layout title="Iniciar Sesión - SSAA2">
-	<main>
-		
+	<main class="login">
+		<Form client:only="react"/>
 	</main>
 </Layout>
