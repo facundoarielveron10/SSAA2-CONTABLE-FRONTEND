@@ -1,0 +1,23 @@
+---
+// CSS
+import '../css/login/login.css'
+
+// AUTH
+import { isLoggedIn } from '../utils/auth';
+
+// COMPONENTS
+import Layout from '../layouts/Layout.astro';
+import Form from '../components/login/Form.jsx';
+
+// REDIRECT
+const isAuth = Astro.cookies.get("AUTH_TOKEN");
+if (isLoggedIn(isAuth)) {
+	return Astro.redirect("/")
+}
+---
+
+<Layout title="Iniciar Sesión - SSAA2">
+	<main class="login">
+		<Form client:only="react"/>
+	</main>
+</Layout>
