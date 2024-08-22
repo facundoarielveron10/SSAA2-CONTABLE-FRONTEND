@@ -1,13 +1,13 @@
 ---
 // CSS
-import '../css/auth/login.css'
+import '../css/auth/register.css'
 
 // AUTH
 import { isLoggedIn } from '../utils/auth';
 
 // COMPONENTS
 import Layout from '../layouts/Layout.astro';
-import FormLogin from '../components/auth/FormLogin.jsx';
+import FormRegister from '../components/auth/FormRegister.jsx';
 
 // REDIRECT
 const isAuth = Astro.cookies.get("AUTH_TOKEN");
@@ -16,8 +16,8 @@ if (isLoggedIn(isAuth)) {
 }
 ---
 
-<Layout title="Iniciar Sesión - SSAA2">
-	<main class="login">
-		<FormLogin client:only="react"/>
+<Layout title="Registrarse - SSAA2">
+	<main class="register">
+		<FormRegister client:only="react"/>
 	</main>
 </Layout>

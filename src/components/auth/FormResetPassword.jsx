@@ -1,5 +1,5 @@
 // CSS
-import "../../css/login/form.css";
+import "../../css/auth/form.css";
 
 // REACT
 import { useState } from "react";
@@ -7,23 +7,27 @@ import { useState } from "react";
 // AXIOS
 import clientAxios from "../../config/ClientAxios";
 
-// COOKIES
-import { useCookies } from "react-cookie";
+// ICONS
+import { IoIosArrowForward } from "react-icons/io";
 
-export default function Form() {
+// UTILS
+import { errorResponse } from "../../utils/error";
+
+export default function FormResetPassword() {
     // STATES
     const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
     const [error, setError] = useState("");
-
-    // COOKIES
-    const [cookies, setCookie] = useCookies(["AUTH_TOKEN"]);
+    const [success, setSuccess] = useState("");
 
     // FUNCTIONS
+    const resetValues = () => {
+        setEmail("");
+    };
+
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        if ([email, password].includes("")) {
+        if ([email].includes("")) {
             setError("Todos los campos son obligatorios");
 
             setTimeout(() => {
@@ -33,15 +37,14 @@ export default function Form() {
         }
 
         try {
-            const { data } = await clientAxios.post("/user/login", {
+            const { data } = await clientAxios.post("/user/reset-password", {
                 email,
-                password,
             });
 
-            setCookie("AUTH_TOKEN", data);
-            window.location.assign("/");
+            resetValues();
+            setSuccess(data);
         } catch (error) {
-            setError(error.response.data.error);
+            setError(errorResponse(error));
             setTimeout(() => {
                 setError("");
             }, 5000);
@@ -50,12 +53,17 @@ export default function Form() {
 
     return (
         <>
-            <div className="form-error-container">
-                {error ? <p className="form-error">{error}</p> : null}
+            <div className="form-message-container">
+                {error ? (
+                    <p className="form-message form-error">{error}</p>
+                ) : null}
+                {success ? (
+                    <p className="form-message form-success">{success}</p>
+                ) : null}
             </div>
 
             <form className="form" onSubmit={handleSubmit}>
-                {/* NAME */}
+                {/* EMAIL */}
                 <div className="form-group">
                     <label className="form-label" htmlFor="email">
                         Email
@@ -64,25 +72,23 @@ export default function Form() {
                         className="form-input"
                         type="text"
                         id="email"
+                        value={email}
                         onChange={(e) => setEmail(e.target.value)}
                     />
                 </div>
-                {/* PASSWORD */}
-                <div className="form-group">
-                    <label className="form-label" htmlFor="password">
-                        Contraseña
-                    </label>
-                    <input
-                        className="form-input"
-                        type="password"
-                        id="password"
-                        onChange={(e) => setPassword(e.target.value)}
-                    />
-                </div>
                 <button className="form-submit" type="submit">
-                    Iniciar Sesión
+                    Enviar Instrucciones
                 </button>
             </form>
+            {/* ENLACES */}
+            <div className="form-links">
+                <a className="form-link" href="/register">
+                    <IoIosArrowForward /> Iniciar Sesión
+                </a>
+                <a className="form-link" href="/register">
+                    <IoIosArrowForward /> Registro
+                </a>
+            </div>
         </>
     );
 }
