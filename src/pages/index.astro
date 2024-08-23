@@ -4,6 +4,7 @@ import { isLoggedIn } from '../utils/auth';
 
 // COMPONENTS
 import Layout from '../layouts/Layout.astro';
+import Navbar from '../components/Navbar';
 
 // REDIRECT
 const isAuth = Astro.cookies.get("AUTH_TOKEN");
@@ -14,6 +15,6 @@ if (!isLoggedIn(isAuth)) {
 
 <Layout title="Inicio - SSAA2">
 	<main>
-		
+		<Navbar client:only="react" />
 	</main>
 </Layout>

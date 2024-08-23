@@ -1,0 +1,38 @@
+.navbar {
+    display: flex;
+    justify-content: center;
+    margin-top: 2rem;
+    position: fixed;
+    left: 0;
+    right: 0;
+}
+
+.navbar-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    background-color: var(--backgroundCard);
+    color: var(--textColor);
+    width: 800px;
+}
+
+.navbar-logo {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: var(--textColor);
+}
+
+.navbar-separator {
+    height: 30px;
+    width: 1px;
+    background-color: #2e2e2e;
+    margin: 0 1rem;
+}
+
+.navbar-links {
+    color: var(--textColor);
+}

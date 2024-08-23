@@ -76,7 +76,7 @@ export default function FormResetPassword() {
                         onChange={(e) => setEmail(e.target.value)}
                     />
                 </div>
-                <button className="form-submit" type="submit">
+                <button className="form-submit button" type="submit">
                     Enviar Instrucciones
                 </button>
             </form>

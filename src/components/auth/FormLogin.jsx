@@ -95,7 +95,7 @@ export default function FormLogin() {
                         onChange={(e) => setPassword(e.target.value)}
                     />
                 </div>
-                <button className="form-submit" type="submit">
+                <button className="form-submit button" type="submit">
                     Iniciar Sesión
                 </button>
             </form>

@@ -80,7 +80,7 @@ export default function FormLogin() {
                 </div>
                 <button
                     disabled={success ? true : false}
-                    className={`form-submit ${
+                    className={`form-submit button ${
                         success ? "form-submit-blocked" : ""
                     }`}
                     type="submit"

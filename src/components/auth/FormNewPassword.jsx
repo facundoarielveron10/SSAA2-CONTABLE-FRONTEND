@@ -133,7 +133,7 @@ export default function FormNewPassword() {
                     </div>
                     <button
                         disabled={success ? true : false}
-                        className={`form-submit ${
+                        className={`form-submit button ${
                             success ? "form-submit-blocked" : ""
                         }`}
                         type="submit"
@@ -161,7 +161,7 @@ export default function FormNewPassword() {
                     </div>
                     <button
                         disabled={success ? true : false}
-                        className={`form-submit ${
+                        className={`form-submit button ${
                             success ? "form-submit-blocked" : ""
                         }`}
                         type="submit"

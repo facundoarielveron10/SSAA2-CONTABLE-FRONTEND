@@ -140,7 +140,7 @@ export default function FormRegister() {
                         onChange={(e) => setPasswordConfirm(e.target.value)}
                     />
                 </div>
-                <button className="form-submit" type="submit">
+                <button className="form-submit button" type="submit">
                     Registrarme
                 </button>
             </form>
