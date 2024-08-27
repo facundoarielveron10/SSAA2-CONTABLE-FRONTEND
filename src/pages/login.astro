@@ -16,8 +16,8 @@ if (isLoggedIn(isAuth)) {
 }
 ---
 
-<Layout title="Iniciar Sesión - SSAA2">
-	<main class="login">
+<Layout title="Iniciar Sesión - SSAA2" navbar={false}>
+	<div class="login">
 		<FormLogin client:only="react"/>
-	</main>
+	</div>
 </Layout>

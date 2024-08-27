@@ -10,14 +10,14 @@ import Layout from '../layouts/Layout.astro';
 import FormRegister from '../components/auth/FormRegister.jsx';
 
 // REDIRECT
-const isAuth = Astro.cookies.get("AUTH_TOKEN");
-if (isLoggedIn(isAuth)) {
+const token = Astro.cookies.get("AUTH_TOKEN");
+if (isLoggedIn(token)) {
 	return Astro.redirect("/")
 }
 ---
 
-<Layout title="Registrarse - SSAA2">
-	<main class="register">
+<Layout title="Registrarse - SSAA2" navbar={false}>
+	<div class="register">
 		<FormRegister client:only="react"/>
-	</main>
+	</div>
 </Layout>

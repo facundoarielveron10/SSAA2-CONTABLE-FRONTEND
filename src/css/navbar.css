@@ -34,5 +34,21 @@
 }
 
 .navbar-links {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+}
+
+.navbar-link {
     color: var(--textColor);
+    font-weight: bold;
+    text-decoration: none;
+    text-transform: uppercase;
+    transition: all;
+    transition-duration: 300ms;
+}
+
+.navbar-link:hover {
+    color: var(--primaryColor);
 }

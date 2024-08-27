@@ -1,0 +1,65 @@
+.listUser {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--backgroundColor);
+    padding: 1.5rem;
+}
+
+.listUser-title {
+    font-weight: bold;
+    text-transform: uppercase;
+    color: var(--textColor);
+}
+
+.listUser-users {
+    display: flex;
+    flex-direction: column;
+    gap: 5rem;
+    align-items: center;
+    width: 100%;
+}
+
+@media (min-width: 1368px) {
+    .listUser-users {
+        flex-direction: row;
+        justify-content: space-around;
+    }
+}
+
+.listUser-list {
+    background-color: var(--backgroundCard);
+    border-radius: 8px;
+    padding: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    width: 100%;
+}
+
+.listUser-subtitle {
+    font-weight: bold;
+    text-transform: uppercase;
+    color: var(--textColor);
+    margin-bottom: 10px;
+}
+
+.listUser-table {
+    width: 100%;
+    border-collapse: collapse;
+    color: var(--textColor);
+}
+
+.listUser-table th,
+.listUser-table td {
+    padding: 10px;
+    text-align: left;
+    border-bottom: 1px solid var(--backgroundInput);
+}
+
+.listUser-table th {
+    background-color: var(--primaryDarkColor);
+}
+
+.listUser-table tr:nth-child(even) {
+    background-color: var(--backgroundInput);
+}
