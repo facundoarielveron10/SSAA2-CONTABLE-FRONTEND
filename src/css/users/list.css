@@ -21,7 +21,7 @@
     width: 100%;
 }
 
-@media (min-width: 1368px) {
+@media (min-width: 1438px) {
     .listUser-users {
         flex-direction: row;
         justify-content: space-around;
@@ -62,4 +62,52 @@
 
 .listUser-table tr:nth-child(even) {
     background-color: var(--backgroundInput);
+}
+
+.listUser-actions {
+    display: flex;
+    flex-direction: column;
+}
+
+.listUser-actions button {
+    font-size: 0.8rem;
+}
+
+.listUser-modal-title {
+    text-transform: uppercase;
+    color: var(--textColor);
+}
+
+.listUser-modal-paragraph {
+    color: var(--textColor);
+}
+
+.listUser-modal-select {
+    width: 100%;
+    padding: 10px;
+    background-color: var(--backgroundInput);
+    color: var(--textColor);
+    border: 2px solid var(--primaryColor);
+    border-radius: 4px;
+    font-size: 16px;
+    appearance: none;
+    outline: none;
+    transition: border-color 0.3s;
+}
+
+.listUser-modal-select:hover {
+    border-color: var(--primaryDarkColor);
+}
+
+.listUser-modal-select:focus {
+    border-color: var(--primaryDarkColor);
+}
+
+.listUser-modal-option {
+    background-color: var(--backgroundCard);
+    color: var(--textColor);
+}
+
+.listUser-modal-button {
+    margin-top: 1rem;
 }

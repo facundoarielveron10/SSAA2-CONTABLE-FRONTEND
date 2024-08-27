@@ -364,6 +364,22 @@ template {
     display: none;
 }
 
+/* MODAL */
+.customOverlay {
+    background: #222222b3 !important;
+}
+
+.customModal {
+    background: var(--backgroundCard) !important;
+    max-width: 500px !important;
+    width: 100% !important;
+    border-radius: 4px;
+}
+
+.customCloseIcon {
+    filter: invert(1);
+}
+
 /* CUSTOM STYLES */
 .container {
     padding: 5rem 5rem;
