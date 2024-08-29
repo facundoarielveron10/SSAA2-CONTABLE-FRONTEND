@@ -65,12 +65,10 @@ export default function FormRegister() {
 
     return (
         <>
-            <div className="form-message-container">
-                {error ? (
-                    <p className="form-message form-error">{error}</p>
-                ) : null}
+            <div className="alert-container">
+                {error ? <p className="alert alert-error">{error}</p> : null}
                 {success ? (
-                    <p className="form-message form-success">{success}</p>
+                    <p className="alert alert-success">{success}</p>
                 ) : null}
             </div>
 

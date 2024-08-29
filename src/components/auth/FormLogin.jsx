@@ -62,10 +62,8 @@ export default function FormLogin() {
 
     return (
         <>
-            <div className="form-message-container">
-                {error ? (
-                    <p className="form-message form-error">{error}</p>
-                ) : null}
+            <div className="alert-container">
+                {error ? <p className="alert alert-error">{error}</p> : null}
             </div>
 
             <form className="form" onSubmit={handleSubmit}>

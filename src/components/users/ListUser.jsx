@@ -11,11 +11,18 @@ import clientAxios from "../../config/ClientAxios";
 // MODAL
 import { Modal } from "react-responsive-modal";
 
-export default function List({ user }) {
+// UTILS
+import { errorResponse } from "../../utils/error";
+
+export default function ListUser({ user }) {
     // STATES
     const [users, setUsers] = useState([]);
     const [admins, setAdmins] = useState([]);
     const [open, setOpen] = useState(false);
+    const [changeRole, setChangeRole] = useState({});
+    const [newRole, setNewRole] = useState("");
+    const [error, setError] = useState("");
+    const [success, setSuccess] = useState("");
 
     // EFFECTS
     useEffect(() => {
@@ -53,12 +60,46 @@ export default function List({ user }) {
         setUsers(filterUser);
     };
 
-    const onOpenModal = () => setOpen(true);
+    const onOpenChangeRoleModal = (user) => {
+        setChangeRole(user);
+        setNewRole("");
+        setOpen(true);
+    };
 
-    const onCloseModal = () => setOpen(false);
+    const onCloseChangeRoleModal = () => {
+        setChangeRole({});
+        setNewRole("");
+        setOpen(false);
+    };
+
+    const handleChangeRole = async (e) => {
+        e.preventDefault();
+        try {
+            const { data } = await clientAxios.post("/user/change-role", {
+                role: newRole,
+                userId: changeRole._id,
+            });
+
+            setSuccess(data);
+            setTimeout(() => {
+                setSuccess("");
+            }, 5000);
+        } catch (error) {
+            setError(errorResponse(error));
+            setTimeout(() => {
+                setError("");
+            }, 5000);
+        }
+    };
 
     return (
         <>
+            <div className="listUser-alert alert-container">
+                {error ? <p className="alert alert-error">{error}</p> : null}
+                {success ? (
+                    <p className="alert alert-success">{success}</p>
+                ) : null}
+            </div>
             <div className="listUser">
                 <h1 className="listUser-title">Listado de usuarios</h1>
                 <div className="listUser-users">
@@ -84,7 +125,9 @@ export default function List({ user }) {
                                         <td className="listUser-actions">
                                             <button
                                                 className="button"
-                                                onClick={onOpenModal}
+                                                onClick={() =>
+                                                    onOpenChangeRoleModal(admin)
+                                                }
                                             >
                                                 Cambiar Rol
                                             </button>
@@ -116,7 +159,9 @@ export default function List({ user }) {
                                         <td className="listUser-actions">
                                             <button
                                                 className="button"
-                                                onClick={onOpenModal}
+                                                onClick={() =>
+                                                    onOpenChangeRoleModal(user)
+                                                }
                                             >
                                                 Cambiar Rol
                                             </button>
@@ -131,7 +176,7 @@ export default function List({ user }) {
             <div>
                 <Modal
                     open={open}
-                    onClose={onCloseModal}
+                    onClose={onCloseChangeRoleModal}
                     center
                     classNames={{
                         overlay: "customOverlay",
@@ -139,23 +184,55 @@ export default function List({ user }) {
                         closeIcon: "customCloseIcon",
                     }}
                 >
-                    <h2 className="listUser-modal-title">
-                        Cambiar el rol del usuario
-                    </h2>
-                    <p className="listUser-modal-paragraph">
-                        Selecciona el rol para el usuario
-                    </p>
-                    <select className="listUser-modal-select">
-                        <option className="listUser-modal-option" value="admin">
-                            Administrador
-                        </option>
-                        <option className="listUser-modal-option" value="user">
-                            Usuario
-                        </option>
-                    </select>
-                    <button className="listUser-modal-button button">
-                        Cambiar
-                    </button>
+                    <form onSubmit={handleChangeRole}>
+                        <h2 className="listUser-modal-title">
+                            Cambiar el rol del usuario
+                        </h2>
+                        <p className="listUser-modal-user">
+                            Usuario:{" "}
+                            <span>
+                                {changeRole.name} {changeRole.lastname}
+                            </span>
+                        </p>
+                        <p className="listUser-modal-paragraph">
+                            Selecciona el rol para el usuario
+                        </p>
+                        <select
+                            className="listUser-modal-select"
+                            value={newRole}
+                            onChange={(e) => setNewRole(e.target.value)}
+                        >
+                            <option
+                                disabled
+                                className="listUser-modal-option"
+                                value=""
+                            >
+                                -- Seleccionar Rol --
+                            </option>
+                            <option
+                                disabled={
+                                    changeRole?.role?.name === "Administrador"
+                                }
+                                className="listUser-modal-option"
+                                value="ROLE_ADMIN"
+                            >
+                                Administrador
+                            </option>
+                            <option
+                                disabled={changeRole?.role?.name === "Usuario"}
+                                className="listUser-modal-option"
+                                value="ROLE_USER"
+                            >
+                                Usuario
+                            </option>
+                        </select>
+                        <button
+                            type="submit"
+                            className="listUser-modal-button button"
+                        >
+                            Cambiar
+                        </button>
+                    </form>
                 </Modal>
             </div>
         </>

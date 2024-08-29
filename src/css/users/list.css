@@ -73,9 +73,22 @@
     font-size: 0.8rem;
 }
 
+.listUser-alert {
+    margin: 2rem 0 0 0;
+}
+
 .listUser-modal-title {
     text-transform: uppercase;
     color: var(--textColor);
+}
+
+.listUser-modal-user {
+    font-weight: bold;
+    color: var(--textColor);
+}
+
+.listUser-modal-user span {
+    font-weight: normal;
 }
 
 .listUser-modal-paragraph {

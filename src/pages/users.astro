@@ -4,7 +4,7 @@ import { isLoggedIn, getUser } from '../utils/auth';
 
 // COMPONENTS
 import Layout from '../layouts/Layout.astro';
-import List from '../components/users/List';
+import ListUser from '../components/users/ListUser.jsx';
 
 // REDIRECT
 const token = Astro.cookies.get("AUTH_TOKEN");
@@ -16,5 +16,5 @@ const user = getUser(token);
 ---
 
 <Layout title="Usuarios - SSAA2">
-	<List client:only="react" user={user}/>
+	<ListUser client:only="react" user={user}/>
 </Layout>
