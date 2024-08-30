@@ -75,15 +75,20 @@ export default function ListUser({ user }) {
     const handleChangeRole = async (e) => {
         e.preventDefault();
         try {
-            const { data } = await clientAxios.post("/user/change-role", {
-                role: newRole,
-                userId: changeRole._id,
-            });
+            const { data: roleData } = await clientAxios.post(
+                "/user/change-role",
+                {
+                    role: newRole,
+                    userId: changeRole._id,
+                }
+            );
 
-            setSuccess(data);
+            setSuccess(roleData);
             setTimeout(() => {
                 setSuccess("");
             }, 5000);
+
+            getUsers();
         } catch (error) {
             setError(errorResponse(error));
             setTimeout(() => {
