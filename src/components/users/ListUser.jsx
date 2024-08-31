@@ -16,6 +16,7 @@ import { errorResponse } from "../../utils/error";
 
 // ZUSTAND
 import { useLoginStore } from "../../zustand/loginStore";
+import { isChangeRol } from "../../utils/auth";
 
 export default function ListUser() {
     // ZUSTAND
@@ -81,6 +82,10 @@ export default function ListUser() {
     const handleChangeRole = async (e) => {
         e.preventDefault();
         try {
+            if (!isChangeRol(user.actions)) {
+                return setError("No tienes permisos");
+            }
+
             const { data: roleData } = await clientAxios.post(
                 "/user/change-role",
                 {
@@ -90,6 +95,7 @@ export default function ListUser() {
             );
 
             setSuccess(roleData);
+            onCloseChangeRoleModal();
             setTimeout(() => {
                 setSuccess("");
             }, 5000);

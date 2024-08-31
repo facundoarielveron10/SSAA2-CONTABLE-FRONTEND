@@ -7,26 +7,21 @@ import { useCookies } from "react-cookie";
 // ZUSTAND
 import { useLoginStore } from "../zustand/loginStore";
 
-export default function Navbar({ user }) {
+// UTILS
+import { isGetUsers } from "../utils/auth";
+
+export default function Navbar() {
     // COOKIES
     const [cookies, setCookie, removeCookie] = useCookies(["AUTH_TOKEN"]);
 
     // ZUSTAND
-    const { logout } = useLoginStore();
+    const { user, logout } = useLoginStore();
 
     // FUNCTIONS
     const handleLogout = () => {
         removeCookie("AUTH_TOKEN");
         logout();
         window.location.assign("/login");
-    };
-
-    const isAdmin = () => {
-        if (user.role.name === "ROLE_ADMIN") {
-            return true;
-        } else {
-            return false;
-        }
     };
 
     return (
@@ -39,7 +34,7 @@ export default function Navbar({ user }) {
                     <div className="navbar-separator"></div>
                 </div>
                 <div className="navbar-links">
-                    {isAdmin(user) ? (
+                    {isGetUsers(user.actions) ? (
                         <a href="/users" className="navbar-link">
                             Usuarios
                         </a>
