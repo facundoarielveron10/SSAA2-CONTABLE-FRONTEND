@@ -3,7 +3,7 @@
 import '../css/auth/confirm.css'
 
 // AUTH
-import { isLoggedIn } from '../utils/auth';
+import { isLoggedIn } from '../utils/verifyAuth';
 
 // COMPONENTS
 import Layout from '../layouts/Layout.astro';
@@ -16,7 +16,7 @@ if (isLoggedIn(token)) {
 }
 ---
 
-<Layout title="Confirmar Cuenta - SSAA2" navbar={false}>
+<Layout title="Confirmar Cuenta - SSAA2" container={false}>
 	<div class="confirm">
 		<FormConfirm client:only="react"/>
 	</div>

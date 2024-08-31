@@ -2,10 +2,7 @@
 import "../../css/auth/form.css";
 
 // REACT
-import { useState } from "react";
-
-// AXIOS
-import clientAxios from "../../config/ClientAxios";
+import { useEffect, useState } from "react";
 
 // COOKIES
 import { useCookies } from "react-cookie";
@@ -16,7 +13,19 @@ import { IoIosArrowForward } from "react-icons/io";
 // UTILS
 import { errorResponse } from "../../utils/error";
 
+// ZUSTAND
+import { useLoginStore } from "../../zustand/loginStore";
+
 export default function FormLogin() {
+    // ZUSTAND
+    const {
+        jwt,
+        isSubmitting,
+        successSubmitted,
+        errorSubmitting,
+        submitLogin,
+    } = useLoginStore();
+
     // STATES
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
@@ -44,14 +53,9 @@ export default function FormLogin() {
         }
 
         try {
-            const { data } = await clientAxios.post("/user/login", {
-                email,
-                password,
-            });
+            await submitLogin(email, password);
 
-            setCookie("AUTH_TOKEN", data);
             resetValues();
-            window.location.assign("/");
         } catch (error) {
             setError(errorResponse(error));
             setTimeout(() => {
@@ -59,6 +63,23 @@ export default function FormLogin() {
             }, 5000);
         }
     };
+
+    // EFFECTS
+    useEffect(() => {
+        if (!isSubmitting && errorSubmitting) {
+            setError(errorSubmitting);
+            setTimeout(() => {
+                setError("");
+            }, 5000);
+        }
+    }, [errorSubmitting, isSubmitting]);
+
+    useEffect(() => {
+        if (!isSubmitting && successSubmitted) {
+            setCookie("AUTH_TOKEN", jwt);
+            window.location.assign("/");
+        }
+    }, [successSubmitted, isSubmitting]);
 
     return (
         <>

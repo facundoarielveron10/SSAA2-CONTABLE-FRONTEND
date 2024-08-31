@@ -1,20 +1,21 @@
 ---
 // AUTH
-import { isLoggedIn, getUser } from '../utils/auth';
+import { isLoggedIn } from '../utils/verifyAuth';
 
 // COMPONENTS
 import Layout from '../layouts/Layout.astro';
 import ListUser from '../components/users/ListUser.jsx';
+import LayoutAuth from '../layouts/LayoutAuth';
 
 // REDIRECT
 const token = Astro.cookies.get("AUTH_TOKEN");
 if (!isLoggedIn(token)) {
 	return Astro.redirect("/login")
 }
-
-const user = getUser(token);
 ---
 
 <Layout title="Usuarios - SSAA2">
-	<ListUser client:only="react" user={user}/>
+	<LayoutAuth client:only="react">
+		<ListUser client:only="react"/>
+	</LayoutAuth>
 </Layout>

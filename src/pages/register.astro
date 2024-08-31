@@ -3,7 +3,7 @@
 import '../css/auth/register.css'
 
 // AUTH
-import { isLoggedIn } from '../utils/auth';
+import { isLoggedIn } from '../utils/verifyAuth';
 
 // COMPONENTS
 import Layout from '../layouts/Layout.astro';
@@ -16,7 +16,7 @@ if (isLoggedIn(token)) {
 }
 ---
 
-<Layout title="Registrarse - SSAA2" navbar={false}>
+<Layout title="Registrarse - SSAA2" container={false}>
 	<div class="register">
 		<FormRegister client:only="react"/>
 	</div>

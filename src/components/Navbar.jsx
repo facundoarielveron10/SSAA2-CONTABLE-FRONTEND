@@ -4,18 +4,25 @@ import "../css/navbar.css";
 // COOKIES
 import { useCookies } from "react-cookie";
 
+// ZUSTAND
+import { useLoginStore } from "../zustand/loginStore";
+
 export default function Navbar({ user }) {
     // COOKIES
     const [cookies, setCookie, removeCookie] = useCookies(["AUTH_TOKEN"]);
 
+    // ZUSTAND
+    const { logout } = useLoginStore();
+
     // FUNCTIONS
     const handleLogout = () => {
         removeCookie("AUTH_TOKEN");
+        logout();
         window.location.assign("/login");
     };
 
     const isAdmin = () => {
-        if (user.role === "ROLE_ADMIN") {
+        if (user.role.name === "ROLE_ADMIN") {
             return true;
         } else {
             return false;

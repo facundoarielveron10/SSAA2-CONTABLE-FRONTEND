@@ -14,7 +14,13 @@ import { Modal } from "react-responsive-modal";
 // UTILS
 import { errorResponse } from "../../utils/error";
 
-export default function ListUser({ user }) {
+// ZUSTAND
+import { useLoginStore } from "../../zustand/loginStore";
+
+export default function ListUser() {
+    // ZUSTAND
+    const { user } = useLoginStore();
+
     // STATES
     const [users, setUsers] = useState([]);
     const [admins, setAdmins] = useState([]);

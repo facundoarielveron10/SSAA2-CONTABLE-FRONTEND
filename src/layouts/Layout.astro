@@ -1,18 +1,13 @@
 ---
 import { ViewTransitions } from 'astro:transitions';
 import { CookiesProvider } from 'react-cookie'
-import Navbar from '../components/Navbar';
-import { getUser } from '../utils/auth';
 
 interface Props {
 	title: string;
-	navbar?: boolean;
+	container?: boolean;
 }
 
-const { title, navbar = true } = Astro.props;
-
-const token = Astro.cookies.get("AUTH_TOKEN");
-const user = getUser(token);
+const { title, container = true } = Astro.props;
 ---
 
 <!doctype html>
@@ -41,8 +36,7 @@ const user = getUser(token);
 	</head>
 	<body>
 		<CookiesProvider>
-			{navbar ? <Navbar client:only="react" user={user}/> : null}
-			<main class=`${navbar ? "container" : ""}`>
+			<main class={`${container ? "container" : ""}`}>
 				<slot />
 			</main>
 		</CookiesProvider>

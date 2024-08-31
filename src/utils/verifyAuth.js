@@ -1,8 +1,8 @@
+// JWT
 import jwt from "jsonwebtoken";
-import { jwtDecode } from "jwt-decode";
-
 const jwtSecret = import.meta.env.JWT_SECRET;
 
+// FUNCTIONS
 export const isLoggedIn = (token) => {
     if (!token) {
         return false;
@@ -27,24 +27,5 @@ export const isLoggedIn = (token) => {
         }
     } catch (error) {
         return false;
-    }
-};
-
-export const getUser = (token) => {
-    if (!token) {
-        return null;
-    }
-
-    const { value } = token;
-
-    if (typeof value !== "string" || !value.trim()) {
-        return null;
-    }
-
-    try {
-        const decoded = jwtDecode(value);
-        return decoded;
-    } catch (error) {
-        return null;
     }
 };
