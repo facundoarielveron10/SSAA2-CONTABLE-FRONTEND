@@ -7,12 +7,6 @@
     padding: 1.5rem;
 }
 
-.listUser-title {
-    font-weight: bold;
-    text-transform: uppercase;
-    color: var(--textColor);
-}
-
 .listUser-users {
     display: flex;
     flex-direction: column;
@@ -26,6 +20,13 @@
         flex-direction: row;
         justify-content: space-around;
     }
+}
+
+.listUser-spinner {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 
 .listUser-list {

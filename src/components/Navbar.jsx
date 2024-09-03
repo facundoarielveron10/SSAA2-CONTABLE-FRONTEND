@@ -7,15 +7,12 @@ import { useCookies } from "react-cookie";
 // ZUSTAND
 import { useLoginStore } from "../zustand/loginStore";
 
-// UTILS
-import { isGetUsers } from "../utils/auth";
-
 export default function Navbar() {
     // COOKIES
     const [cookies, setCookie, removeCookie] = useCookies(["AUTH_TOKEN"]);
 
     // ZUSTAND
-    const { user, logout } = useLoginStore();
+    const { logout, canExecute } = useLoginStore();
 
     // FUNCTIONS
     const handleLogout = () => {
@@ -34,9 +31,14 @@ export default function Navbar() {
                     <div className="navbar-separator"></div>
                 </div>
                 <div className="navbar-links">
-                    {isGetUsers(user.actions) ? (
+                    {canExecute("GET_USERS") ? (
                         <a href="/users" className="navbar-link">
                             Usuarios
+                        </a>
+                    ) : null}
+                    {canExecute("CREATE_ROL") ? (
+                        <a href="/roles" className="navbar-link">
+                            Roles
                         </a>
                     ) : null}
                     <button className="button" onClick={handleLogout}>

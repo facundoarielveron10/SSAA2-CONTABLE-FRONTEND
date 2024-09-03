@@ -14,7 +14,7 @@
         "@astrojs/react": "^3.6.2",
         "@types/react": "^18.3.4",
         "@types/react-dom": "^18.3.0",
-        "astro": "^4.14.3",
+        "astro": "^4.15.2",
         "axios": "^1.7.4",
         "jsonwebtoken": "^9.0.2",
         "jwt-decode": "^4.0.0",

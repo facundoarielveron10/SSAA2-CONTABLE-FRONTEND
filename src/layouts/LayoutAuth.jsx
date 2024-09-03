@@ -1,9 +1,6 @@
 // REACT
 import { useEffect } from "react";
 
-// UTILS
-import { isGetUsers } from "../utils/auth";
-
 // COMPONENTS
 import Navbar from "../components/Navbar";
 
@@ -12,11 +9,11 @@ import { useLoginStore } from "../zustand/loginStore";
 
 export default function LayoutAuth({ children, page }) {
     // ZUSTAND
-    const { user } = useLoginStore();
+    const { canExecute } = useLoginStore();
 
     // EFFECTS
     useEffect(() => {
-        if (page === "users" && !isGetUsers(user.actions)) {
+        if (page === "users" && !canExecute("GET_USERS")) {
             window.location.assign("/");
         }
     }, [page]);

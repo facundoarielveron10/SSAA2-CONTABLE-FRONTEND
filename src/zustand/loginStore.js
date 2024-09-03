@@ -10,7 +10,7 @@ import clientAxios from "../config/ClientAxios";
 
 export const useLoginStore = create(
     persist(
-        (set) => ({
+        (set, get) => ({
             jwt: "",
             user: {},
             isSubmitting: false,
@@ -53,6 +53,9 @@ export const useLoginStore = create(
                         isSubmitting: false,
                     });
                 }
+            },
+            canExecute: (action) => {
+                return get()?.user?.actions.includes(action) ? true : false;
             },
         }),
         {

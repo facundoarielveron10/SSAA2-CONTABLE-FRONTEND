@@ -1,0 +1,114 @@
+.createRole {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--backgroundColor);
+    padding: 1.5rem;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    color: var(--textColor);
+}
+
+.createRole-typeRole {
+    margin-bottom: 1.5rem;
+    width: 100%;
+}
+
+.createRole-type-label {
+    display: block;
+    margin: 1rem 0 0.5rem 0;
+    color: var(--textColor);
+    font-weight: bold;
+}
+
+.createRole-type-select {
+    width: 100%;
+    padding: 10px;
+    background-color: var(--backgroundInput);
+    color: var(--textColor);
+    border: 2px solid var(--primaryColor);
+    border-radius: 4px;
+    font-size: 16px;
+    appearance: none;
+    outline: none;
+    transition: border-color 0.3s;
+}
+
+.createRole-type-select:hover {
+    border-color: var(--primaryDarkColor);
+}
+
+.createRole-type-select:focus {
+    border-color: var(--primaryDarkColor);
+}
+
+.createRole-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    width: 100%;
+}
+
+.createRole-action {
+    display: flex;
+    align-items: center;
+    background-color: var(--backgroundCard);
+    padding: 0.75rem;
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
+}
+
+.createRole-action:hover {
+    background-color: var(--primaryDarkColor);
+}
+
+.createRole-checkbox {
+    appearance: none;
+    width: 18px;
+    height: 18px;
+    border: 2px solid var(--primaryColor);
+    border-radius: 4px;
+    background-color: var(--backgroundInput);
+    cursor: pointer;
+    position: relative;
+    margin-right: 1rem;
+}
+
+.createRole-checkbox:checked {
+    background-color: var(--primaryDarkColor);
+    border-color: var(--primaryDarkColor);
+}
+
+.createRole-checkbox::after {
+    content: "";
+    display: block;
+    width: 10px;
+    height: 10px;
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    background-color: var(--backgroundCard);
+    clip-path: polygon(14% 44%, 0% 65%, 48% 100%, 100% 16%, 80% 0%, 43% 77%);
+    transition: opacity 0.2s ease-in-out;
+    opacity: 0;
+}
+
+.createRole-checkbox:checked::after {
+    opacity: 1;
+}
+
+.createRole-description {
+    color: var(--textColor);
+    cursor: pointer;
+    user-select: none;
+}
+
+.createRole-button {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    margin-top: 2rem;
+}
