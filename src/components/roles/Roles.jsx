@@ -4,8 +4,7 @@ import "../../css/roles/roles.css";
 // REACT
 import { useEffect, useState } from "react";
 
-// ZUSTAND
-import { useLoginStore } from "../../zustand/loginStore";
+// UTILS
 import { errorResponse } from "../../utils/error";
 
 // COMPONENTS
@@ -15,9 +14,6 @@ import Spinner from "../Spinner";
 import clientAxios from "../../config/ClientAxios";
 
 export default function Roles() {
-    // ZUSTAND
-    const { user, canExecute } = useLoginStore();
-
     // STATES
     const [roles, setRoles] = useState([]);
     const [error, setError] = useState("");
@@ -31,9 +27,7 @@ export default function Roles() {
     // FUNCTIONS
     const getRoles = async () => {
         try {
-            const { data } = await clientAxios.get(
-                `/role-action/roles/${user.id}`
-            );
+            const { data } = await clientAxios.get("/role-action/roles");
 
             setRoles(data);
         } catch (error) {
@@ -81,6 +75,7 @@ export default function Roles() {
                                     <tr>
                                         <th>Nombre</th>
                                         <th>Descripcion</th>
+                                        <th>Acciones</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -88,6 +83,14 @@ export default function Roles() {
                                         <tr key={rol._id}>
                                             <td>{rol.name}</td>
                                             <td>{rol.description}</td>
+                                            <td>
+                                                <a
+                                                    href={`edit-role/${rol._id}`}
+                                                    className="roles-button button"
+                                                >
+                                                    Editar
+                                                </a>
+                                            </td>
                                         </tr>
                                     ))}
                                 </tbody>

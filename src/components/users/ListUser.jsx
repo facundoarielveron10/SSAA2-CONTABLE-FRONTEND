@@ -14,17 +14,11 @@ import { Modal } from "react-responsive-modal";
 // UTILS
 import { errorResponse } from "../../utils/error";
 
-// ZUSTAND
-import { useLoginStore } from "../../zustand/loginStore";
-
 // COMPONENTS
 import Spinner from "../Spinner";
 import TableUser from "./TableUser";
 
 export default function ListUser() {
-    // ZUSTAND
-    const { user, canExecute } = useLoginStore();
-
     // STATES
     const [users, setUsers] = useState([]);
     const [roles, setRoles] = useState([]);
@@ -43,7 +37,7 @@ export default function ListUser() {
     // FUNCTIONS
     const getUsers = async () => {
         try {
-            const { data } = await clientAxios.get(`/user/users/${user.id}`);
+            const { data } = await clientAxios.get("/user/users");
 
             setUsers(data);
         } catch (error) {
@@ -56,9 +50,7 @@ export default function ListUser() {
 
     const getRoles = async () => {
         try {
-            const { data } = await clientAxios.get(
-                `/role-action/roles/${user.id}`
-            );
+            const { data } = await clientAxios.get("/role-action/roles");
 
             setRoles(data);
         } catch (error) {
@@ -84,14 +76,6 @@ export default function ListUser() {
     const handleChangeRole = async (e) => {
         e.preventDefault();
         try {
-            if (!canExecute("CHANGE_ROL")) {
-                setError("No tienes permisos");
-                setTimeout(() => {
-                    setError("");
-                }, 5000);
-                return;
-            }
-
             const { data: roleData } = await clientAxios.post(
                 "/user/change-role",
                 {

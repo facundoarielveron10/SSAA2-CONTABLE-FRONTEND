@@ -14,7 +14,7 @@ import Spinner from "../Spinner";
 // AXIOS
 import clientAxios from "../../config/ClientAxios";
 
-export default function Create() {
+export default function Edit({ id }) {
     // STATES
     const [actions, setActions] = useState([]);
     const [filteredActions, setFilteredActions] = useState([]);
@@ -38,6 +38,16 @@ export default function Create() {
         setDescription("");
         setSelectedType("");
         setSelectedActions([]);
+    };
+
+    const getRole = async () => {
+        try {
+        } catch (error) {
+            setError(errorResponse(error));
+            setTimeout(() => {
+                setError("");
+            }, 5000);
+        }
     };
 
     const getActions = async () => {
@@ -128,10 +138,10 @@ export default function Create() {
                 ) : null}
             </div>
             <div className="createRole">
-                <h1 className="title">Creacion de Rol</h1>
+                <h1 className="title">Edicion de rol</h1>
                 <p className="paragraph">
-                    Completa el siguiente formulario para crear un nuevo rol,
-                    donde el nombre descriptivo del rol es como se vera
+                    Cambia los datos del siguiente formulario para editar el
+                    rol, donde el nombre descriptivo del rol es como se vera
                     reflejado en el sistema y finalmente selecciona las acciones
                     que podrá hacer este rol.
                 </p>
