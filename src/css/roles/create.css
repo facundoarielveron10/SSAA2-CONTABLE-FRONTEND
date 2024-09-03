@@ -43,6 +43,13 @@
     border-color: var(--primaryDarkColor);
 }
 
+.createRole-spinner {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
 .createRole-actions {
     display: flex;
     flex-direction: column;

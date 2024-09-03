@@ -10,15 +10,15 @@
 .listUser-users {
     display: flex;
     flex-direction: column;
-    gap: 5rem;
+    justify-content: center;
     align-items: center;
-    width: 100%;
+    gap: 3rem;
 }
 
-@media (min-width: 1438px) {
+@media (min-width: 1468px) {
     .listUser-users {
-        flex-direction: row;
-        justify-content: space-around;
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
     }
 }
 

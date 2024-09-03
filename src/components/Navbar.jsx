@@ -36,7 +36,7 @@ export default function Navbar() {
                             Usuarios
                         </a>
                     ) : null}
-                    {canExecute("CREATE_ROL") ? (
+                    {canExecute("GET_ROLES") ? (
                         <a href="/roles" className="navbar-link">
                             Roles
                         </a>

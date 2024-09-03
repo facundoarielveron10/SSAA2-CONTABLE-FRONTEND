@@ -17,7 +17,7 @@ import clientAxios from "../../config/ClientAxios";
 
 export default function Create() {
     // ZUSTAND
-    const { user } = useLoginStore();
+    const { user, canExecute } = useLoginStore();
 
     // STATES
     const [actions, setActions] = useState([]);
@@ -38,6 +38,7 @@ export default function Create() {
     // FUNCTIONS
     const resetValues = () => {
         setName("");
+        setNameDescriptive("");
         setDescription("");
         setSelectedType("");
         setSelectedActions([]);
@@ -81,6 +82,14 @@ export default function Create() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+
+        if (!canExecute("CREATE_ROL")) {
+            setError("No tienes permisos");
+            setTimeout(() => {
+                setError("");
+            }, 5000);
+            return;
+        }
 
         if ([name, nameDescriptive, description].includes("")) {
             setError("Todos los campos son obligatorios");
@@ -223,32 +232,43 @@ export default function Create() {
                             ))}
                         </select>
                     </div>
-                    <div className="createRole-actions">
-                        {filteredActions.map((action) => (
-                            <div key={action._id} className="createRole-action">
-                                <input
-                                    className="createRole-checkbox"
-                                    type="checkbox"
-                                    id={action._id}
-                                    name={action.name}
-                                    checked={
-                                        selectedActions.includes(action.name)
-                                            ? true
-                                            : false
-                                    }
-                                    onChange={(e) =>
-                                        handleChecked(e.target.name)
-                                    }
-                                />
-                                <label
-                                    className="createRole-description"
-                                    htmlFor={action._id}
+                    {actions.length === 0 ? (
+                        <div className="createRole-spinner">
+                            <Spinner />
+                        </div>
+                    ) : (
+                        <div className="createRole-actions">
+                            {filteredActions.map((action) => (
+                                <div
+                                    key={action._id}
+                                    className="createRole-action"
                                 >
-                                    {action.description}
-                                </label>
-                            </div>
-                        ))}
-                    </div>
+                                    <input
+                                        className="createRole-checkbox"
+                                        type="checkbox"
+                                        id={action._id}
+                                        name={action.name}
+                                        checked={
+                                            selectedActions.includes(
+                                                action.name
+                                            )
+                                                ? true
+                                                : false
+                                        }
+                                        onChange={(e) =>
+                                            handleChecked(e.target.name)
+                                        }
+                                    />
+                                    <label
+                                        className="createRole-description"
+                                        htmlFor={action._id}
+                                    >
+                                        {action.description}
+                                    </label>
+                                </div>
+                            ))}
+                        </div>
+                    )}
 
                     <button className="createRole-button button">
                         Crear rol

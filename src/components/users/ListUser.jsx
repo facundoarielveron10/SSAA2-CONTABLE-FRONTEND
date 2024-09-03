@@ -19,6 +19,7 @@ import { useLoginStore } from "../../zustand/loginStore";
 
 // COMPONENTS
 import Spinner from "../Spinner";
+import TableUser from "./TableUser";
 
 export default function ListUser() {
     // ZUSTAND
@@ -26,7 +27,7 @@ export default function ListUser() {
 
     // STATES
     const [users, setUsers] = useState([]);
-    const [admins, setAdmins] = useState([]);
+    const [roles, setRoles] = useState([]);
     const [open, setOpen] = useState(false);
     const [changeRole, setChangeRole] = useState({});
     const [newRole, setNewRole] = useState("");
@@ -36,6 +37,7 @@ export default function ListUser() {
     // EFFECTS
     useEffect(() => {
         getUsers();
+        getRoles();
     }, []);
 
     // FUNCTIONS
@@ -43,31 +45,22 @@ export default function ListUser() {
         try {
             const { data } = await clientAxios.get(`/user/users/${user.id}`);
 
-            const formattedData = data.map((userData) => {
-                if (userData.role.name === "ROLE_ADMIN") {
-                    return {
-                        ...userData,
-                        role: { ...userData.role, name: "Administrador" },
-                    };
-                }
-                if (userData.role.name === "ROLE_USER") {
-                    return {
-                        ...userData,
-                        role: { ...userData.role, name: "Usuario" },
-                    };
-                }
-                return userData;
-            });
+            setUsers(data);
+        } catch (error) {
+            setError(errorResponse(error));
+            setTimeout(() => {
+                setError("");
+            }, 5000);
+        }
+    };
 
-            const filterAdmin = formattedData.filter(
-                (userData) => userData.role.name === "Administrador"
-            );
-            const filterUser = formattedData.filter(
-                (userData) => userData.role.name === "Usuario"
+    const getRoles = async () => {
+        try {
+            const { data } = await clientAxios.get(
+                `/role-action/roles/${user.id}`
             );
 
-            setAdmins(filterAdmin);
-            setUsers(filterUser);
+            setRoles(data);
         } catch (error) {
             setError(errorResponse(error));
             setTimeout(() => {
@@ -137,86 +130,21 @@ export default function ListUser() {
                     en el sistema, donde tambien se puede cambiarle los roles a
                     los mismos
                 </p>
-                {users.length === 0 ? (
+                {users.length === 0 || roles.length === 0 ? (
                     <div className="listUser-spinner">
                         <Spinner />
                     </div>
                 ) : (
                     <div className="listUser-users">
-                        <div className="listUser-list">
-                            <h2 className="listUser-subtitle">
-                                Administradores
-                            </h2>
-                            <table className="listUser-table">
-                                <thead>
-                                    <tr>
-                                        <th>Nombre</th>
-                                        <th>Apellido</th>
-                                        <th>Email</th>
-                                        <th>Rol</th>
-                                        <th>Acciones</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {admins.map((admin) => (
-                                        <tr key={admin._id}>
-                                            <td>{admin.name}</td>
-                                            <td>{admin.lastname}</td>
-                                            <td>{admin.email}</td>
-                                            <td>{admin.role.name}</td>
-                                            <td className="listUser-actions">
-                                                <button
-                                                    className="button"
-                                                    onClick={() =>
-                                                        onOpenChangeRoleModal(
-                                                            admin
-                                                        )
-                                                    }
-                                                >
-                                                    Cambiar Rol
-                                                </button>
-                                            </td>
-                                        </tr>
-                                    ))}
-                                </tbody>
-                            </table>
-                        </div>
-                        <div className="listUser-list">
-                            <h2 className="listUser-subtitle">Usuarios</h2>
-                            <table className="listUser-table">
-                                <thead>
-                                    <tr>
-                                        <th>Nombre</th>
-                                        <th>Apellido</th>
-                                        <th>Email</th>
-                                        <th>Rol</th>
-                                        <th>Acciones</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {users.map((user) => (
-                                        <tr key={user._id}>
-                                            <td>{user.name}</td>
-                                            <td>{user.lastname}</td>
-                                            <td>{user.email}</td>
-                                            <td>{user.role.name}</td>
-                                            <td className="listUser-actions">
-                                                <button
-                                                    className="button"
-                                                    onClick={() =>
-                                                        onOpenChangeRoleModal(
-                                                            user
-                                                        )
-                                                    }
-                                                >
-                                                    Cambiar Rol
-                                                </button>
-                                            </td>
-                                        </tr>
-                                    ))}
-                                </tbody>
-                            </table>
-                        </div>
+                        {roles.map((rol) => (
+                            <TableUser
+                                key={rol._id}
+                                title={rol.nameDescriptive}
+                                rolName={rol.name}
+                                users={users}
+                                onOpenChangeRoleModal={onOpenChangeRoleModal}
+                            />
+                        ))}
                     </div>
                 )}
             </div>
@@ -256,22 +184,17 @@ export default function ListUser() {
                             >
                                 -- Seleccionar Rol --
                             </option>
-                            <option
-                                disabled={
-                                    changeRole?.role?.name === "Administrador"
-                                }
-                                className="listUser-modal-option"
-                                value="ROLE_ADMIN"
-                            >
-                                Administrador
-                            </option>
-                            <option
-                                disabled={changeRole?.role?.name === "Usuario"}
-                                className="listUser-modal-option"
-                                value="ROLE_USER"
-                            >
-                                Usuario
-                            </option>
+                            {roles.length > 0
+                                ? roles.map((rol) => (
+                                      <option
+                                          key={rol._id}
+                                          className="listUser-modal-option"
+                                          value={rol.name}
+                                      >
+                                          {rol.nameDescriptive}
+                                      </option>
+                                  ))
+                                : null}
                         </select>
                         <button
                             type="submit"
