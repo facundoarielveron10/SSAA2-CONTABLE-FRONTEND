@@ -55,7 +55,7 @@ export const useLoginStore = create(
                 }
             },
             canExecute: (action) => {
-                return get()?.user?.actions.includes(action) ? true : false;
+                return get()?.user?.actions?.includes(action) ? true : false;
             },
         }),
         {

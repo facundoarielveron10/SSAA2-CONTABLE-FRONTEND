@@ -1,5 +1,5 @@
 // CSS
-import "../../css/roles/create.css";
+import "../../css/roles/create-edit.css";
 import "../../css/auth/form.css";
 
 // REACT
@@ -121,13 +121,13 @@ export default function Create() {
 
     return (
         <>
-            <div className="createRole alert-container">
+            <div className="createEdit alert-container">
                 {error ? <p className="alert alert-error">{error}</p> : null}
                 {success ? (
                     <p className="alert alert-success">{success}</p>
                 ) : null}
             </div>
-            <div className="createRole">
+            <div className="createEdit">
                 <h1 className="title">Creacion de Rol</h1>
                 <p className="paragraph">
                     Completa el siguiente formulario para crear un nuevo rol,
@@ -137,14 +137,14 @@ export default function Create() {
                 </p>
 
                 <form onSubmit={handleSubmit}>
-                    <div className="form createRole-form">
+                    <div className="form">
                         {/* NOMBRE */}
-                        <div className="form-group">
+                        <div className="form-group createEdit-group">
                             <label className="form-label" htmlFor="name">
                                 Nombre del Rol
                             </label>
                             <input
-                                className="form-input"
+                                className="form-input createEdit-input"
                                 type="text"
                                 id="name"
                                 value={name}
@@ -163,7 +163,7 @@ export default function Create() {
                             />
                         </div>
                         {/* NOMBRE DESCRIPTIVO */}
-                        <div className="form-group">
+                        <div className="form-group createEdit-group">
                             <label
                                 className="form-label"
                                 htmlFor="nameDescriptive"
@@ -171,7 +171,7 @@ export default function Create() {
                                 Nombre Descriptivo del Rol
                             </label>
                             <input
-                                className="form-input"
+                                className="form-input createEdit-input"
                                 type="text"
                                 id="nameDescriptive"
                                 value={nameDescriptive}
@@ -181,12 +181,12 @@ export default function Create() {
                             />
                         </div>
                         {/* DESCRIPCIÓN DEL ROL */}
-                        <div className="form-group">
+                        <div className="form-group createEdit-group">
                             <label className="form-label" htmlFor="description">
                                 Descripción del Rol
                             </label>
                             <textarea
-                                className="form-input"
+                                className="form-input createEdit-input"
                                 id="description"
                                 value={description}
                                 onChange={(e) => setDescription(e.target.value)}
@@ -194,12 +194,12 @@ export default function Create() {
                         </div>
                     </div>
 
-                    <div className="createRole-typeRole">
-                        <label className="createRole-type-label" htmlFor="type">
+                    <div className="createEdit-typeRole">
+                        <label className="createEdit-type-label" htmlFor="type">
                             Tipo de Acciones
                         </label>
                         <select
-                            className="createRole-type-select"
+                            className="createEdit-type-select"
                             id="type"
                             value={selectedType}
                             onChange={handleTypeChange}
@@ -219,18 +219,18 @@ export default function Create() {
                         </select>
                     </div>
                     {actions.length === 0 ? (
-                        <div className="createRole-spinner">
+                        <div className="createEdit-spinner">
                             <Spinner />
                         </div>
                     ) : (
-                        <div className="createRole-actions">
+                        <div className="createEdit-actions">
                             {filteredActions.map((action) => (
                                 <div
                                     key={action._id}
-                                    className="createRole-action"
+                                    className="createEdit-action"
                                 >
                                     <input
-                                        className="createRole-checkbox"
+                                        className="createEdit-checkbox"
                                         type="checkbox"
                                         id={action._id}
                                         name={action.name}
@@ -246,7 +246,7 @@ export default function Create() {
                                         }
                                     />
                                     <label
-                                        className="createRole-description"
+                                        className="createEdit-description"
                                         htmlFor={action._id}
                                     >
                                         {action.description}
@@ -256,7 +256,7 @@ export default function Create() {
                         </div>
                     )}
 
-                    <button className="createRole-button button">
+                    <button className="createEdit-button button">
                         Crear rol
                     </button>
                 </form>

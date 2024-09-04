@@ -13,11 +13,16 @@ import Spinner from "../Spinner";
 // AXIOS
 import clientAxios from "../../config/ClientAxios";
 
+// ZUSTAND
+import { useLoginStore } from "../../zustand/loginStore";
+
 export default function Roles() {
     // STATES
     const [roles, setRoles] = useState([]);
     const [error, setError] = useState("");
-    const [success, setSuccess] = useState("");
+
+    // ZUSTAND
+    const { canExecute } = useLoginStore();
 
     // EFFECTS
     useEffect(() => {
@@ -42,9 +47,6 @@ export default function Roles() {
         <>
             <div className="roles-alert alert-container">
                 {error ? <p className="alert alert-error">{error}</p> : null}
-                {success ? (
-                    <p className="alert alert-success">{success}</p>
-                ) : null}
             </div>
             <div className="roles">
                 <h1 className="title">Listado de Roles</h1>
@@ -62,12 +64,14 @@ export default function Roles() {
                             <div className="roles-header">
                                 <h2 className="roles-subtitle">Roles</h2>
                                 <div className="roles-button-container">
-                                    <a
-                                        href="create-role"
-                                        className="roles-button button"
-                                    >
-                                        Crear Rol
-                                    </a>
+                                    {canExecute("CREATE_ROLE") ? (
+                                        <a
+                                            href="create-role"
+                                            className="roles-button button"
+                                        >
+                                            Crear Rol
+                                        </a>
+                                    ) : null}
                                 </div>
                             </div>
                             <table className="roles-table">
@@ -84,12 +88,14 @@ export default function Roles() {
                                             <td>{rol.name}</td>
                                             <td>{rol.description}</td>
                                             <td>
-                                                <a
-                                                    href={`edit-role/${rol._id}`}
-                                                    className="roles-button button"
-                                                >
-                                                    Editar
-                                                </a>
+                                                {canExecute("EDIT_ROLE") ? (
+                                                    <a
+                                                        href={`edit-role/${rol._id}`}
+                                                        className="roles-button button"
+                                                    >
+                                                        Editar
+                                                    </a>
+                                                ) : null}
                                             </td>
                                         </tr>
                                     ))}

@@ -5,7 +5,7 @@ import "../../css/auth/form.css";
 import { useEffect, useState } from "react";
 
 // COOKIES
-import { useCookies } from "react-cookie";
+import Cookies from "js-cookie";
 
 // ICONS
 import { IoIosArrowForward } from "react-icons/io";
@@ -30,9 +30,6 @@ export default function FormLogin() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [error, setError] = useState("");
-
-    // COOKIES
-    const [cookies, setCookie] = useCookies(["AUTH_TOKEN"]);
 
     // FUNCTIONS
     const resetValues = () => {
@@ -76,7 +73,7 @@ export default function FormLogin() {
 
     useEffect(() => {
         if (!isSubmitting && successSubmitted) {
-            setCookie("AUTH_TOKEN", jwt);
+            Cookies.set("AUTH_TOKEN", jwt);
             window.location.assign("/");
         }
     }, [successSubmitted, isSubmitting]);

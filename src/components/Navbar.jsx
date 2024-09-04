@@ -2,21 +2,18 @@
 import "../css/navbar.css";
 
 // COOKIES
-import { useCookies } from "react-cookie";
+import Cookies from "js-cookie";
 
 // ZUSTAND
 import { useLoginStore } from "../zustand/loginStore";
 
 export default function Navbar() {
-    // COOKIES
-    const [cookies, setCookie, removeCookie] = useCookies(["AUTH_TOKEN"]);
-
     // ZUSTAND
     const { logout, canExecute } = useLoginStore();
 
     // FUNCTIONS
     const handleLogout = () => {
-        removeCookie("AUTH_TOKEN");
+        Cookies.remove("AUTH_TOKEN");
         logout();
         window.location.assign("/login");
     };
