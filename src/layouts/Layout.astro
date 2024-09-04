@@ -1,6 +1,5 @@
 ---
 import { ViewTransitions } from 'astro:transitions';
-import { CookiesProvider } from 'react-cookie'
 
 interface Props {
 	title: string;
@@ -35,10 +34,8 @@ const { title, container = true } = Astro.props;
 		<title>{title}</title>
 	</head>
 	<body>
-		<CookiesProvider>
-			<main class={`${container ? "container" : ""}`}>
-				<slot />
-			</main>
-		</CookiesProvider>
+		<main class={`${container ? "container" : ""}`}>
+			<slot />
+		</main>
 	</body>
 </html>
