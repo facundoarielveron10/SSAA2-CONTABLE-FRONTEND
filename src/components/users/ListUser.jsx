@@ -90,7 +90,7 @@ export default function ListUser() {
                 setSuccess("");
             }, 5000);
 
-            getUsers();
+            await getUsers();
         } catch (error) {
             setError(errorResponse(error));
             setTimeout(() => {

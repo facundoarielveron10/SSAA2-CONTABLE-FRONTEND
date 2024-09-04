@@ -8,6 +8,9 @@ import { errorResponse } from "../utils/error";
 // AXIOS
 import clientAxios from "../config/ClientAxios";
 
+// COOKIES
+import Cookies from "js-cookie";
+
 export const useLoginStore = create(
     persist(
         (set, get) => ({
@@ -29,6 +32,7 @@ export const useLoginStore = create(
                         isSubmitting: false,
                         successSubmitted: true,
                     });
+                    Cookies.set("AUTH_TOKEN", data.jwt);
                 } catch (error) {
                     set({
                         successSubmitted: false,
@@ -46,6 +50,8 @@ export const useLoginStore = create(
                         successSubmitted: false,
                         errorSubmitting: undefined,
                     });
+                    Cookies.remove("AUTH_TOKEN");
+                    window.location.assign("/login");
                 } catch (error) {
                     set({
                         successSubmitted: false,
@@ -56,6 +62,16 @@ export const useLoginStore = create(
             },
             canExecute: (action) => {
                 return get()?.user?.actions?.includes(action) ? true : false;
+            },
+            editActions: (idRole, actions) => {
+                if (get()?.user?.role?._id === idRole) {
+                    set((state) => ({
+                        user: {
+                            ...state.user,
+                            actions: actions,
+                        },
+                    }));
+                }
             },
         }),
         {

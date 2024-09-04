@@ -73,7 +73,6 @@ export default function FormLogin() {
 
     useEffect(() => {
         if (!isSubmitting && successSubmitted) {
-            Cookies.set("AUTH_TOKEN", jwt);
             window.location.assign("/");
         }
     }, [successSubmitted, isSubmitting]);

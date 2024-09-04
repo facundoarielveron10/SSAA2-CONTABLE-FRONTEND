@@ -13,9 +13,7 @@ export default function Navbar() {
 
     // FUNCTIONS
     const handleLogout = () => {
-        Cookies.remove("AUTH_TOKEN");
         logout();
-        window.location.assign("/login");
     };
 
     return (

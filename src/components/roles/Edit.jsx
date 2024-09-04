@@ -14,6 +14,9 @@ import Spinner from "../Spinner";
 // AXIOS
 import clientAxios from "../../config/ClientAxios";
 
+// ZUSTAND
+import { useLoginStore } from "../../zustand/loginStore";
+
 export default function Edit({ id }) {
     // STATES
     const [actions, setActions] = useState([]);
@@ -25,6 +28,9 @@ export default function Edit({ id }) {
     const [description, setDescription] = useState("");
     const [selectedType, setSelectedType] = useState("");
     const [selectedActions, setSelectedActions] = useState([]);
+
+    // ZUSTAND
+    const { editActions } = useLoginStore();
 
     // EFFECTS
     useEffect(() => {
@@ -102,15 +108,6 @@ export default function Edit({ id }) {
             return;
         }
 
-        if (selectedActions.length <= 0) {
-            setError("Tienes que seleccionar al menos una accion");
-
-            setTimeout(() => {
-                setError("");
-            }, 5000);
-            return;
-        }
-
         try {
             const { data } = await clientAxios.post("/role-action/edit-role", {
                 idRole: id,
@@ -121,6 +118,7 @@ export default function Edit({ id }) {
             });
 
             setSuccess(data);
+            editActions(id, selectedActions);
             getRoleActions();
             setTimeout(() => {
                 setSuccess("");

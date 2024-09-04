@@ -26,6 +26,13 @@
     width: 100%;
 }
 
+.roles-buttons {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 1rem;
+}
+
 .roles-button-container {
     display: flex;
     flex-direction: column;
@@ -39,6 +46,18 @@
     justify-content: center;
     align-items: center;
     text-decoration: none;
+}
+
+.roles-edit {
+    background-color: var(--primaryColor);
+}
+
+.roles-delete {
+    background-color: var(--colorDelete);
+}
+
+.roles-delete:hover {
+    background-color: var(--colorDeleteDark);
 }
 
 .roles-list {
@@ -86,4 +105,35 @@
 
 .roles-alert {
     margin: 2rem 0 0 0;
+}
+
+.roles-modal-title {
+    text-transform: uppercase;
+    color: var(--textColor);
+}
+
+.roles-modal-rol p {
+    font-weight: bold;
+    color: var(--textColor);
+}
+
+.roles-modal-rol span {
+    font-weight: normal;
+}
+
+.roles-modal-rol span {
+    font-weight: normal;
+}
+
+.roles-modal-paragraph {
+    color: var(--textColor);
+}
+
+.roles-modal-button {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    margin-top: 1rem;
 }

@@ -86,15 +86,6 @@ export default function Create() {
             return;
         }
 
-        if (selectedActions.length <= 0) {
-            setError("Tienes que seleccionar al menos una accion");
-
-            setTimeout(() => {
-                setError("");
-            }, 5000);
-            return;
-        }
-
         try {
             const { data } = await clientAxios.post(
                 "/role-action/create-role",
