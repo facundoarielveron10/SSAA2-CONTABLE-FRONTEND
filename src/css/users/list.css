@@ -47,6 +47,13 @@
 .listUser-table {
     width: 100%;
     border-collapse: collapse;
+}
+
+.listUser-table thead {
+    color: var(--backgroundTextColor);
+}
+
+.listUser-table tbody {
     color: var(--textColor);
 }
 

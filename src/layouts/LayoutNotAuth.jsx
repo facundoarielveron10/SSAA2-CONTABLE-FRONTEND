@@ -2,22 +2,14 @@
 import { useEffect } from "react";
 
 // COMPONENTS
-import Navbar from "../components/Navbar";
 import DarkMode from "../components/DarkMode";
 
 // ZUSTAND
 import { useLoginStore } from "../zustand/loginStore";
 
-export default function LayoutAuth({ children, page }) {
+export default function LayoutNotAuth({ children }) {
     // ZUSTAND
-    const { canExecute, initializeTheme } = useLoginStore();
-
-    // EFFECTS
-    useEffect(() => {
-        if (page === "users" && !canExecute("GET_USERS")) {
-            window.location.assign("/");
-        }
-    }, [page]);
+    const { initializeTheme } = useLoginStore();
 
     useEffect(() => {
         initializeTheme();
@@ -25,7 +17,6 @@ export default function LayoutAuth({ children, page }) {
 
     return (
         <>
-            <Navbar />
             <DarkMode />
             {children}
         </>

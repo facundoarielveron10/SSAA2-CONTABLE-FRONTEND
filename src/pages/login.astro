@@ -7,6 +7,7 @@ import { isLoggedIn } from '../utils/verifyAuth';
 
 // COMPONENTS
 import Layout from '../layouts/Layout.astro';
+import LayoutNotAuth from '../layouts/LayoutNotAuth';
 import FormLogin from '../components/auth/FormLogin.jsx';
 
 // REDIRECT
@@ -17,7 +18,9 @@ if (isLoggedIn(isAuth)) {
 ---
 
 <Layout title="Iniciar Sesión - SSAA2" container={false}>
-	<div class="login">
-		<FormLogin client:only="react"/>
-	</div>
+	<LayoutNotAuth client:only="react">
+		<div class="login">
+			<FormLogin client:only="react"/>
+		</div>
+	</LayoutNotAuth>
 </Layout>

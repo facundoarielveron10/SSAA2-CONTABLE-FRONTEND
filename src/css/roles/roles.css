@@ -85,6 +85,13 @@
 .roles-table {
     width: 100%;
     border-collapse: collapse;
+}
+
+.roles-table thead {
+    color: var(--backgroundTextColor);
+}
+
+.roles-table tbody {
     color: var(--textColor);
 }
 

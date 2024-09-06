@@ -16,6 +16,7 @@ export const useLoginStore = create(
         (set, get) => ({
             jwt: "",
             user: {},
+            darkMode: true,
             isSubmitting: false,
             successSubmitted: false,
             errorSubmitting: undefined,
@@ -61,10 +62,12 @@ export const useLoginStore = create(
                 }
             },
             canExecute: (action) => {
-                return get()?.user?.actions?.includes(action) ? true : false;
+                const { user } = get();
+                return user?.actions?.includes(action) ? true : false;
             },
             editActions: (idRole, actions) => {
-                if (get()?.user?.role?._id === idRole) {
+                const { user } = get();
+                if (user?.role?._id === idRole) {
                     set((state) => ({
                         user: {
                             ...state.user,
@@ -73,10 +76,27 @@ export const useLoginStore = create(
                     }));
                 }
             },
+            toggleDarkMode: (checked) => {
+                set({
+                    darkMode: checked,
+                });
+
+                const theme = checked ? "dark" : "light";
+                document.body.setAttribute("theme", theme);
+            },
+            initializeTheme: () => {
+                const { darkMode } = get();
+                const theme = darkMode ? "dark" : "light";
+                document.body.setAttribute("theme", theme);
+            },
         }),
         {
             name: "user",
-            partialize: (state) => ({ jwt: state.jwt, user: state.user }),
+            partialize: (state) => ({
+                jwt: state.jwt,
+                user: state.user,
+                darkMode: state.darkMode,
+            }),
         }
     )
 );
