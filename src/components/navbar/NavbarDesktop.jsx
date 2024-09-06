@@ -1,13 +1,10 @@
 // CSS
-import "../css/navbar.css";
-
-// COOKIES
-import Cookies from "js-cookie";
+import "../../css/navbar.css";
 
 // ZUSTAND
-import { useLoginStore } from "../zustand/loginStore";
+import { useLoginStore } from "../../zustand/loginStore";
 
-export default function Navbar() {
+export default function NavbarDesktop() {
     // ZUSTAND
     const { logout, canExecute } = useLoginStore();
 

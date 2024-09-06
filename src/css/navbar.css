@@ -1,3 +1,4 @@
+/* DESKTOP */
 .navbar {
     display: flex;
     justify-content: center;
@@ -52,4 +53,120 @@
 
 .navbar-link:hover {
     color: var(--primaryColor);
+}
+
+/* MOBILE */
+.navbarMobile {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: absolute;
+    top: 0;
+    left: 0;
+    margin: 1.5rem 0 0 2rem;
+    z-index: 1000;
+}
+
+.navbarMobile-overlay {
+    position: fixed;
+    background: var(--primaryColor);
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 0%;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.35s, visibility 0.35s, height 0.35s;
+    overflow: hidden;
+    z-index: 100;
+}
+.navbarMobile-overlay.open {
+    opacity: 0.9;
+    visibility: visible;
+    height: 100%;
+}
+.navbarMobile-overlay.open li {
+    animation: fadeInRight 0.5s ease forwards;
+    animation-delay: 0.35s;
+}
+.navbarMobile-overlay.open li:nth-of-type(2) {
+    animation-delay: 0.4s;
+}
+.navbarMobile-overlay.open li:nth-of-type(3) {
+    animation-delay: 0.45s;
+}
+.navbarMobile-overlay.open li:nth-of-type(4) {
+    animation-delay: 0.5s;
+}
+.navbarMobile-overlay nav {
+    position: relative;
+    height: 70%;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 50px;
+    font-weight: 400;
+    text-align: center;
+}
+.navbarMobile-overlay ul {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    list-style: none;
+    padding: 0;
+    margin: 0 auto;
+    position: relative;
+    height: 100%;
+}
+.navbarMobile-overlay ul li {
+    display: block;
+    height: 25%;
+    height: calc(100% / 4);
+    min-height: 50px;
+    position: relative;
+    opacity: 0;
+}
+.navbarMobile-overlay ul li a {
+    display: block;
+    position: relative;
+    color: #fff;
+    text-decoration: none;
+    overflow: hidden;
+}
+.navbarMobile-overlay ul li a:hover:after,
+.navbarMobile-overlay ul li a:focus:after,
+.navbarMobile-overlay ul li a:active:after {
+    width: 100%;
+}
+.navbarMobile-overlay ul li a:after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    width: 0%;
+    transform: translateX(-50%);
+    height: 3px;
+    background: #fff;
+    transition: 0.35s;
+}
+
+@keyframes fadeInRight {
+    0% {
+        opacity: 0;
+        left: 20%;
+    }
+    100% {
+        opacity: 1;
+        left: 0;
+    }
+}
+
+.navbarMobile-logout {
+    cursor: pointer;
+    background-color: transparent;
+    color: #fff;
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }

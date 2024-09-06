@@ -2,8 +2,8 @@
 import { useEffect } from "react";
 
 // COMPONENTS
-import Navbar from "../components/Navbar";
-import DarkMode from "../components/DarkMode";
+import Navbar from "../components/navbar/Navbar.jsx";
+import DarkMode from "../components/DarkMode.jsx";
 
 // ZUSTAND
 import { useLoginStore } from "../zustand/loginStore";
