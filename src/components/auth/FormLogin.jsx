@@ -4,8 +4,8 @@ import "../../css/auth/form.css";
 // REACT
 import { useEffect, useState } from "react";
 
-// COOKIES
-import Cookies from "js-cookie";
+// COMPONENTS
+import Alert from "../Alert";
 
 // ICONS
 import { IoIosArrowForward } from "react-icons/io";
@@ -18,13 +18,8 @@ import { useLoginStore } from "../../zustand/loginStore";
 
 export default function FormLogin() {
     // ZUSTAND
-    const {
-        jwt,
-        isSubmitting,
-        successSubmitted,
-        errorSubmitting,
-        submitLogin,
-    } = useLoginStore();
+    const { isSubmitting, successSubmitted, errorSubmitting, submitLogin } =
+        useLoginStore();
 
     // STATES
     const [email, setEmail] = useState("");
@@ -79,10 +74,7 @@ export default function FormLogin() {
 
     return (
         <>
-            <div className="alert-container">
-                {error ? <p className="alert alert-error">{error}</p> : null}
-            </div>
-
+            {error ? <Alert message={error} type="error" /> : null}
             <form className="form" onSubmit={handleSubmit}>
                 {/* EMAIL */}
                 <div className="form-group">

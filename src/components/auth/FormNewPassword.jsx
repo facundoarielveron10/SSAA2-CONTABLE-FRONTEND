@@ -12,6 +12,7 @@ import { errorResponse } from "../../utils/error";
 
 // COMPONENTS
 import Spinner from "../Spinner";
+import Alert from "../Alert";
 
 export default function FormNewPassword() {
     // STATES
@@ -89,12 +90,8 @@ export default function FormNewPassword() {
 
     return (
         <>
-            <div className="alert-container">
-                {error ? <p className="alert alert-error">{error}</p> : null}
-                {success ? (
-                    <p className="alert alert-success">{success}</p>
-                ) : null}
-            </div>
+            {error ? <Alert message={error} type="error" /> : null}
+            {success ? <Alert message={success} type="success" /> : null}
             {isValidToken ? (
                 <form className="form" onSubmit={handleSubmitNewPassword}>
                     {/* PASSWORD */}

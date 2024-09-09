@@ -10,6 +10,7 @@ import { errorResponse } from "../../utils/error";
 
 // COMPONENTS
 import Spinner from "../Spinner";
+import Alert from "../Alert";
 
 // AXIOS
 import clientAxios from "../../config/ClientAxios";
@@ -88,12 +89,8 @@ export default function Roles() {
 
     return (
         <>
-            <div className="roles-alert alert-container">
-                {error ? <p className="alert alert-error">{error}</p> : null}
-                {success ? (
-                    <p className="alert alert-success">{success}</p>
-                ) : null}
-            </div>
+            {error ? <Alert message={error} type="error" /> : null}
+            {success ? <Alert message={success} type="success" /> : null}
             <div className="roles">
                 <h1 className="title">Listado de Roles</h1>
                 <p className="paragraph">
@@ -107,19 +104,7 @@ export default function Roles() {
                 ) : (
                     <div className="roles-list-container">
                         <div className="roles-list">
-                            <div className="roles-header">
-                                <h2 className="roles-subtitle">Roles</h2>
-                                <div className="roles-button-container">
-                                    {canExecute("CREATE_ROLE") ? (
-                                        <a
-                                            href="create-role"
-                                            className="roles-button button"
-                                        >
-                                            Crear Rol
-                                        </a>
-                                    ) : null}
-                                </div>
-                            </div>
+                            <h2 className="roles-subtitle">Roles</h2>
                             <table className="roles-table">
                                 <thead>
                                     <tr>
@@ -138,11 +123,13 @@ export default function Roles() {
                                                     {canExecute("EDIT_ROLE") ? (
                                                         <a
                                                             href={`edit-role/${rol._id}`}
-                                                            className="roles-button roles-edit button"
+                                                            className="roles-button-table roles-edit button"
                                                         >
                                                             Editar
                                                         </a>
-                                                    ) : null}
+                                                    ) : (
+                                                        "-"
+                                                    )}
                                                     {canExecute(
                                                         "DELETE_ROLE"
                                                     ) &&
@@ -154,11 +141,13 @@ export default function Roles() {
                                                                     rol
                                                                 )
                                                             }
-                                                            className="roles-button roles-delete button"
+                                                            className="roles-button-table roles-delete button"
                                                         >
                                                             Eliminar
                                                         </button>
-                                                    ) : null}
+                                                    ) : (
+                                                        "-"
+                                                    )}
                                                 </div>
                                             </td>
                                         </tr>
@@ -207,6 +196,11 @@ export default function Roles() {
                     </form>
                 </Modal>
             </div>
+            {canExecute("CREATE_ROLE") ? (
+                <a href="create-role" className="roles-button button">
+                    Crear Rol
+                </a>
+            ) : null}
         </>
     );
 }

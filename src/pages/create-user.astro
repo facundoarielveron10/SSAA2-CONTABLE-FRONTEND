@@ -7,20 +7,20 @@ import { isLoggedIn } from '../utils/verifyAuth';
 
 // COMPONENTS
 import Layout from '../layouts/Layout.astro';
-import LayoutNotAuth from "../layouts/LayoutNotAuth.jsx";
-import FormRegister from '../components/auth/FormRegister.jsx';
+import LayoutAuth from "../layouts/LayoutAuth.jsx";
+import Create from "../components/users/Create.jsx";
 
 // REDIRECT
 const token = Astro.cookies.get("AUTH_TOKEN");
-if (isLoggedIn(token)) {
-	return Astro.redirect("/")
+if (!isLoggedIn(token)) {
+	return Astro.redirect("/login")
 }
 ---
 
 <Layout title="Registrarse - SSAA2" container={false}>
-	<LayoutNotAuth client:only="react">
+	<LayoutAuth client:only="react" page="create-user">
 		<div class="register">
-			<FormRegister client:only="react"/>
+			<Create client:only="react"/>
 		</div>
-	</LayoutNotAuth>
+	</LayoutAuth>
 </Layout>

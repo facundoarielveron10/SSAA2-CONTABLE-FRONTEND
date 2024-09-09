@@ -20,12 +20,6 @@
     align-items: center;
 }
 
-.roles-header {
-    display: flex;
-    justify-content: space-between;
-    width: 100%;
-}
-
 .roles-buttons {
     display: flex;
     justify-content: flex-end;
@@ -33,18 +27,19 @@
     gap: 1rem;
 }
 
-.roles-button-container {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+.roles-button {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    margin: 0 2rem 2rem 0;
+    text-decoration: none;
 }
 
-.roles-button {
+.roles-button-table {
     display: flex;
     flex-direction: column;
-    justify-content: center;
     align-items: center;
+    justify-content: center;
     text-decoration: none;
 }
 

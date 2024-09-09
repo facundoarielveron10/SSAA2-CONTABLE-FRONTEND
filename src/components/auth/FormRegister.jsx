@@ -13,6 +13,9 @@ import clientAxios from "../../config/ClientAxios";
 // ICONS
 import { IoIosArrowForward } from "react-icons/io";
 
+// COMPONENTS
+import Alert from "../Alert";
+
 export default function FormRegister() {
     // STATES
     const [name, setName] = useState("");
@@ -65,13 +68,8 @@ export default function FormRegister() {
 
     return (
         <>
-            <div className="alert-container">
-                {error ? <p className="alert alert-error">{error}</p> : null}
-                {success ? (
-                    <p className="alert alert-success">{success}</p>
-                ) : null}
-            </div>
-
+            {error ? <Alert message={error} type="error" /> : null}
+            {success ? <Alert message={success} type="success" /> : null}
             <form className="form" onSubmit={handleSubmit}>
                 {/* NAME */}
                 <div className="form-group">

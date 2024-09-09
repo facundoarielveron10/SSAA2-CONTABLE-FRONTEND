@@ -1,12 +1,18 @@
 // CSS
 import "../../css/users/list.css";
 
+// ZUSTAND
+import { useLoginStore } from "../../zustand/loginStore";
+
 export default function TableUser({
     title,
     rolName,
     users,
     onOpenChangeRoleModal,
 }) {
+    // ZUSTAND
+    const { canExecute } = useLoginStore();
+
     return (
         <div className="listUser-list">
             <h2 className="listUser-subtitle">{title}</h2>
@@ -30,14 +36,18 @@ export default function TableUser({
                                     <td>{user.email}</td>
                                     <td>{user.role.nameDescriptive}</td>
                                     <td className="listUser-actions">
-                                        <button
-                                            className="button"
-                                            onClick={() =>
-                                                onOpenChangeRoleModal(user)
-                                            }
-                                        >
-                                            Cambiar Rol
-                                        </button>
+                                        {canExecute("CHANGE_ROLE") ? (
+                                            <button
+                                                className="button"
+                                                onClick={() =>
+                                                    onOpenChangeRoleModal(user)
+                                                }
+                                            >
+                                                Cambiar Rol
+                                            </button>
+                                        ) : (
+                                            "-"
+                                        )}
                                     </td>
                                 </tr>
                             );

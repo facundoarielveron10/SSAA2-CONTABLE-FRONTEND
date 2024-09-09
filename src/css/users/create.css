@@ -1,0 +1,18 @@
+.createUser {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--backgroundColor);
+    padding: 1.5rem;
+    border-radius: 8px;
+    color: var(--textColor);
+}
+
+.createUser-select select {
+    width: 100%;
+}
+
+.createUser-button {
+    width: 100%;
+}

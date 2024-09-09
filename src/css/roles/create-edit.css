@@ -1,4 +1,4 @@
-.createEdit {
+.createEditRole {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -9,24 +9,24 @@
     color: var(--textColor);
 }
 
-.createEdit-group,
-.form-input.createEdit-input {
+.createEditRole-group,
+.form-input.createEditRole-input {
     width: 100%;
 }
 
-.createEdit-typeRole {
+.createEditRole-typeRole {
     margin-bottom: 1.5rem;
     width: 100%;
 }
 
-.createEdit-type-label {
+.createEditRole-type-label {
     display: block;
     margin: 1rem 0 0.5rem 0;
     color: var(--textColor);
     font-weight: bold;
 }
 
-.createEdit-type-select {
+.createEditRole-type-select {
     width: 100%;
     padding: 10px;
     background-color: var(--backgroundInput);
@@ -39,29 +39,29 @@
     transition: border-color 0.3s;
 }
 
-.createEdit-type-select:hover {
+.createEditRole-type-select:hover {
     border-color: var(--primaryDarkColor);
 }
 
-.createEdit-type-select:focus {
+.createEditRole-type-select:focus {
     border-color: var(--primaryDarkColor);
 }
 
-.createEdit-spinner {
+.createEditRole-spinner {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
 }
 
-.createEdit-actions {
+.createEditRole-actions {
     display: flex;
     flex-direction: column;
     gap: 0.75rem;
     width: 100%;
 }
 
-.createEdit-action {
+.createEditRole-action {
     display: flex;
     align-items: center;
     background-color: var(--backgroundCard);
@@ -70,11 +70,11 @@
     transition: background-color 0.3s ease;
 }
 
-.createEdit-action:hover {
+.createEditRole-action:hover {
     background-color: var(--primaryDarkColor);
 }
 
-.createEdit-checkbox {
+.createEditRole-checkbox {
     appearance: none;
     width: 18px;
     height: 18px;
@@ -86,12 +86,12 @@
     margin-right: 1rem;
 }
 
-.createEdit-checkbox:checked {
+.createEditRole-checkbox:checked {
     background-color: var(--primaryDarkColor);
     border-color: var(--primaryDarkColor);
 }
 
-.createEdit-checkbox::after {
+.createEditRole-checkbox::after {
     content: "";
     display: block;
     width: 10px;
@@ -105,17 +105,17 @@
     opacity: 0;
 }
 
-.createEdit-checkbox:checked::after {
+.createEditRole-checkbox:checked::after {
     opacity: 1;
 }
 
-.createEdit-description {
+.createEditRole-description {
     color: var(--textColor);
     cursor: pointer;
     user-select: none;
 }
 
-.createEdit-button {
+.createEditRole-button {
     display: flex;
     flex-direction: column;
     justify-content: center;

@@ -17,6 +17,7 @@ import { errorResponse } from "../../utils/error";
 // COMPONENTS
 import Spinner from "../Spinner";
 import TableUser from "./TableUser";
+import Alert from "../Alert";
 
 export default function ListUser() {
     // STATES
@@ -101,12 +102,8 @@ export default function ListUser() {
 
     return (
         <>
-            <div className="listUser-alert alert-container">
-                {error ? <p className="alert alert-error">{error}</p> : null}
-                {success ? (
-                    <p className="alert alert-success">{success}</p>
-                ) : null}
-            </div>
+            {error ? <Alert message={error} type="error" /> : null}
+            {success ? <Alert message={success} type="success" /> : null}
             <div className="listUser">
                 <h1 className="title">Listado de usuarios</h1>
                 <p className="paragraph">
@@ -189,6 +186,9 @@ export default function ListUser() {
                     </form>
                 </Modal>
             </div>
+            <a href="create-user" className="listUser-button button">
+                Crear usuario
+            </a>
         </>
     );
 }

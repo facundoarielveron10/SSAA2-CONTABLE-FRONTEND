@@ -10,6 +10,7 @@ import { errorResponse } from "../../utils/error";
 
 // COMPONENTS
 import Spinner from "../Spinner";
+import Alert from "../Alert";
 
 // AXIOS
 import clientAxios from "../../config/ClientAxios";
@@ -133,13 +134,9 @@ export default function Edit({ id }) {
 
     return (
         <>
-            <div className="createEdit alert-container">
-                {error ? <p className="alert alert-error">{error}</p> : null}
-                {success ? (
-                    <p className="alert alert-success">{success}</p>
-                ) : null}
-            </div>
-            <div className="createEdit">
+            {error ? <Alert message={error} type="error" /> : null}
+            {success ? <Alert message={success} type="success" /> : null}
+            <div className="createEditRole">
                 <h1 className="title">Edicion de rol</h1>
                 <p className="paragraph">
                     Cambia los datos del siguiente formulario para editar el
@@ -151,12 +148,12 @@ export default function Edit({ id }) {
                 <form onSubmit={handleSubmit}>
                     <div className="form">
                         {/* NOMBRE */}
-                        <div className="form-group createEdit-group">
+                        <div className="form-group createEditRole-group">
                             <label className="form-label" htmlFor="name">
                                 Nombre del Rol
                             </label>
                             <input
-                                className="form-input createEdit-input"
+                                className="form-input createEditRole-input"
                                 type="text"
                                 id="name"
                                 value={name}
@@ -175,7 +172,7 @@ export default function Edit({ id }) {
                             />
                         </div>
                         {/* NOMBRE DESCRIPTIVO */}
-                        <div className="form-group createEdit-group">
+                        <div className="form-group createEditRole-group">
                             <label
                                 className="form-label"
                                 htmlFor="nameDescriptive"
@@ -183,7 +180,7 @@ export default function Edit({ id }) {
                                 Nombre Descriptivo del Rol
                             </label>
                             <input
-                                className="form-input createEdit-input"
+                                className="form-input createEditRole-input"
                                 type="text"
                                 id="nameDescriptive"
                                 value={nameDescriptive}
@@ -193,12 +190,12 @@ export default function Edit({ id }) {
                             />
                         </div>
                         {/* DESCRIPCIÓN DEL ROL */}
-                        <div className="form-group createEdit-group">
+                        <div className="form-group createEditRole-group">
                             <label className="form-label" htmlFor="description">
                                 Descripción del Rol
                             </label>
                             <textarea
-                                className="form-input createEdit-input"
+                                className="form-input createEditRole-input"
                                 id="description"
                                 value={description}
                                 onChange={(e) => setDescription(e.target.value)}
@@ -206,12 +203,15 @@ export default function Edit({ id }) {
                         </div>
                     </div>
 
-                    <div className="createEdit-typeRole">
-                        <label className="createEdit-type-label" htmlFor="type">
+                    <div className="createEditRole-typeRole">
+                        <label
+                            className="createEditRole-type-label"
+                            htmlFor="type"
+                        >
                             Tipo de Acciones
                         </label>
                         <select
-                            className="createEdit-type-select"
+                            className="createEditRole-type-select"
                             id="type"
                             value={selectedType}
                             onChange={handleTypeChange}
@@ -231,18 +231,18 @@ export default function Edit({ id }) {
                         </select>
                     </div>
                     {actions.length === 0 ? (
-                        <div className="createEdit-spinner">
+                        <div className="createEditRole-spinner">
                             <Spinner />
                         </div>
                     ) : (
-                        <div className="createEdit-actions">
+                        <div className="createEditRole-actions">
                             {filteredActions.map((action) => (
                                 <div
                                     key={action._id}
-                                    className="createEdit-action"
+                                    className="createEditRole-action"
                                 >
                                     <input
-                                        className="createEdit-checkbox"
+                                        className="createEditRole-checkbox"
                                         type="checkbox"
                                         id={action._id}
                                         name={action.name}
@@ -258,7 +258,7 @@ export default function Edit({ id }) {
                                         }
                                     />
                                     <label
-                                        className="createEdit-description"
+                                        className="createEditRole-description"
                                         htmlFor={action._id}
                                     >
                                         {action.description}
@@ -268,7 +268,7 @@ export default function Edit({ id }) {
                         </div>
                     )}
 
-                    <button className="createEdit-button button">
+                    <button className="createEditRole-button button">
                         Editar rol
                     </button>
                 </form>

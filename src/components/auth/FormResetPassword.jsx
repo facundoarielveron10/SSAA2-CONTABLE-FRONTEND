@@ -13,6 +13,9 @@ import { IoIosArrowForward } from "react-icons/io";
 // UTILS
 import { errorResponse } from "../../utils/error";
 
+// COMPONENTS
+import Alert from "../Alert";
+
 export default function FormResetPassword() {
     // STATES
     const [email, setEmail] = useState("");
@@ -53,13 +56,8 @@ export default function FormResetPassword() {
 
     return (
         <>
-            <div className="alert-container">
-                {error ? <p className="alert alert-error">{error}</p> : null}
-                {success ? (
-                    <p className="alert alert-success">{success}</p>
-                ) : null}
-            </div>
-
+            {error ? <Alert message={error} type="error" /> : null}
+            {success ? <Alert message={success} type="success" /> : null}
             <form className="form" onSubmit={handleSubmit}>
                 {/* EMAIL */}
                 <div className="form-group">
