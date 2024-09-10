@@ -19,15 +19,23 @@ import Spinner from "../Spinner";
 import Table from "./Table";
 import Alert from "../Alert";
 
+// ZUSTAND
+import { useLoginStore } from "../../zustand/loginStore";
+
 export default function Users() {
     // STATES
     const [users, setUsers] = useState([]);
+    const [userDelete, setUserDelete] = useState({});
     const [roles, setRoles] = useState([]);
-    const [open, setOpen] = useState(false);
+    const [openChangeModal, setOpenChangeModal] = useState(false);
+    const [openDeleteModal, setOpenDeleteModal] = useState(false);
     const [changeRole, setChangeRole] = useState({});
     const [newRole, setNewRole] = useState("");
     const [error, setError] = useState("");
     const [success, setSuccess] = useState("");
+
+    // ZUSTAND
+    const { user, logout } = useLoginStore();
 
     // EFFECTS
     useEffect(() => {
@@ -65,13 +73,23 @@ export default function Users() {
     const onOpenChangeRoleModal = (user) => {
         setChangeRole(user);
         setNewRole("");
-        setOpen(true);
+        setOpenChangeModal(true);
     };
 
     const onCloseChangeRoleModal = () => {
         setChangeRole({});
         setNewRole("");
-        setOpen(false);
+        setOpenChangeModal(false);
+    };
+
+    const onOpenDeleteUserModal = (user) => {
+        setOpenDeleteModal(true);
+        setUserDelete(user);
+    };
+
+    const onCloseDeleteUserModal = () => {
+        setOpenDeleteModal(false);
+        setUserDelete({});
     };
 
     const handleChangeRole = async (e) => {
@@ -92,6 +110,30 @@ export default function Users() {
             }, 5000);
 
             await getUsers();
+        } catch (error) {
+            setError(errorResponse(error));
+            setTimeout(() => {
+                setError("");
+            }, 5000);
+        }
+    };
+
+    const handleDeleteUser = async () => {
+        try {
+            const { data } = await clientAxios.post("/user/delete-user", {
+                idUser: userDelete._id,
+            });
+
+            setSuccess(data);
+            onCloseDeleteUserModal();
+
+            if (userDelete._id === user.id) {
+                logout();
+            }
+
+            setTimeout(() => {
+                setSuccess("");
+            }, 5000);
         } catch (error) {
             setError(errorResponse(error));
             setTimeout(() => {
@@ -124,6 +166,7 @@ export default function Users() {
                                 rolName={rol.name}
                                 users={users}
                                 onOpenChangeRoleModal={onOpenChangeRoleModal}
+                                onOpenDeleteUserModal={onOpenDeleteUserModal}
                             />
                         ))}
                     </div>
@@ -131,7 +174,7 @@ export default function Users() {
             </div>
             <div>
                 <Modal
-                    open={open}
+                    open={openChangeModal}
                     onClose={onCloseChangeRoleModal}
                     center
                     classNames={{
@@ -182,6 +225,42 @@ export default function Users() {
                             className="listUser-modal-button button"
                         >
                             Cambiar
+                        </button>
+                    </form>
+                </Modal>
+            </div>
+            <div>
+                <Modal
+                    open={openDeleteModal}
+                    onClose={onCloseDeleteUserModal}
+                    center
+                    classNames={{
+                        overlay: "customOverlay",
+                        modal: "customModal",
+                        closeIcon: "customCloseIcon",
+                    }}
+                >
+                    <form onSubmit={handleDeleteUser}>
+                        <h2 className="listUser-modal-title">
+                            ¿Estas seguro de eliminar el Usuario?
+                        </h2>
+                        <div className="listUser-modal-user">
+                            <p>
+                                Nombre: <span>{userDelete.name}</span>
+                            </p>
+                            <p>
+                                Apellido: <span>{userDelete.lastname}</span>
+                            </p>
+                            <p>
+                                Email: <span>{userDelete.email}</span>
+                            </p>
+                        </div>
+
+                        <button
+                            type="submit"
+                            className="button listUser-delete listUser-modal-button"
+                        >
+                            Eliminar Usuario
                         </button>
                     </form>
                 </Modal>

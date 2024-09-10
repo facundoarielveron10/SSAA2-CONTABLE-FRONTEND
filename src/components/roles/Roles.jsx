@@ -71,13 +71,16 @@ export default function Roles() {
             );
 
             setSuccess(data);
+            onCloseDeleteRoleModal();
 
             if (roleDelete.name === user.role.name) {
                 logout();
             }
 
-            setRoleDelete({});
             window.location.reload();
+            setTimeout(() => {
+                setSuccess("");
+            }, 5000);
         } catch (error) {
             setError(errorResponse(error));
             setRoleDelete({});

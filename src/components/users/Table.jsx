@@ -9,6 +9,7 @@ export default function Table({
     rolName,
     users,
     onOpenChangeRoleModal,
+    onOpenDeleteUserModal,
 }) {
     // ZUSTAND
     const { canExecute } = useLoginStore();
@@ -23,7 +24,7 @@ export default function Table({
                         <th>Apellido</th>
                         <th>Email</th>
                         <th>Rol</th>
-                        <th>Acciones</th>
+                        <th className="listUser-head-actions">Acciones</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -57,7 +58,12 @@ export default function Table({
                                             </a>
                                         ) : null}
                                         {canExecute("DELETE_USER") ? (
-                                            <button className="listUser-button-table listUser-delete button">
+                                            <button
+                                                onClick={() =>
+                                                    onOpenDeleteUserModal(user)
+                                                }
+                                                className="listUser-button-table listUser-delete button"
+                                            >
                                                 Eliminar
                                             </button>
                                         ) : null}
