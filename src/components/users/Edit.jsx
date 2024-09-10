@@ -14,7 +14,10 @@ import clientAxios from "../../config/ClientAxios";
 // COMPONENTS
 import Alert from "../Alert.jsx";
 
-export default function Create() {
+// ZUSTAND
+import { useLoginStore } from "../../zustand/loginStore.js";
+
+export default function Edit({ id }) {
     // STATES
     const [name, setName] = useState("");
     const [lastname, setLastname] = useState("");
@@ -26,11 +29,11 @@ export default function Create() {
     const [success, setSuccess] = useState("");
     const [roles, setRoles] = useState([]);
 
+    // ZUSTAND
+    const { user, logout } = useLoginStore();
+
     // FUNCTIONS
     const resetValues = () => {
-        setName("");
-        setLastname("");
-        setEmail("");
         setPassword("");
         setPasswordConfirm("");
     };
@@ -38,11 +41,7 @@ export default function Create() {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        if (
-            [name, lastname, email, password, passwordConfirm, role].includes(
-                ""
-            )
-        ) {
+        if ([name, lastname, email, role].includes("")) {
             setError("Todos los campos son obligatorios");
 
             setTimeout(() => {
@@ -52,7 +51,8 @@ export default function Create() {
         }
 
         try {
-            const { data } = await clientAxios.post("/user/create-user", {
+            const { data } = await clientAxios.post("/user/edit-user", {
+                idUser: id,
                 name,
                 lastname,
                 email,
@@ -63,6 +63,10 @@ export default function Create() {
 
             setSuccess(data);
             resetValues();
+
+            if (id === user?.id) {
+                logout();
+            }
 
             setTimeout(() => {
                 setSuccess("");
@@ -88,9 +92,26 @@ export default function Create() {
         }
     };
 
+    const getUser = async () => {
+        try {
+            const { data } = await clientAxios.get(`/user/user/${id}`);
+
+            setName(data?.name);
+            setLastname(data?.lastname);
+            setEmail(data?.email);
+            setRole(data?.role.name);
+        } catch (error) {
+            setError(errorResponse(error));
+            setTimeout(() => {
+                setError("");
+            }, 5000);
+        }
+    };
+
     // EFFECTS
     useEffect(() => {
         getRoles();
+        getUser();
     }, []);
 
     return (
@@ -98,11 +119,11 @@ export default function Create() {
             {error ? <Alert message={error} type={"error"} /> : null}
             {success ? <Alert message={success} type={"success"} /> : null}
             <div className="createEditUser">
-                <h1 className="title">Creacion de Usuario</h1>
+                <h1 className="title">Edicion de Usuario</h1>
                 <p className="paragraph">
-                    Completa el siguiente formulario para crear un nuevo
-                    usuario, donde deberas colocar el nombre, apellido, email,
-                    contraseña y el rol del nuevo usuario.
+                    Cambia los datos del siguiente formulario para editar el
+                    usuario, donde podemos cambiar los datos de nombre,
+                    apellido, email, contraseña y rol del usuario.
                 </p>
 
                 <form className="form" onSubmit={handleSubmit}>
@@ -206,7 +227,7 @@ export default function Create() {
                         className="createEditUser-button form-submit button"
                         type="submit"
                     >
-                        Crear usuario
+                        Editar usuario
                     </button>
                 </form>
             </div>

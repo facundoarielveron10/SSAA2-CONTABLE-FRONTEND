@@ -74,7 +74,22 @@
 
 .listUser-actions {
     display: flex;
-    flex-direction: column;
+    justify-content: flex-end;
+    align-items: flex-end;
+    gap: 0.5rem;
+}
+
+.listUser-button-table {
+    text-decoration: none;
+    font-size: 0.9rem;
+}
+
+.listUser-delete {
+    background-color: var(--colorDelete);
+}
+
+.listUser-delete:hover {
+    background-color: var(--colorDeleteDark);
 }
 
 .listUser-actions button {

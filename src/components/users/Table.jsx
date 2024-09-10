@@ -1,10 +1,10 @@
 // CSS
-import "../../css/users/list.css";
+import "../../css/users/users.css";
 
 // ZUSTAND
 import { useLoginStore } from "../../zustand/loginStore";
 
-export default function TableUser({
+export default function Table({
     title,
     rolName,
     users,
@@ -48,6 +48,19 @@ export default function TableUser({
                                         ) : (
                                             "-"
                                         )}
+                                        {canExecute("EDIT_USER") ? (
+                                            <a
+                                                href={`edit-user/${user._id}`}
+                                                className="listUser-button-table button"
+                                            >
+                                                Editar
+                                            </a>
+                                        ) : null}
+                                        {canExecute("DELETE_USER") ? (
+                                            <button className="listUser-button-table listUser-delete button">
+                                                Eliminar
+                                            </button>
+                                        ) : null}
                                     </td>
                                 </tr>
                             );

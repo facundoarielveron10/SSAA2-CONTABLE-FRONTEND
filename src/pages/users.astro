@@ -4,7 +4,7 @@ import { isLoggedIn } from '../utils/verifyAuth';
 
 // COMPONENTS
 import Layout from '../layouts/Layout.astro';
-import ListUser from '../components/users/ListUser.jsx';
+import ListUsers from '../components/users/Users.jsx';
 import LayoutAuth from '../layouts/LayoutAuth';
 
 // REDIRECT
@@ -16,6 +16,6 @@ if (!isLoggedIn(token)) {
 
 <Layout title="Usuarios - SSAA2">
 	<LayoutAuth client:only="react" page="users">
-		<ListUser client:only="react"/>
+		<ListUsers client:only="react"/>
 	</LayoutAuth>
 </Layout>

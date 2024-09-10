@@ -1,5 +1,5 @@
 // CSS
-import "../../css/users/list.css";
+import "../../css/users/users.css";
 import "react-responsive-modal/styles.css";
 
 // REACT
@@ -16,10 +16,10 @@ import { errorResponse } from "../../utils/error";
 
 // COMPONENTS
 import Spinner from "../Spinner";
-import TableUser from "./TableUser";
+import Table from "./Table";
 import Alert from "../Alert";
 
-export default function ListUser() {
+export default function Users() {
     // STATES
     const [users, setUsers] = useState([]);
     const [roles, setRoles] = useState([]);
@@ -118,7 +118,7 @@ export default function ListUser() {
                 ) : (
                     <div className="listUser-users">
                         {roles.map((rol) => (
-                            <TableUser
+                            <Table
                                 key={rol._id}
                                 title={rol.nameDescriptive}
                                 rolName={rol.name}
