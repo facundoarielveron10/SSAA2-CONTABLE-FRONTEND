@@ -25,14 +25,17 @@ import { useLoginStore } from "../../zustand/loginStore";
 export default function Users() {
     // STATES
     const [users, setUsers] = useState([]);
+    const [filteredUsers, setFilteredUsers] = useState([]);
     const [userDelete, setUserDelete] = useState({});
     const [roles, setRoles] = useState([]);
+    const [selectedRole, setSelectedRole] = useState("");
     const [openChangeModal, setOpenChangeModal] = useState(false);
     const [openDeleteModal, setOpenDeleteModal] = useState(false);
     const [changeRole, setChangeRole] = useState({});
     const [newRole, setNewRole] = useState("");
     const [error, setError] = useState("");
     const [success, setSuccess] = useState("");
+    const [loading, setLoading] = useState(false);
 
     // ZUSTAND
     const { user, logout } = useLoginStore();
@@ -43,31 +46,51 @@ export default function Users() {
         getRoles();
     }, []);
 
+    useEffect(() => {
+        if (selectedRole) {
+            const filtered = users.filter(
+                (user) => user.role.name === selectedRole
+            );
+            setFilteredUsers(filtered);
+        } else {
+            setFilteredUsers(users);
+        }
+    }, [selectedRole, users]);
+
     // FUNCTIONS
     const getUsers = async () => {
+        setLoading(true);
         try {
             const { data } = await clientAxios.get("/user/users");
-
             setUsers(data);
+            setFilteredUsers(data);
         } catch (error) {
             setError(errorResponse(error));
             setTimeout(() => {
                 setError("");
             }, 5000);
+        } finally {
+            setLoading(false);
         }
     };
 
     const getRoles = async () => {
+        setLoading(true);
         try {
             const { data } = await clientAxios.get("/role-action/roles");
-
             setRoles(data);
         } catch (error) {
             setError(errorResponse(error));
             setTimeout(() => {
                 setError("");
             }, 5000);
+        } finally {
+            setLoading(false);
         }
+    };
+
+    const handleRoleChange = (e) => {
+        setSelectedRole(e.target.value);
     };
 
     const onOpenChangeRoleModal = (user) => {
@@ -149,26 +172,25 @@ export default function Users() {
             <div className="listUser">
                 <h1 className="title">Listado de usuarios</h1>
                 <p className="paragraph">
-                    En este listado se pueden ver todos lo usuarios registrados
-                    en el sistema, donde tambien se puede cambiarle los roles a
-                    los mismos
+                    En este listado se pueden ver todos los usuarios registrados
+                    en el sistema, donde también se puede cambiarle los roles a
+                    los mismos.
                 </p>
-                {users.length === 0 || roles.length === 0 ? (
+
+                {loading ? (
                     <div className="listUser-spinner">
                         <Spinner />
                     </div>
                 ) : (
                     <div className="listUser-users">
-                        {roles.map((rol) => (
-                            <Table
-                                key={rol._id}
-                                title={rol.nameDescriptive}
-                                rolName={rol.name}
-                                users={users}
-                                onOpenChangeRoleModal={onOpenChangeRoleModal}
-                                onOpenDeleteUserModal={onOpenDeleteUserModal}
-                            />
-                        ))}
+                        <Table
+                            users={filteredUsers}
+                            onOpenChangeRoleModal={onOpenChangeRoleModal}
+                            onOpenDeleteUserModal={onOpenDeleteUserModal}
+                            handleRoleChange={handleRoleChange}
+                            selectedRole={selectedRole}
+                            roles={roles}
+                        />
                     </div>
                 )}
             </div>
@@ -242,7 +264,7 @@ export default function Users() {
                 >
                     <form onSubmit={handleDeleteUser}>
                         <h2 className="listUser-modal-title">
-                            ¿Estas seguro de eliminar el Usuario?
+                            ¿Estás seguro de eliminar el Usuario?
                         </h2>
                         <div className="listUser-modal-user">
                             <p>

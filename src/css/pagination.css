@@ -7,6 +7,7 @@
 }
 
 .pagination-page {
+    color: var(--textColor);
     font-weight: bold;
     text-transform: uppercase;
 }

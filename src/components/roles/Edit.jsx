@@ -25,6 +25,7 @@ export default function Edit({ id }) {
     const [actions, setActions] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
     const [totalPages, setTotalPages] = useState(1);
+    const [limit] = useState(5);
     const [error, setError] = useState("");
     const [success, setSuccess] = useState("");
     const [name, setName] = useState("");
@@ -74,7 +75,7 @@ export default function Edit({ id }) {
         setLoading(true);
         try {
             const { data } = await clientAxios.get(
-                `/role-action/actions?page=${currentPage}&limit=5&type=${selectedType}`
+                `/role-action/actions?page=${currentPage}&limit=${limit}&type=${selectedType}`
             );
             setActions(data.actions);
             setTotalPages(data.totalPages);
