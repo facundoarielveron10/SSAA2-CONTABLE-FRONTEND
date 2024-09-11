@@ -18,6 +18,7 @@ import { errorResponse } from "../../utils/error";
 import Spinner from "../Spinner";
 import Table from "./Table";
 import Alert from "../Alert";
+import Pagination from "../Pagination";
 
 // ZUSTAND
 import { useLoginStore } from "../../zustand/loginStore";
@@ -36,15 +37,21 @@ export default function Users() {
     const [error, setError] = useState("");
     const [success, setSuccess] = useState("");
     const [loading, setLoading] = useState(false);
+    const [currentPage, setCurrentPage] = useState(1);
+    const [totalPages, setTotalPages] = useState(1);
+    const [limit] = useState(10);
 
     // ZUSTAND
     const { user, logout } = useLoginStore();
 
     // EFFECTS
     useEffect(() => {
-        getUsers();
         getRoles();
     }, []);
+
+    useEffect(() => {
+        getUsers(currentPage, selectedRole);
+    }, [currentPage, selectedRole]);
 
     useEffect(() => {
         if (selectedRole) {
@@ -58,12 +65,15 @@ export default function Users() {
     }, [selectedRole, users]);
 
     // FUNCTIONS
-    const getUsers = async () => {
+    const getUsers = async (page = 1, role = "") => {
         setLoading(true);
         try {
-            const { data } = await clientAxios.get("/user/users");
-            setUsers(data);
-            setFilteredUsers(data);
+            const { data } = await clientAxios.get(
+                `/user/users?page=${page}&limit=${limit}&role=${role}`
+            );
+            setUsers(data.users);
+            setFilteredUsers(data.users);
+            setTotalPages(Math.ceil(data.totalUsers / limit));
         } catch (error) {
             setError(errorResponse(error));
             setTimeout(() => {
@@ -90,7 +100,25 @@ export default function Users() {
     };
 
     const handleRoleChange = (e) => {
-        setSelectedRole(e.target.value);
+        const role = e.target.value;
+        setSelectedRole(role);
+        setCurrentPage(1);
+    };
+
+    const handleNextPage = () => {
+        if (currentPage < totalPages) {
+            const nextPage = currentPage + 1;
+            setCurrentPage(nextPage);
+            getUsers(nextPage);
+        }
+    };
+
+    const handlePreviousPage = () => {
+        if (currentPage > 1) {
+            const previousPage = currentPage - 1;
+            setCurrentPage(previousPage);
+            getUsers(previousPage);
+        }
     };
 
     const onOpenChangeRoleModal = (user) => {
@@ -190,6 +218,13 @@ export default function Users() {
                             handleRoleChange={handleRoleChange}
                             selectedRole={selectedRole}
                             roles={roles}
+                        />
+
+                        <Pagination
+                            handleNextPage={handleNextPage}
+                            handlePreviousPage={handlePreviousPage}
+                            currentPage={currentPage}
+                            totalPages={totalPages}
                         />
                     </div>
                 )}
