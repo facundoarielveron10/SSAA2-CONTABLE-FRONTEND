@@ -219,13 +219,14 @@ export default function Users() {
                             selectedRole={selectedRole}
                             roles={roles}
                         />
-
-                        <Pagination
-                            handleNextPage={handleNextPage}
-                            handlePreviousPage={handlePreviousPage}
-                            currentPage={currentPage}
-                            totalPages={totalPages}
-                        />
+                        {filteredUsers.length > 0 ? (
+                            <Pagination
+                                handleNextPage={handleNextPage}
+                                handlePreviousPage={handlePreviousPage}
+                                currentPage={currentPage}
+                                totalPages={totalPages}
+                            />
+                        ) : null}
                     </div>
                 )}
             </div>
