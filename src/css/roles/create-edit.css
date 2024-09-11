@@ -9,6 +9,10 @@
     color: var(--textColor);
 }
 
+.createEditRole-form {
+    width: 600px;
+}
+
 .createEditRole-group,
 .form-input.createEditRole-input {
     width: 100%;

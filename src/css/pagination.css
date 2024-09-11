@@ -1,0 +1,20 @@
+.pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+    margin: 1rem 0;
+}
+
+.pagination-page {
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+.pagination-disabled {
+    background-color: #636363;
+}
+
+.pagination-disabled:hover {
+    background-color: #424242;
+}

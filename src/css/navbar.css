@@ -69,7 +69,7 @@
 
 .navbarMobile-overlay {
     position: fixed;
-    background: var(--primaryColor);
+    background: var(--backgroundColorDark);
     top: 0;
     left: 0;
     width: 100%;

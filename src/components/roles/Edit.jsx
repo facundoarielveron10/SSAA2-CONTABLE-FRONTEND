@@ -9,8 +9,10 @@ import { useEffect, useState } from "react";
 import { errorResponse } from "../../utils/error";
 
 // COMPONENTS
-import Spinner from "../Spinner";
-import Alert from "../Alert";
+import Spinner from "../Spinner.jsx";
+import Alert from "../Alert.jsx";
+import Action from "./Action.jsx";
+import Pagination from "../Pagination.jsx";
 
 // AXIOS
 import clientAxios from "../../config/ClientAxios";
@@ -21,7 +23,8 @@ import { useLoginStore } from "../../zustand/loginStore";
 export default function Edit({ id }) {
     // STATES
     const [actions, setActions] = useState([]);
-    const [filteredActions, setFilteredActions] = useState([]);
+    const [currentPage, setCurrentPage] = useState(1);
+    const [totalPages, setTotalPages] = useState(1);
     const [error, setError] = useState("");
     const [success, setSuccess] = useState("");
     const [name, setName] = useState("");
@@ -29,6 +32,7 @@ export default function Edit({ id }) {
     const [description, setDescription] = useState("");
     const [selectedType, setSelectedType] = useState("");
     const [selectedActions, setSelectedActions] = useState([]);
+    const [loading, setLoading] = useState(false);
 
     // ZUSTAND
     const { editActions } = useLoginStore();
@@ -36,6 +40,9 @@ export default function Edit({ id }) {
     // EFFECTS
     useEffect(() => {
         getActions();
+    }, [currentPage, selectedType]);
+
+    useEffect(() => {
         getRoleActions();
     }, []);
 
@@ -64,37 +71,38 @@ export default function Edit({ id }) {
     };
 
     const getActions = async () => {
+        setLoading(true);
         try {
-            const { data } = await clientAxios.get("/role-action/actions");
-            setActions(data);
-            setFilteredActions(data);
+            const { data } = await clientAxios.get(
+                `/role-action/actions?page=${currentPage}&limit=5&type=${selectedType}`
+            );
+            setActions(data.actions);
+            setTotalPages(data.totalPages);
         } catch (error) {
             setError(errorResponse(error));
             setTimeout(() => {
                 setError("");
             }, 5000);
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    const handleNextPage = () => {
+        if (currentPage < totalPages) {
+            setCurrentPage(currentPage + 1);
+        }
+    };
+
+    const handlePreviousPage = () => {
+        if (currentPage > 1) {
+            setCurrentPage(currentPage - 1);
         }
     };
 
     const handleTypeChange = (e) => {
-        const selected = e.target.value;
-        setSelectedType(selected);
-        if (selected) {
-            setFilteredActions(
-                actions.filter((action) => action.type === selected)
-            );
-        } else {
-            setFilteredActions(actions);
-        }
-    };
-
-    const handleChecked = (action) => {
-        if (selectedActions.includes(action)) {
-            const updatedActions = selectedActions.filter((a) => a !== action);
-            setSelectedActions(updatedActions);
-        } else {
-            setSelectedActions([...selectedActions, action]);
-        }
+        setSelectedType(e.target.value);
+        setCurrentPage(1);
     };
 
     const handleSubmit = async (e) => {
@@ -145,7 +153,7 @@ export default function Edit({ id }) {
                     que podrá hacer este rol.
                 </p>
 
-                <form onSubmit={handleSubmit}>
+                <form className="createEditRole-form" onSubmit={handleSubmit}>
                     <div className="form">
                         {/* NOMBRE */}
                         <div className="form-group createEditRole-group">
@@ -216,58 +224,34 @@ export default function Edit({ id }) {
                             value={selectedType}
                             onChange={handleTypeChange}
                         >
-                            <option disabled={true} defaultChecked value="">
+                            <option defaultChecked value="">
                                 Todos los tipos
                             </option>
-                            {[
-                                ...new Set(
-                                    actions.map((action) => action.type)
-                                ),
-                            ].map((type) => (
-                                <option key={type} value={type}>
-                                    {type}
-                                </option>
-                            ))}
+                            <option value="Usuarios">Usuarios</option>
+                            <option value="Roles">Roles</option>
                         </select>
                     </div>
-                    {actions.length === 0 ? (
+                    {actions.length === 0 || loading ? (
                         <div className="createEditRole-spinner">
                             <Spinner />
                         </div>
                     ) : (
                         <div className="createEditRole-actions">
-                            {filteredActions.map((action) => (
-                                <div
-                                    key={action._id}
-                                    className="createEditRole-action"
-                                >
-                                    <input
-                                        className="createEditRole-checkbox"
-                                        type="checkbox"
-                                        id={action._id}
-                                        name={action.name}
-                                        checked={
-                                            selectedActions.includes(
-                                                action.name
-                                            )
-                                                ? true
-                                                : false
-                                        }
-                                        onChange={(e) =>
-                                            handleChecked(e.target.name)
-                                        }
-                                    />
-                                    <label
-                                        className="createEditRole-description"
-                                        htmlFor={action._id}
-                                    >
-                                        {action.description}
-                                    </label>
-                                </div>
+                            {actions.map((action) => (
+                                <Action
+                                    action={action}
+                                    selectedActions={selectedActions}
+                                    setSelectedActions={setSelectedActions}
+                                />
                             ))}
                         </div>
                     )}
-
+                    <Pagination
+                        handleNextPage={handleNextPage}
+                        handlePreviousPage={handlePreviousPage}
+                        currentPage={currentPage}
+                        totalPages={totalPages}
+                    />
                     <button className="createEditRole-button button">
                         Editar rol
                     </button>
