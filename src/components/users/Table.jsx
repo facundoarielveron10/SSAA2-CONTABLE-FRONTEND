@@ -3,6 +3,7 @@ import "../../css/users/users.css";
 
 // ZUSTAND
 import { useLoginStore } from "../../zustand/loginStore";
+import Search from "../Search";
 
 export default function Table({
     users,

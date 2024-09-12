@@ -18,6 +18,7 @@ import { errorResponse } from "../../utils/error";
 import Spinner from "../Spinner";
 import Table from "./Table";
 import Pagination from "../Pagination";
+import Search from "../Search";
 
 // ALERTS
 import toast from "react-hot-toast";
@@ -41,6 +42,7 @@ export default function Users() {
     const [currentPage, setCurrentPage] = useState(1);
     const [totalPages, setTotalPages] = useState(1);
     const [limit] = useState(10);
+    const [search, setSearch] = useState("");
 
     // ZUSTAND
     const { user, logout } = useLoginStore();
@@ -189,6 +191,26 @@ export default function Users() {
         }
     };
 
+    const handleSearch = async (page = 1, role = "") => {
+        setLoading(true);
+        try {
+            const { data } = await clientAxios.post(
+                `/user/search-users?page=${page}&limit=${limit}&role=${role}`,
+                {
+                    search,
+                }
+            );
+            setUsers(data.users);
+            setFilteredUsers(data.users);
+            setTotalPages(Math.ceil(data.totalUsers / limit));
+        } catch (error) {
+            toast.error(errorResponse(error));
+        } finally {
+            setLoading(false);
+            setSearch("");
+        }
+    };
+
     return (
         <>
             <Alert />
@@ -206,6 +228,12 @@ export default function Users() {
                     </div>
                 ) : (
                     <div className="listUser-users">
+                        <Search
+                            handleSearch={handleSearch}
+                            handleClean={getUsers}
+                            search={search}
+                            setSearch={setSearch}
+                        />
                         <Table
                             users={filteredUsers}
                             onOpenChangeRoleModal={onOpenChangeRoleModal}
