@@ -98,14 +98,18 @@ export default function Table({
                                         </div>
                                     ) : (
                                         <div className="listUser-actions">
-                                            <button
-                                                className="listUser-button-table button"
-                                                onClick={() =>
-                                                    handleActive(user._id)
-                                                }
-                                            >
-                                                Activar
-                                            </button>
+                                            {canExecute("ACTIVE_USER") ? (
+                                                <button
+                                                    className="listUser-button-table button"
+                                                    onClick={() =>
+                                                        handleActive(user._id)
+                                                    }
+                                                >
+                                                    Activar
+                                                </button>
+                                            ) : (
+                                                "-"
+                                            )}
                                         </div>
                                     )}
                                 </td>

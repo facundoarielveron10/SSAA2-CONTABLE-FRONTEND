@@ -27,6 +27,7 @@ export default function Pagination({
     return (
         <div className="pagination">
             <button
+                type="button"
                 className={`button ${
                     isDisabledPrevious() ? "pagination-disabled" : ""
                 }`}
@@ -39,6 +40,7 @@ export default function Pagination({
                 {currentPage} de {totalPages}
             </span>
             <button
+                type="button"
                 className={`button ${
                     isDisabledNext() ? "pagination-disabled" : ""
                 }`}

@@ -253,7 +253,10 @@ export default function Edit({ id }) {
                         currentPage={currentPage}
                         totalPages={totalPages}
                     />
-                    <button className="createEditRole-button button">
+                    <button
+                        type="submit"
+                        className="createEditRole-button button"
+                    >
                         Editar rol
                     </button>
                 </form>
