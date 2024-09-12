@@ -105,19 +105,19 @@ export default function Users() {
         setCurrentPage(1);
     };
 
-    const handleNextPage = () => {
+    const handleNextPage = async () => {
         if (currentPage < totalPages) {
             const nextPage = currentPage + 1;
             setCurrentPage(nextPage);
-            getUsers(nextPage);
+            await getUsers(nextPage);
         }
     };
 
-    const handlePreviousPage = () => {
+    const handlePreviousPage = async () => {
         if (currentPage > 1) {
             const previousPage = currentPage - 1;
             setCurrentPage(previousPage);
-            getUsers(previousPage);
+            await getUsers(previousPage);
         }
     };
 
@@ -160,7 +160,28 @@ export default function Users() {
                 setSuccess("");
             }, 5000);
 
-            await getUsers();
+            await getUsers(currentPage, selectedRole);
+        } catch (error) {
+            setError(errorResponse(error));
+            setTimeout(() => {
+                setError("");
+            }, 5000);
+        }
+    };
+
+    const handleActive = async (id) => {
+        try {
+            const { data } = await clientAxios.post("/user/active-user", {
+                idUser: id,
+            });
+
+            setSuccess(data);
+
+            setTimeout(() => {
+                setSuccess("");
+            }, 5000);
+
+            await getUsers(currentPage, selectedRole);
         } catch (error) {
             setError(errorResponse(error));
             setTimeout(() => {
@@ -216,6 +237,7 @@ export default function Users() {
                             onOpenChangeRoleModal={onOpenChangeRoleModal}
                             onOpenDeleteUserModal={onOpenDeleteUserModal}
                             handleRoleChange={handleRoleChange}
+                            handleActive={handleActive}
                             selectedRole={selectedRole}
                             roles={roles}
                         />

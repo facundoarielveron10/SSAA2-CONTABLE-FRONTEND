@@ -71,19 +71,38 @@ export default function Roles() {
             );
 
             setSuccess(data);
-            onCloseDeleteRoleModal();
-
             if (roleDelete.name === user.role.name) {
                 logout();
             }
 
             window.location.reload();
-            setTimeout(() => {
-                setSuccess("");
-            }, 5000);
         } catch (error) {
             setError(errorResponse(error));
             setRoleDelete({});
+            setTimeout(() => {
+                setError("");
+            }, 5000);
+        }
+    };
+
+    const handleActive = async (id) => {
+        try {
+            const { data } = await clientAxios.post(
+                "/role-action/active-role",
+                {
+                    idRole: id,
+                }
+            );
+
+            setSuccess(data);
+
+            setTimeout(() => {
+                setSuccess("");
+            }, 5000);
+
+            await getRoles();
+        } catch (error) {
+            setError(errorResponse(error));
             setTimeout(() => {
                 setError("");
             }, 5000);
@@ -122,36 +141,55 @@ export default function Roles() {
                                             <td>{rol.name}</td>
                                             <td>{rol.description}</td>
                                             <td>
-                                                <div className="roles-buttons">
-                                                    {canExecute("EDIT_ROLE") ? (
-                                                        <a
-                                                            href={`edit-role/${rol._id}`}
-                                                            className="roles-button-table roles-edit button"
-                                                        >
-                                                            Editar
-                                                        </a>
-                                                    ) : (
-                                                        "-"
-                                                    )}
-                                                    {canExecute(
-                                                        "DELETE_ROLE"
-                                                    ) &&
-                                                    rol.name !== "ROLE_ADMIN" &&
-                                                    rol.name !== "ROLE_USER" ? (
+                                                {rol.active ? (
+                                                    <div className="roles-buttons">
+                                                        {canExecute(
+                                                            "EDIT_ROLE"
+                                                        ) ? (
+                                                            <a
+                                                                href={`edit-role/${rol._id}`}
+                                                                className="roles-button-table roles-edit button"
+                                                            >
+                                                                Editar
+                                                            </a>
+                                                        ) : (
+                                                            "-"
+                                                        )}
+                                                        {canExecute(
+                                                            "DELETE_ROLE"
+                                                        ) &&
+                                                        rol.name !==
+                                                            "ROLE_ADMIN" &&
+                                                        rol.name !==
+                                                            "ROLE_USER" ? (
+                                                            <button
+                                                                onClick={() =>
+                                                                    onOpenDeleteRoleModal(
+                                                                        rol
+                                                                    )
+                                                                }
+                                                                className="roles-button-table roles-delete button"
+                                                            >
+                                                                Eliminar
+                                                            </button>
+                                                        ) : (
+                                                            "-"
+                                                        )}
+                                                    </div>
+                                                ) : (
+                                                    <div className="roles-buttons">
                                                         <button
                                                             onClick={() =>
-                                                                onOpenDeleteRoleModal(
-                                                                    rol
+                                                                handleActive(
+                                                                    rol._id
                                                                 )
                                                             }
-                                                            className="roles-button-table roles-delete button"
+                                                            className="roles-button-table button"
                                                         >
-                                                            Eliminar
+                                                            Activar
                                                         </button>
-                                                    ) : (
-                                                        "-"
-                                                    )}
-                                                </div>
+                                                    </div>
+                                                )}
                                             </td>
                                         </tr>
                                     ))}

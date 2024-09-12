@@ -9,6 +9,7 @@ export default function Table({
     onOpenChangeRoleModal,
     onOpenDeleteUserModal,
     handleRoleChange,
+    handleActive,
     selectedRole,
     roles,
 }) {
@@ -57,37 +58,56 @@ export default function Table({
                                 <td>{user.lastname}</td>
                                 <td>{user.email}</td>
                                 <td>{user.role.nameDescriptive}</td>
-                                <td className="listUser-actions">
-                                    {canExecute("CHANGE_ROLE") ? (
-                                        <button
-                                            className="button"
-                                            onClick={() =>
-                                                onOpenChangeRoleModal(user)
-                                            }
-                                        >
-                                            Cambiar Rol
-                                        </button>
+                                <td>
+                                    {user.active ? (
+                                        <div className="listUser-actions">
+                                            {canExecute("CHANGE_ROLE") ? (
+                                                <button
+                                                    className="button"
+                                                    onClick={() =>
+                                                        onOpenChangeRoleModal(
+                                                            user
+                                                        )
+                                                    }
+                                                >
+                                                    Cambiar Rol
+                                                </button>
+                                            ) : (
+                                                "-"
+                                            )}
+                                            {canExecute("EDIT_USER") ? (
+                                                <a
+                                                    href={`edit-user/${user._id}`}
+                                                    className="listUser-button-table button"
+                                                >
+                                                    Editar
+                                                </a>
+                                            ) : null}
+                                            {canExecute("DELETE_USER") ? (
+                                                <button
+                                                    onClick={() =>
+                                                        onOpenDeleteUserModal(
+                                                            user
+                                                        )
+                                                    }
+                                                    className="listUser-button-table listUser-delete button"
+                                                >
+                                                    Eliminar
+                                                </button>
+                                            ) : null}
+                                        </div>
                                     ) : (
-                                        "-"
+                                        <div className="listUser-actions">
+                                            <button
+                                                className="listUser-button-table button"
+                                                onClick={() =>
+                                                    handleActive(user._id)
+                                                }
+                                            >
+                                                Activar
+                                            </button>
+                                        </div>
                                     )}
-                                    {canExecute("EDIT_USER") ? (
-                                        <a
-                                            href={`edit-user/${user._id}`}
-                                            className="listUser-button-table button"
-                                        >
-                                            Editar
-                                        </a>
-                                    ) : null}
-                                    {canExecute("DELETE_USER") ? (
-                                        <button
-                                            onClick={() =>
-                                                onOpenDeleteUserModal(user)
-                                            }
-                                            className="listUser-button-table listUser-delete button"
-                                        >
-                                            Eliminar
-                                        </button>
-                                    ) : null}
                                 </td>
                             </tr>
                         ))}
