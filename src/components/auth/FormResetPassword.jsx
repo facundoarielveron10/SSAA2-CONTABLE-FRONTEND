@@ -15,12 +15,11 @@ import { errorResponse } from "../../utils/error";
 
 // COMPONENTS
 import Alert from "../Alert";
+import toast from "react-hot-toast";
 
 export default function FormResetPassword() {
     // STATES
     const [email, setEmail] = useState("");
-    const [error, setError] = useState("");
-    const [success, setSuccess] = useState("");
 
     // FUNCTIONS
     const resetValues = () => {
@@ -31,11 +30,7 @@ export default function FormResetPassword() {
         e.preventDefault();
 
         if ([email].includes("")) {
-            setError("Todos los campos son obligatorios");
-
-            setTimeout(() => {
-                setError("");
-            }, 5000);
+            toast.error("Todos los campos son obligatorios");
             return;
         }
 
@@ -45,19 +40,15 @@ export default function FormResetPassword() {
             });
 
             resetValues();
-            setSuccess(data);
+            toast.success(data);
         } catch (error) {
-            setError(errorResponse(error));
-            setTimeout(() => {
-                setError("");
-            }, 5000);
+            toast.error(errorResponse(error));
         }
     };
 
     return (
         <>
-            {error ? <Alert message={error} type="error" /> : null}
-            {success ? <Alert message={success} type="success" /> : null}
+            <Alert />
             <form className="form" onSubmit={handleSubmit}>
                 {/* EMAIL */}
                 <div className="form-group">

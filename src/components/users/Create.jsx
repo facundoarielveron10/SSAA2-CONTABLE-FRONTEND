@@ -11,8 +11,9 @@ import { useEffect, useState } from "react";
 // AXIOS
 import clientAxios from "../../config/ClientAxios";
 
-// COMPONENTS
+// ALERTS
 import Alert from "../Alert.jsx";
+import toast from "react-hot-toast";
 
 export default function Create() {
     // STATES
@@ -22,8 +23,6 @@ export default function Create() {
     const [password, setPassword] = useState("");
     const [passwordConfirm, setPasswordConfirm] = useState("");
     const [role, setRole] = useState("");
-    const [error, setError] = useState("");
-    const [success, setSuccess] = useState("");
     const [roles, setRoles] = useState([]);
 
     // FUNCTIONS
@@ -43,11 +42,7 @@ export default function Create() {
                 ""
             )
         ) {
-            setError("Todos los campos son obligatorios");
-
-            setTimeout(() => {
-                setError("");
-            }, 5000);
+            toast.error("Todos los campos son obligatorios");
             return;
         }
 
@@ -61,17 +56,10 @@ export default function Create() {
                 role,
             });
 
-            setSuccess(data);
+            toast.success(data);
             resetValues();
-
-            setTimeout(() => {
-                setSuccess("");
-            }, 5000);
         } catch (error) {
-            setError(errorResponse(error));
-            setTimeout(() => {
-                setError("");
-            }, 5000);
+            toast.error(errorResponse(error));
         }
     };
 
@@ -81,10 +69,7 @@ export default function Create() {
 
             setRoles(data);
         } catch (error) {
-            setError(errorResponse(error));
-            setTimeout(() => {
-                setError("");
-            }, 5000);
+            toast.error(errorResponse(error));
         }
     };
 
@@ -95,8 +80,7 @@ export default function Create() {
 
     return (
         <>
-            {error ? <Alert message={error} type={"error"} /> : null}
-            {success ? <Alert message={success} type={"success"} /> : null}
+            <Alert />
             <div className="createEditUser">
                 <h1 className="title">Creacion de Usuario</h1>
                 <p className="paragraph">

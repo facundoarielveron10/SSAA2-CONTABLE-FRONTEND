@@ -11,7 +11,8 @@ import { useEffect, useState } from "react";
 // AXIOS
 import clientAxios from "../../config/ClientAxios";
 
-// COMPONENTS
+// ALERTS
+import toast from "react-hot-toast";
 import Alert from "../Alert.jsx";
 
 // ZUSTAND
@@ -25,8 +26,6 @@ export default function Edit({ id }) {
     const [password, setPassword] = useState("");
     const [passwordConfirm, setPasswordConfirm] = useState("");
     const [role, setRole] = useState("");
-    const [error, setError] = useState("");
-    const [success, setSuccess] = useState("");
     const [roles, setRoles] = useState([]);
 
     // ZUSTAND
@@ -42,11 +41,7 @@ export default function Edit({ id }) {
         e.preventDefault();
 
         if ([name, lastname, email, role].includes("")) {
-            setError("Todos los campos son obligatorios");
-
-            setTimeout(() => {
-                setError("");
-            }, 5000);
+            toast.error("Todos los campos son obligatorios");
             return;
         }
 
@@ -61,21 +56,14 @@ export default function Edit({ id }) {
                 role,
             });
 
-            setSuccess(data);
+            toast.success(data);
             resetValues();
 
             if (id === user?.id) {
                 logout();
             }
-
-            setTimeout(() => {
-                setSuccess("");
-            }, 5000);
         } catch (error) {
-            setError(errorResponse(error));
-            setTimeout(() => {
-                setError("");
-            }, 5000);
+            toast.error(errorResponse(error));
         }
     };
 
@@ -85,10 +73,7 @@ export default function Edit({ id }) {
 
             setRoles(data);
         } catch (error) {
-            setError(errorResponse(error));
-            setTimeout(() => {
-                setError("");
-            }, 5000);
+            toast.error(errorResponse(error));
         }
     };
 
@@ -101,10 +86,7 @@ export default function Edit({ id }) {
             setEmail(data?.email);
             setRole(data?.role.name);
         } catch (error) {
-            setError(errorResponse(error));
-            setTimeout(() => {
-                setError("");
-            }, 5000);
+            toast.error(errorResponse(error));
         }
     };
 
@@ -116,8 +98,7 @@ export default function Edit({ id }) {
 
     return (
         <>
-            {error ? <Alert message={error} type={"error"} /> : null}
-            {success ? <Alert message={success} type={"success"} /> : null}
+            <Alert />
             <div className="createEditUser">
                 <h1 className="title">Edicion de Usuario</h1>
                 <p className="paragraph">

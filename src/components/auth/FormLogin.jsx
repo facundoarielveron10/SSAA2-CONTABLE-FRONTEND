@@ -4,9 +4,6 @@ import "../../css/auth/form.css";
 // REACT
 import { useEffect, useState } from "react";
 
-// COMPONENTS
-import Alert from "../Alert";
-
 // ICONS
 import { IoIosArrowForward } from "react-icons/io";
 
@@ -16,6 +13,10 @@ import { errorResponse } from "../../utils/error";
 // ZUSTAND
 import { useLoginStore } from "../../zustand/loginStore";
 
+// ALERTS
+import toast from "react-hot-toast";
+import Alert from "../Alert";
+
 export default function FormLogin() {
     // ZUSTAND
     const { isSubmitting, successSubmitted, errorSubmitting, submitLogin } =
@@ -24,7 +25,6 @@ export default function FormLogin() {
     // STATES
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-    const [error, setError] = useState("");
 
     // FUNCTIONS
     const resetValues = () => {
@@ -36,11 +36,7 @@ export default function FormLogin() {
         e.preventDefault();
 
         if ([email, password].includes("")) {
-            setError("Todos los campos son obligatorios");
-
-            setTimeout(() => {
-                setError("");
-            }, 5000);
+            toast.error("Todos los campos son obligatorios");
             return;
         }
 
@@ -49,20 +45,14 @@ export default function FormLogin() {
 
             resetValues();
         } catch (error) {
-            setError(errorResponse(error));
-            setTimeout(() => {
-                setError("");
-            }, 5000);
+            toast.error(errorResponse(error));
         }
     };
 
     // EFFECTS
     useEffect(() => {
         if (!isSubmitting && errorSubmitting) {
-            setError(errorSubmitting);
-            setTimeout(() => {
-                setError("");
-            }, 5000);
+            toast.error(errorSubmitting);
         }
     }, [errorSubmitting, isSubmitting]);
 
@@ -74,7 +64,8 @@ export default function FormLogin() {
 
     return (
         <>
-            {error ? <Alert message={error} type="error" /> : null}
+            {/* ALERTA */}
+            <Alert />
             <form className="form" onSubmit={handleSubmit}>
                 {/* EMAIL */}
                 <div className="form-group">

@@ -10,6 +10,10 @@ import { errorResponse } from "../../utils/error";
 
 // COMPONENTS
 import Spinner from "../Spinner";
+import Pagination from "../Pagination";
+
+// ALERTS
+import toast from "react-hot-toast";
 import Alert from "../Alert";
 
 // AXIOS
@@ -19,18 +23,19 @@ export default function Create() {
     // STATES
     const [actions, setActions] = useState([]);
     const [filteredActions, setFilteredActions] = useState([]);
-    const [error, setError] = useState("");
-    const [success, setSuccess] = useState("");
     const [name, setName] = useState("ROLE_");
     const [nameDescriptive, setNameDescriptive] = useState("");
     const [description, setDescription] = useState("");
     const [selectedType, setSelectedType] = useState("");
     const [selectedActions, setSelectedActions] = useState([]);
+    const [limit] = useState(5);
+    const [currentPage, setCurrentPage] = useState(1);
+    const [totalPages, setTotalPages] = useState(1);
 
     // EFFECTS
     useEffect(() => {
         getActions();
-    }, []);
+    }, [currentPage, selectedType]);
 
     // FUNCTIONS
     const resetValues = () => {
@@ -43,27 +48,32 @@ export default function Create() {
 
     const getActions = async () => {
         try {
-            const { data } = await clientAxios.get("/role-action/actions");
-            setActions(data);
-            setFilteredActions(data);
+            const { data } = await clientAxios.get(
+                `/role-action/actions?page=${currentPage}&limit=${limit}&type=${selectedType}`
+            );
+            setActions(data.actions);
+            setTotalPages(data.totalPages);
+            setFilteredActions(data.actions);
         } catch (error) {
-            setError(errorResponse(error));
-            setTimeout(() => {
-                setError("");
-            }, 5000);
+            toast.error(errorResponse());
+        }
+    };
+
+    const handleNextPage = () => {
+        if (currentPage < totalPages) {
+            setCurrentPage(currentPage + 1);
+        }
+    };
+
+    const handlePreviousPage = () => {
+        if (currentPage > 1) {
+            setCurrentPage(currentPage - 1);
         }
     };
 
     const handleTypeChange = (e) => {
-        const selected = e.target.value;
-        setSelectedType(selected);
-        if (selected) {
-            setFilteredActions(
-                actions.filter((action) => action.type === selected)
-            );
-        } else {
-            setFilteredActions(actions);
-        }
+        setSelectedType(e.target.value);
+        setCurrentPage(1);
     };
 
     const handleChecked = (action) => {
@@ -79,11 +89,7 @@ export default function Create() {
         e.preventDefault();
 
         if ([name, nameDescriptive, description].includes("")) {
-            setError("Todos los campos son obligatorios");
-
-            setTimeout(() => {
-                setError("");
-            }, 5000);
+            toast.error("Todos los campos son obligatorios");
             return;
         }
 
@@ -98,23 +104,16 @@ export default function Create() {
                 }
             );
 
-            setSuccess(data);
+            toast.success(data);
             resetValues();
-            setTimeout(() => {
-                setSuccess("");
-            }, 5000);
         } catch (error) {
-            setError(errorResponse(error));
-            setTimeout(() => {
-                setError("");
-            }, 5000);
+            toast.error(errorResponse(error));
         }
     };
 
     return (
         <>
-            {error ? <Alert message={error} type="error" /> : null}
-            {success ? <Alert message={success} type="success" /> : null}
+            <Alert />
             <div className="createEditRole">
                 <h1 className="title">Creacion de Rol</h1>
                 <p className="paragraph">
@@ -124,7 +123,7 @@ export default function Create() {
                     que podrá hacer este rol.
                 </p>
 
-                <form onSubmit={handleSubmit}>
+                <form className="createEditRole-form" onSubmit={handleSubmit}>
                     <div className="form">
                         {/* NOMBRE */}
                         <div className="form-group createEditRole-group">
@@ -195,18 +194,11 @@ export default function Create() {
                             value={selectedType}
                             onChange={handleTypeChange}
                         >
-                            <option disabled={true} defaultChecked value="">
+                            <option defaultChecked value="">
                                 Todos los tipos
                             </option>
-                            {[
-                                ...new Set(
-                                    actions.map((action) => action.type)
-                                ),
-                            ].map((type) => (
-                                <option key={type} value={type}>
-                                    {type}
-                                </option>
-                            ))}
+                            <option value="Usuarios">Usuarios</option>
+                            <option value="Roles">Roles</option>
                         </select>
                     </div>
                     {actions.length === 0 ? (
@@ -246,7 +238,12 @@ export default function Create() {
                             ))}
                         </div>
                     )}
-
+                    <Pagination
+                        handleNextPage={handleNextPage}
+                        handlePreviousPage={handlePreviousPage}
+                        currentPage={currentPage}
+                        totalPages={totalPages}
+                    />
                     <button className="createEditRole-button button">
                         Crear rol
                     </button>

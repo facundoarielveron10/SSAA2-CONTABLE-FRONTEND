@@ -12,24 +12,22 @@ import { errorResponse } from "../../utils/error";
 
 // COMPONENTS
 import Spinner from "../Spinner";
+
+// ALERTS
+import toast from "react-hot-toast";
 import Alert from "../Alert";
 
 export default function FormLogin() {
     // STATES
     const [token, setToken] = useState("");
-    const [error, setError] = useState("");
-    const [success, setSuccess] = useState("");
+    const [success, setSuccess] = useState(false);
 
     // FUNCTIONS
     const handleSubmit = async (e) => {
         e.preventDefault();
 
         if ([token].includes("")) {
-            setError("Todos los campos son obligatorios");
-
-            setTimeout(() => {
-                setError("");
-            }, 5000);
+            toast.error("Todos los campos son obligatorios");
             return;
         }
 
@@ -38,23 +36,20 @@ export default function FormLogin() {
                 token,
             });
 
-            setSuccess(data);
-
+            toast.success(data);
+            setSuccess(true);
             setTimeout(() => {
                 window.location.assign("/login");
             }, 5000);
         } catch (error) {
-            setError(errorResponse(error));
-            setTimeout(() => {
-                setError("");
-            }, 5000);
+            toast.error(errorResponse(error));
+            setSuccess(false);
         }
     };
 
     return (
         <>
-            {error ? <Alert message={error} type="error" /> : null}
-            {success ? <Alert message={success} type="success" /> : null}
+            <Alert />
             <form className="form" onSubmit={handleSubmit}>
                 {/* TOKEN */}
                 <div className="form-group">

@@ -10,9 +10,12 @@ import { errorResponse } from "../../utils/error";
 
 // COMPONENTS
 import Spinner from "../Spinner.jsx";
-import Alert from "../Alert.jsx";
 import Action from "./Action.jsx";
 import Pagination from "../Pagination.jsx";
+
+// ALERTS
+import toast from "react-hot-toast";
+import Alert from "../Alert.jsx";
 
 // AXIOS
 import clientAxios from "../../config/ClientAxios";
@@ -26,8 +29,6 @@ export default function Edit({ id }) {
     const [currentPage, setCurrentPage] = useState(1);
     const [totalPages, setTotalPages] = useState(1);
     const [limit] = useState(5);
-    const [error, setError] = useState("");
-    const [success, setSuccess] = useState("");
     const [name, setName] = useState("");
     const [nameDescriptive, setNameDescriptive] = useState("");
     const [description, setDescription] = useState("");
@@ -64,10 +65,7 @@ export default function Edit({ id }) {
             setDescription(role.description);
             setSelectedActions(actionNames);
         } catch (error) {
-            setError(errorResponse(error));
-            setTimeout(() => {
-                setError("");
-            }, 5000);
+            toast.error(errorResponse(error));
         }
     };
 
@@ -80,10 +78,7 @@ export default function Edit({ id }) {
             setActions(data.actions);
             setTotalPages(data.totalPages);
         } catch (error) {
-            setError(errorResponse(error));
-            setTimeout(() => {
-                setError("");
-            }, 5000);
+            toast.error(errorResponse(error));
         } finally {
             setLoading(false);
         }
@@ -110,11 +105,7 @@ export default function Edit({ id }) {
         e.preventDefault();
 
         if ([name, nameDescriptive, description].includes("")) {
-            setError("Todos los campos son obligatorios");
-
-            setTimeout(() => {
-                setError("");
-            }, 5000);
+            toast.error("Todos los campos son obligatorios");
             return;
         }
 
@@ -127,24 +118,17 @@ export default function Edit({ id }) {
                 newActions: selectedActions,
             });
 
-            setSuccess(data);
+            toast.success(data);
             editActions(id, selectedActions);
             getRoleActions();
-            setTimeout(() => {
-                setSuccess("");
-            }, 5000);
         } catch (error) {
-            setError(errorResponse(error));
-            setTimeout(() => {
-                setError("");
-            }, 5000);
+            toast.error(errorResponse(error));
         }
     };
 
     return (
         <>
-            {error ? <Alert message={error} type="error" /> : null}
-            {success ? <Alert message={success} type="success" /> : null}
+            <Alert />
             <div className="createEditRole">
                 <h1 className="title">Edicion de rol</h1>
                 <p className="paragraph">

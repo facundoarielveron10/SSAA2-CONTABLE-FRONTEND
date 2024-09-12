@@ -1,16 +1,37 @@
 // CSS
 import "../css/alert.css";
 
-export default function Alert({ message, type }) {
-    // FUNCTIONS
-    const typeMessage = () => {
-        if (type === "error") return "error";
-        if (type === "success") return "success";
-    };
+// ALERT
+import { Toaster, toast } from "react-hot-toast";
+import { FiCheckCircle, FiXCircle } from "react-icons/fi";
 
+export default function Alert() {
     return (
-        <div className={`alert-container ${typeMessage()}`}>
-            <p className="alert">{message}</p>
+        <div className="alert" onClick={() => toast.dismiss()}>
+            <Toaster
+                toastOptions={{
+                    success: {
+                        icon: <FiCheckCircle />,
+                        style: {
+                            background: "#11bd11",
+                            color: "white",
+                            textTransform: "uppercase",
+                            fontWeight: "bold",
+                        },
+                    },
+                    error: {
+                        icon: <FiXCircle />,
+                        style: {
+                            background: "#c70a0a",
+                            color: "white",
+                            textTransform: "uppercase",
+                            fontWeight: "bold",
+                        },
+                    },
+                }}
+                position="top-right"
+                reverseOrder={false}
+            />
         </div>
     );
 }

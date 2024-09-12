@@ -13,7 +13,8 @@ import clientAxios from "../../config/ClientAxios";
 // ICONS
 import { IoIosArrowForward } from "react-icons/io";
 
-// COMPONENTS
+// ALERTS
+import toast from "react-hot-toast";
 import Alert from "../Alert";
 
 export default function FormRegister() {
@@ -23,8 +24,6 @@ export default function FormRegister() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [passwordConfirm, setPasswordConfirm] = useState("");
-    const [error, setError] = useState("");
-    const [success, setSuccess] = useState("");
 
     // FUNCTIONS
     const resetValues = () => {
@@ -39,11 +38,7 @@ export default function FormRegister() {
         e.preventDefault();
 
         if ([name, lastname, email, password, passwordConfirm].includes("")) {
-            setError("Todos los campos son obligatorios");
-
-            setTimeout(() => {
-                setError("");
-            }, 5000);
+            toast.error("Todos los campos son obligatorios");
             return;
         }
 
@@ -56,20 +51,16 @@ export default function FormRegister() {
                 passwordConfirm,
             });
 
-            setSuccess(data);
+            toast.success(data);
             resetValues();
         } catch (error) {
-            setError(errorResponse(error));
-            setTimeout(() => {
-                setError("");
-            }, 5000);
+            toast.error(errorResponse(error));
         }
     };
 
     return (
         <>
-            {error ? <Alert message={error} type="error" /> : null}
-            {success ? <Alert message={success} type="success" /> : null}
+            <Alert />
             <form className="form" onSubmit={handleSubmit}>
                 {/* NAME */}
                 <div className="form-group">
@@ -140,6 +131,7 @@ export default function FormRegister() {
                     Registrarme
                 </button>
             </form>
+
             {/* ENLACES */}
             <div className="form-links">
                 <a className="form-link" href="/login">

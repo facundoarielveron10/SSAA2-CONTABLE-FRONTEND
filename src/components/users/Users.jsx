@@ -17,8 +17,11 @@ import { errorResponse } from "../../utils/error";
 // COMPONENTS
 import Spinner from "../Spinner";
 import Table from "./Table";
-import Alert from "../Alert";
 import Pagination from "../Pagination";
+
+// ALERTS
+import toast from "react-hot-toast";
+import Alert from "../Alert";
 
 // ZUSTAND
 import { useLoginStore } from "../../zustand/loginStore";
@@ -34,8 +37,6 @@ export default function Users() {
     const [openDeleteModal, setOpenDeleteModal] = useState(false);
     const [changeRole, setChangeRole] = useState({});
     const [newRole, setNewRole] = useState("");
-    const [error, setError] = useState("");
-    const [success, setSuccess] = useState("");
     const [loading, setLoading] = useState(false);
     const [currentPage, setCurrentPage] = useState(1);
     const [totalPages, setTotalPages] = useState(1);
@@ -75,10 +76,7 @@ export default function Users() {
             setFilteredUsers(data.users);
             setTotalPages(Math.ceil(data.totalUsers / limit));
         } catch (error) {
-            setError(errorResponse(error));
-            setTimeout(() => {
-                setError("");
-            }, 5000);
+            toast.error(errorResponse(error));
         } finally {
             setLoading(false);
         }
@@ -90,10 +88,7 @@ export default function Users() {
             const { data } = await clientAxios.get("/role-action/roles");
             setRoles(data);
         } catch (error) {
-            setError(errorResponse(error));
-            setTimeout(() => {
-                setError("");
-            }, 5000);
+            toast.error(errorResponse(error));
         } finally {
             setLoading(false);
         }
@@ -154,18 +149,12 @@ export default function Users() {
                 }
             );
 
-            setSuccess(roleData);
+            toast.success(roleData);
             onCloseChangeRoleModal();
-            setTimeout(() => {
-                setSuccess("");
-            }, 5000);
 
             await getUsers(currentPage, selectedRole);
         } catch (error) {
-            setError(errorResponse(error));
-            setTimeout(() => {
-                setError("");
-            }, 5000);
+            toast.error(errorResponse(error));
         }
     };
 
@@ -175,18 +164,11 @@ export default function Users() {
                 idUser: id,
             });
 
-            setSuccess(data);
-
-            setTimeout(() => {
-                setSuccess("");
-            }, 5000);
+            toast.success(data);
 
             await getUsers(currentPage, selectedRole);
         } catch (error) {
-            setError(errorResponse(error));
-            setTimeout(() => {
-                setError("");
-            }, 5000);
+            toast.error(errorResponse(error));
         }
     };
 
@@ -196,28 +178,20 @@ export default function Users() {
                 idUser: userDelete._id,
             });
 
-            setSuccess(data);
+            toast.success(data);
             onCloseDeleteUserModal();
 
             if (userDelete._id === user.id) {
                 logout();
             }
-
-            setTimeout(() => {
-                setSuccess("");
-            }, 5000);
         } catch (error) {
-            setError(errorResponse(error));
-            setTimeout(() => {
-                setError("");
-            }, 5000);
+            toast.error(errorResponse(error));
         }
     };
 
     return (
         <>
-            {error ? <Alert message={error} type="error" /> : null}
-            {success ? <Alert message={success} type="success" /> : null}
+            <Alert />
             <div className="listUser">
                 <h1 className="title">Listado de usuarios</h1>
                 <p className="paragraph">

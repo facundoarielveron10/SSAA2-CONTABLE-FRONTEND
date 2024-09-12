@@ -10,6 +10,9 @@ import { errorResponse } from "../../utils/error";
 
 // COMPONENTS
 import Spinner from "../Spinner";
+
+// ALERTS
+import toast from "react-hot-toast";
 import Alert from "../Alert";
 
 // AXIOS
@@ -25,8 +28,6 @@ import Table from "./Table";
 export default function Roles() {
     // STATES
     const [roles, setRoles] = useState([]);
-    const [error, setError] = useState("");
-    const [success, setSuccess] = useState("");
     const [open, setOpen] = useState(false);
     const [roleDelete, setRoleDelete] = useState({});
 
@@ -45,10 +46,7 @@ export default function Roles() {
 
             setRoles(data);
         } catch (error) {
-            setError(errorResponse(error));
-            setTimeout(() => {
-                setError("");
-            }, 5000);
+            toast.error(errorResponse(error));
         }
     };
 
@@ -71,18 +69,15 @@ export default function Roles() {
                 }
             );
 
-            setSuccess(data);
+            toast.success(data);
             if (roleDelete.name === user.role.name) {
                 logout();
             }
 
             window.location.reload();
         } catch (error) {
-            setError(errorResponse(error));
+            toast.error(errorResponse(error));
             setRoleDelete({});
-            setTimeout(() => {
-                setError("");
-            }, 5000);
         }
     };
 
@@ -95,25 +90,17 @@ export default function Roles() {
                 }
             );
 
-            setSuccess(data);
-
-            setTimeout(() => {
-                setSuccess("");
-            }, 5000);
+            toast.success(data);
 
             await getRoles();
         } catch (error) {
-            setError(errorResponse(error));
-            setTimeout(() => {
-                setError("");
-            }, 5000);
+            toast.error(errorResponse(error));
         }
     };
 
     return (
         <>
-            {error ? <Alert message={error} type="error" /> : null}
-            {success ? <Alert message={success} type="success" /> : null}
+            <Alert />
             <div className="roles">
                 <h1 className="title">Listado de Roles</h1>
                 <p className="paragraph">

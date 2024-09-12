@@ -12,7 +12,10 @@ import { errorResponse } from "../../utils/error";
 
 // COMPONENTS
 import Spinner from "../Spinner";
+
+// ALERTS
 import Alert from "../Alert";
+import toast from "react-hot-toast";
 
 export default function FormNewPassword() {
     // STATES
@@ -20,19 +23,14 @@ export default function FormNewPassword() {
     const [token, setToken] = useState("");
     const [password, setPassword] = useState("");
     const [passwordConfirm, setPasswordConfirm] = useState("");
-    const [error, setError] = useState("");
-    const [success, setSuccess] = useState("");
+    const [success, setSuccess] = useState(false);
 
     // FUNCTIONS
     const handleSubmitToken = async (e) => {
         e.preventDefault();
 
         if ([token].includes("")) {
-            setError("Todos los campos son obligatorios");
-
-            setTimeout(() => {
-                setError("");
-            }, 5000);
+            toast.error("Todos los campos son obligatorios");
             return;
         }
 
@@ -41,16 +39,14 @@ export default function FormNewPassword() {
                 token,
             });
 
-            setSuccess(data);
+            toast.success(data);
+            setSuccess(true);
             setTimeout(() => {
-                setSuccess("");
+                setSuccess(false);
                 setIsValidToken(true);
             }, 5000);
         } catch (error) {
-            setError(errorResponse(error));
-            setTimeout(() => {
-                setError("");
-            }, 5000);
+            toast.error(errorResponse(error));
         }
     };
 
@@ -58,11 +54,7 @@ export default function FormNewPassword() {
         e.preventDefault();
 
         if ([password, passwordConfirm].includes("")) {
-            setError("Todos los campos son obligatorios");
-
-            setTimeout(() => {
-                setError("");
-            }, 5000);
+            toast.error("Todos los campos son obligatorios");
             return;
         }
 
@@ -75,23 +67,19 @@ export default function FormNewPassword() {
                 }
             );
 
-            setSuccess(data);
-
+            toast.success(data);
+            setSuccess(true);
             setTimeout(() => {
                 window.location.assign("/login");
             }, 5000);
         } catch (error) {
-            setError(errorResponse(error));
-            setTimeout(() => {
-                setError("");
-            }, 5000);
+            toast.error(errorResponse(error));
         }
     };
 
     return (
         <>
-            {error ? <Alert message={error} type="error" /> : null}
-            {success ? <Alert message={success} type="success" /> : null}
+            <Alert />
             {isValidToken ? (
                 <form className="form" onSubmit={handleSubmitNewPassword}>
                     {/* PASSWORD */}
