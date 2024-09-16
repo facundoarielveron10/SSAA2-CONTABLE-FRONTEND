@@ -3,7 +3,8 @@ import "../css/alert.css";
 
 // ALERT
 import { Toaster, toast } from "react-hot-toast";
-import { FiCheckCircle, FiXCircle } from "react-icons/fi";
+import { FaCircleCheck } from "react-icons/fa6";
+import { GoXCircleFill } from "react-icons/go";
 
 export default function Alert() {
     return (
@@ -11,21 +12,23 @@ export default function Alert() {
             <Toaster
                 toastOptions={{
                     success: {
-                        icon: <FiCheckCircle />,
+                        icon: <FaCircleCheck />,
                         style: {
                             background: "#11bd11",
                             color: "white",
                             textTransform: "uppercase",
                             fontWeight: "bold",
+                            width: "100%",
                         },
                     },
                     error: {
-                        icon: <FiXCircle />,
+                        icon: <GoXCircleFill />,
                         style: {
                             background: "#c70a0a",
                             color: "white",
                             textTransform: "uppercase",
                             fontWeight: "bold",
+                            width: "100%",
                         },
                     },
                 }}

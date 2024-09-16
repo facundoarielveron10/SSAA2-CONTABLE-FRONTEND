@@ -45,7 +45,7 @@ export default function Users() {
     const [search, setSearch] = useState("");
 
     // ZUSTAND
-    const { user, logout } = useLoginStore();
+    const { user, logout, canExecute } = useLoginStore();
 
     // EFFECTS
     useEffect(() => {
@@ -53,7 +53,7 @@ export default function Users() {
     }, []);
 
     useEffect(() => {
-        getUsers(currentPage, selectedRole);
+        getUsers();
     }, [currentPage, selectedRole]);
 
     useEffect(() => {
@@ -68,15 +68,15 @@ export default function Users() {
     }, [selectedRole, users]);
 
     // FUNCTIONS
-    const getUsers = async (page = 1, role = "") => {
+    const getUsers = async () => {
         setLoading(true);
         try {
             const { data } = await clientAxios.get(
-                `/user/users?page=${page}&limit=${limit}&role=${role}`
+                `/user/users?page=${currentPage}&limit=${limit}&role=${selectedRole}`
             );
             setUsers(data.users);
             setFilteredUsers(data.users);
-            setTotalPages(Math.ceil(data.totalUsers / limit));
+            setTotalPages(data.totalPages);
         } catch (error) {
             toast.error(errorResponse(error));
         } finally {
@@ -102,19 +102,15 @@ export default function Users() {
         setCurrentPage(1);
     };
 
-    const handleNextPage = async () => {
+    const handleNextPage = () => {
         if (currentPage < totalPages) {
-            const nextPage = currentPage + 1;
-            setCurrentPage(nextPage);
-            await getUsers(nextPage);
+            setCurrentPage(currentPage + 1);
         }
     };
 
-    const handlePreviousPage = async () => {
+    const handlePreviousPage = () => {
         if (currentPage > 1) {
-            const previousPage = currentPage - 1;
-            setCurrentPage(previousPage);
-            await getUsers(previousPage);
+            setCurrentPage(currentPage - 1);
         }
     };
 
@@ -154,7 +150,7 @@ export default function Users() {
             toast.success(roleData);
             onCloseChangeRoleModal();
 
-            await getUsers(currentPage, selectedRole);
+            await getUsers();
         } catch (error) {
             toast.error(errorResponse(error));
         }
@@ -168,7 +164,7 @@ export default function Users() {
 
             toast.success(data);
 
-            await getUsers(currentPage, selectedRole);
+            await getUsers();
         } catch (error) {
             toast.error(errorResponse(error));
         }
@@ -202,7 +198,7 @@ export default function Users() {
             );
             setUsers(data.users);
             setFilteredUsers(data.users);
-            setTotalPages(Math.ceil(data.totalUsers / limit));
+            setTotalPages(data.totalPages);
         } catch (error) {
             toast.error(errorResponse(error));
         } finally {
@@ -347,9 +343,11 @@ export default function Users() {
                     </form>
                 </Modal>
             </div>
-            <a href="create-user" className="listUser-button button">
-                Crear usuario
-            </a>
+            {canExecute("CREATE_USER") ? (
+                <a href="create-user" className="listUser-button button">
+                    Crear usuario
+                </a>
+            ) : null}
         </>
     );
 }

@@ -55,6 +55,11 @@ export default function NavbarMobile() {
                                 <a href="/roles">Roles</a>
                             </li>
                         ) : null}
+                        {canExecute("GET_ACCOUNTS") ? (
+                            <li>
+                                <a href="/accounts">Cuentas</a>
+                            </li>
+                        ) : null}
                         <li>
                             <button
                                 className="navbarMobile-logout"

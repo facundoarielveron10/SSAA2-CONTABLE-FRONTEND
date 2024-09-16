@@ -1,0 +1,135 @@
+.accounts {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--backgroundColor);
+    padding: 1.5rem;
+}
+
+.accounts-list {
+    background-color: var(--backgroundCard);
+    border-radius: 8px;
+    padding: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    width: 1000px;
+}
+
+.accounts-subtitle {
+    font-weight: bold;
+    text-transform: uppercase;
+    color: var(--textColor);
+    margin-bottom: 10px;
+}
+
+.accounts-no-accounts {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.5rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    color: var(--textColor);
+}
+
+.accounts-buttons {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 1rem;
+}
+
+.accounts-button {
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    margin: 0 2rem 2rem 0;
+    text-decoration: none;
+}
+
+.accounts-button-table {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+}
+
+.accounts-edit {
+    background-color: var(--primaryColor);
+}
+
+.accounts-delete {
+    background-color: var(--colorDelete);
+}
+
+.accounts-delete:hover {
+    background-color: var(--colorDeleteDark);
+}
+
+.accounts-spinner {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.accounts-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.accounts-table thead {
+    color: var(--backgroundTextColor);
+}
+
+.accounts-table tbody {
+    color: var(--textColor);
+}
+
+.accounts-table th,
+.accounts-table td {
+    padding: 10px;
+    text-align: left;
+    border-bottom: 1px solid var(--backgroundInput);
+}
+
+.accounts-table th {
+    background-color: var(--primaryDarkColor);
+}
+
+.accounts-table tr:nth-child(even) {
+    background-color: var(--backgroundInput);
+}
+
+.accounts-modal-title {
+    text-transform: uppercase;
+    color: var(--textColor);
+}
+
+.accounts-modal-rol p {
+    font-weight: bold;
+    color: var(--textColor);
+}
+
+.accounts-modal-rol span {
+    font-weight: normal;
+}
+
+.accounts-modal-rol span {
+    font-weight: normal;
+}
+
+.accounts-modal-paragraph {
+    color: var(--textColor);
+}
+
+.accounts-modal-button {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    margin-top: 1rem;
+}

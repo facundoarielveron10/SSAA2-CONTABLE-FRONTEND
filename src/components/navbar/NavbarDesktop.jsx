@@ -33,6 +33,11 @@ export default function NavbarDesktop() {
                             Roles
                         </a>
                     ) : null}
+                    {canExecute("GET_ACCOUNTS") ? (
+                        <a href="/accounts" className="navbar-link">
+                            Cuentas
+                        </a>
+                    ) : null}
                     <button className="button" onClick={handleLogout}>
                         Cerrar Sesión
                     </button>

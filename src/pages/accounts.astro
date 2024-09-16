@@ -1,0 +1,21 @@
+---
+// AUTH
+import { isLoggedIn } from '../utils/verifyAuth';
+
+// COMPONENTS
+import Layout from '../layouts/Layout.astro';
+import AccountsComponent from "../components/accounts/Accounts";
+import LayoutAuth from '../layouts/LayoutAuth';
+
+// REDIRECT
+const token = Astro.cookies.get("AUTH_TOKEN");
+if (!isLoggedIn(token)) {
+	return Astro.redirect("/login")
+}
+---
+
+<Layout title="Cuentas - SSAA2">
+	<LayoutAuth client:only="react" page="accounts">
+		<AccountsComponent client:only="react"/>
+	</LayoutAuth>
+</Layout>
