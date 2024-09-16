@@ -214,6 +214,7 @@ export default function Edit({ id }) {
                             </option>
                             <option value="Usuarios">Usuarios</option>
                             <option value="Roles">Roles</option>
+                            <option value="Cuentas">Cuentas</option>
                         </select>
                     </div>
                     {actions.length === 0 || loading ? (

@@ -31,6 +31,7 @@ export default function Create() {
     const [limit] = useState(5);
     const [currentPage, setCurrentPage] = useState(1);
     const [totalPages, setTotalPages] = useState(1);
+    const [loading, setLoading] = useState(false);
 
     // EFFECTS
     useEffect(() => {
@@ -47,6 +48,7 @@ export default function Create() {
     };
 
     const getActions = async () => {
+        setLoading(true);
         try {
             const { data } = await clientAxios.get(
                 `/role-action/actions?page=${currentPage}&limit=${limit}&type=${selectedType}`
@@ -56,6 +58,8 @@ export default function Create() {
             setFilteredActions(data.actions);
         } catch (error) {
             toast.error(errorResponse());
+        } finally {
+            setLoading(false);
         }
     };
 
@@ -199,9 +203,10 @@ export default function Create() {
                             </option>
                             <option value="Usuarios">Usuarios</option>
                             <option value="Roles">Roles</option>
+                            <option value="Cuentas">Cuentas</option>
                         </select>
                     </div>
-                    {actions.length === 0 ? (
+                    {actions.length === 0 || loading ? (
                         <div className="createEditRole-spinner">
                             <Spinner />
                         </div>
