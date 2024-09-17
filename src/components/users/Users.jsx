@@ -26,16 +26,21 @@ import Alert from "../Alert";
 
 // ZUSTAND
 import { useLoginStore } from "../../zustand/loginStore";
+import ChangeRoleModal from "../modal/ChangeRoleModal";
+import DeleteUserModal from "../modal/DeleteUserModal";
+import DenyUserModal from "../modal/DenyUserModal";
 
 export default function Users() {
     // STATES
     const [users, setUsers] = useState([]);
     const [filteredUsers, setFilteredUsers] = useState([]);
     const [userDelete, setUserDelete] = useState({});
+    const [userDeny, setUserDeny] = useState({});
     const [roles, setRoles] = useState([]);
     const [selectedRole, setSelectedRole] = useState("");
     const [openChangeModal, setOpenChangeModal] = useState(false);
     const [openDeleteModal, setOpenDeleteModal] = useState(false);
+    const [openDenyModal, setOpenDenyModal] = useState(false);
     const [changeRole, setChangeRole] = useState({});
     const [newRole, setNewRole] = useState("");
     const [loading, setLoading] = useState(false);
@@ -136,6 +141,16 @@ export default function Users() {
         setUserDelete({});
     };
 
+    const onOpenDenyUserModal = (user) => {
+        setOpenDenyModal(true);
+        setUserDeny(user);
+    };
+
+    const onCloseDenyUserModal = () => {
+        setOpenDenyModal(false);
+        setUserDeny({});
+    };
+
     const handleChangeRole = async (e) => {
         e.preventDefault();
         try {
@@ -170,6 +185,21 @@ export default function Users() {
         }
     };
 
+    const handleConfirmAdmin = async (id, confirmUser) => {
+        try {
+            const { data } = await clientAxios.post("/user/confirm-admin", {
+                idUser: id,
+                confirmUser,
+            });
+
+            toast.success(data);
+
+            await getUsers();
+        } catch (error) {
+            toast.error(errorResponse(error));
+        }
+    };
+
     const handleDeleteUser = async () => {
         try {
             const { data } = await clientAxios.post("/user/delete-user", {
@@ -187,11 +217,11 @@ export default function Users() {
         }
     };
 
-    const handleSearch = async (page = 1, role = "") => {
+    const handleSearch = async () => {
         setLoading(true);
         try {
             const { data } = await clientAxios.post(
-                `/user/search-users?page=${page}&limit=${limit}&role=${role}`,
+                `/user/search-users?page=${currentPage}&limit=${limit}&role=${selectedRole}`,
                 {
                     search,
                 }
@@ -234,8 +264,10 @@ export default function Users() {
                             users={filteredUsers}
                             onOpenChangeRoleModal={onOpenChangeRoleModal}
                             onOpenDeleteUserModal={onOpenDeleteUserModal}
+                            onOpenDenyUserModal={onOpenDenyUserModal}
                             handleRoleChange={handleRoleChange}
                             handleActive={handleActive}
+                            handleConfirmAdmin={handleConfirmAdmin}
                             selectedRole={selectedRole}
                             roles={roles}
                         />
@@ -250,99 +282,27 @@ export default function Users() {
                     </div>
                 )}
             </div>
-            <div>
-                <Modal
-                    open={openChangeModal}
-                    onClose={onCloseChangeRoleModal}
-                    center
-                    classNames={{
-                        overlay: "customOverlay",
-                        modal: "customModal",
-                        closeIcon: "customCloseIcon",
-                    }}
-                >
-                    <form onSubmit={handleChangeRole}>
-                        <h2 className="listUser-modal-title">
-                            Cambiar el rol del usuario
-                        </h2>
-                        <p className="listUser-modal-user">
-                            Usuario:{" "}
-                            <span>
-                                {changeRole.name} {changeRole.lastname}
-                            </span>
-                        </p>
-                        <p className="listUser-modal-paragraph">
-                            Selecciona el rol para el usuario
-                        </p>
-                        <select
-                            className="listUser-modal-select"
-                            value={newRole}
-                            onChange={(e) => setNewRole(e.target.value)}
-                        >
-                            <option
-                                disabled
-                                className="listUser-modal-option"
-                                value=""
-                            >
-                                -- Seleccionar Rol --
-                            </option>
-                            {roles.length > 0
-                                ? roles.map((rol) => (
-                                      <option
-                                          key={rol._id}
-                                          className="listUser-modal-option"
-                                          value={rol.name}
-                                      >
-                                          {rol.nameDescriptive}
-                                      </option>
-                                  ))
-                                : null}
-                        </select>
-                        <button
-                            type="submit"
-                            className="listUser-modal-button button"
-                        >
-                            Cambiar
-                        </button>
-                    </form>
-                </Modal>
-            </div>
-            <div>
-                <Modal
-                    open={openDeleteModal}
-                    onClose={onCloseDeleteUserModal}
-                    center
-                    classNames={{
-                        overlay: "customOverlay",
-                        modal: "customModal",
-                        closeIcon: "customCloseIcon",
-                    }}
-                >
-                    <form onSubmit={handleDeleteUser}>
-                        <h2 className="listUser-modal-title">
-                            ¿Estás seguro de eliminar el Usuario?
-                        </h2>
-                        <div className="listUser-modal-user">
-                            <p>
-                                Nombre: <span>{userDelete.name}</span>
-                            </p>
-                            <p>
-                                Apellido: <span>{userDelete.lastname}</span>
-                            </p>
-                            <p>
-                                Email: <span>{userDelete.email}</span>
-                            </p>
-                        </div>
-
-                        <button
-                            type="submit"
-                            className="button listUser-delete listUser-modal-button"
-                        >
-                            Eliminar Usuario
-                        </button>
-                    </form>
-                </Modal>
-            </div>
+            <ChangeRoleModal
+                openChangeModal={openChangeModal}
+                onCloseChangeRoleModal={onCloseChangeRoleModal}
+                handleChangeRole={handleChangeRole}
+                role={changeRole}
+                roles={roles}
+                newRole={newRole}
+                setNewRole={setNewRole}
+            />
+            <DeleteUserModal
+                openDeleteModal={openDeleteModal}
+                onCloseDeleteUserModal={onCloseDeleteUserModal}
+                handleDeleteUser={handleDeleteUser}
+                user={userDelete}
+            />
+            <DenyUserModal
+                openDenyModal={openDenyModal}
+                onCloseDenyUserModal={onCloseDenyUserModal}
+                handleConfirmAdmin={handleConfirmAdmin}
+                user={userDeny}
+            />
             {canExecute("CREATE_USER") ? (
                 <a href="create-user" className="listUser-button button">
                     Crear usuario
