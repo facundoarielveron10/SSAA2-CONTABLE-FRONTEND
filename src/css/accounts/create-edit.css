@@ -1,0 +1,74 @@
+.createEditAccount {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--backgroundColor);
+    padding: 1.5rem;
+    border-radius: 8px;
+    color: var(--textColor);
+}
+
+.createEditAccount-form {
+    width: 600px;
+}
+
+.createEditAccount-group,
+.form-input.createEditAccount-input {
+    width: 100%;
+}
+
+.createEditAccount-typeAccount {
+    margin-bottom: 1.5rem;
+    width: 100%;
+}
+
+.createEditAccount-type-label {
+    display: block;
+    margin: 1rem 0 0.5rem 0;
+    color: var(--textColor);
+    font-weight: bold;
+}
+
+.createEditAccount-type-select {
+    width: 100%;
+    padding: 10px;
+    background-color: var(--backgroundInput);
+    color: var(--textColor);
+    border: 2px solid var(--primaryColor);
+    border-radius: 4px;
+    font-size: 16px;
+    appearance: none;
+    outline: none;
+    transition: border-color 0.3s;
+}
+
+.createEditAccount-type-select:hover {
+    border-color: var(--primaryDarkColor);
+}
+
+.createEditAccount-type-select:focus {
+    border-color: var(--primaryDarkColor);
+}
+
+.createEditAccount-spinner {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.createEditAccount-description {
+    color: var(--textColor);
+    cursor: pointer;
+    user-select: none;
+}
+
+.createEditAccount-button {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    margin-top: 2rem;
+}

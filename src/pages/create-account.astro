@@ -1,0 +1,21 @@
+---
+// AUTH
+import { isLoggedIn } from '../utils/verifyAuth';
+
+// COMPONENTS
+import Layout from '../layouts/Layout.astro';
+import LayoutAuth from '../layouts/LayoutAuth';
+import Create from "../components/accounts/Create"
+
+// REDIRECT
+const token = Astro.cookies.get("AUTH_TOKEN");
+if (!isLoggedIn(token)) {
+	return Astro.redirect("/login")
+}
+---
+
+<Layout title="Crear Cuenta - SSAA2">
+	<LayoutAuth client:only="react" page="create-account">
+		<Create client:only="react"/>
+	</LayoutAuth>
+</Layout>

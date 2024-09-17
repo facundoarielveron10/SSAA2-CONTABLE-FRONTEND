@@ -22,9 +22,8 @@ import clientAxios from "../../config/ClientAxios";
 import { useLoginStore } from "../../zustand/loginStore";
 
 // MODAL
-import Modal from "react-responsive-modal";
-import Table from "./Table";
-import Pagination from "../Pagination";
+import Table from "./Table.jsx";
+import Pagination from "../Pagination.jsx";
 
 export default function Accounts() {
     // STATES
