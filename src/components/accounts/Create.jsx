@@ -34,9 +34,9 @@ export default function Create() {
         const numericValue = Math.max(0, parseFloat(value));
 
         if (value) {
-            setBalance(numericValue);
+            setBalance(Number(numericValue));
         } else {
-            setBalance(0);
+            setBalance(Number(0));
         }
     };
 
@@ -49,15 +49,12 @@ export default function Create() {
         }
 
         try {
-            const { data } = await clientAxios.post(
-                "/role-action/create-account",
-                {
-                    name,
-                    description,
-                    type,
-                    balance,
-                }
-            );
+            const { data } = await clientAxios.post("/account/create-account", {
+                name,
+                description,
+                type,
+                balance,
+            });
 
             toast.success(data);
             resetValues();

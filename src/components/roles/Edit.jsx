@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 
 // UTILS
 import { errorResponse } from "../../utils/error";
+import { getActions, getTypeActions } from "../../utils/getData";
 
 // COMPONENTS
 import Spinner from "../Spinner.jsx";
@@ -24,6 +25,9 @@ import clientAxios from "../../config/ClientAxios";
 import { useLoginStore } from "../../zustand/loginStore";
 
 export default function Edit({ id }) {
+    // TYPES ACTIONS
+    const types = getTypeActions();
+
     // STATES
     const [actions, setActions] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
@@ -41,7 +45,15 @@ export default function Edit({ id }) {
 
     // EFFECTS
     useEffect(() => {
-        getActions();
+        const getActionsData = async () => {
+            setLoading(true);
+            const data = await getActions();
+            setActions(data.actions);
+            setTotalPages(data.totalPages);
+            setLoading(false);
+        };
+
+        getActionsData();
     }, [currentPage, selectedType]);
 
     useEffect(() => {
@@ -66,21 +78,6 @@ export default function Edit({ id }) {
             setSelectedActions(actionNames);
         } catch (error) {
             toast.error(errorResponse(error));
-        }
-    };
-
-    const getActions = async () => {
-        setLoading(true);
-        try {
-            const { data } = await clientAxios.get(
-                `/role-action/actions?page=${currentPage}&limit=${limit}&type=${selectedType}`
-            );
-            setActions(data.actions);
-            setTotalPages(data.totalPages);
-        } catch (error) {
-            toast.error(errorResponse(error));
-        } finally {
-            setLoading(false);
         }
     };
 
@@ -212,9 +209,11 @@ export default function Edit({ id }) {
                             <option defaultChecked value="">
                                 Todos los tipos
                             </option>
-                            <option value="Usuarios">Usuarios</option>
-                            <option value="Roles">Roles</option>
-                            <option value="Cuentas">Cuentas</option>
+                            {types.map((type, index) => (
+                                <option key={index} value={type}>
+                                    {type}
+                                </option>
+                            ))}
                         </select>
                     </div>
                     {actions.length === 0 || loading ? (

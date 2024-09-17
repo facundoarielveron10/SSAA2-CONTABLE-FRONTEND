@@ -4,6 +4,7 @@ import "../../css/auth/form.css";
 
 // UTILS
 import { errorResponse } from "../../utils/error";
+import { getRoles } from "../../utils/getData.js";
 
 // REACT
 import { useEffect, useState } from "react";
@@ -67,16 +68,6 @@ export default function Edit({ id }) {
         }
     };
 
-    const getRoles = async () => {
-        try {
-            const { data } = await clientAxios.get("/role-action/roles");
-
-            setRoles(data);
-        } catch (error) {
-            toast.error(errorResponse(error));
-        }
-    };
-
     const getUser = async () => {
         try {
             const { data } = await clientAxios.get(`/user/user/${id}`);
@@ -92,7 +83,13 @@ export default function Edit({ id }) {
 
     // EFFECTS
     useEffect(() => {
-        getRoles();
+        const getRolesData = async () => {
+            const data = await getRoles();
+
+            setRoles(data);
+        };
+
+        getRolesData();
         getUser();
     }, []);
 

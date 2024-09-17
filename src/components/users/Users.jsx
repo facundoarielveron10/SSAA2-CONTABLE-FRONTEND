@@ -8,11 +8,9 @@ import { useEffect, useState } from "react";
 // AXIOS
 import clientAxios from "../../config/ClientAxios";
 
-// MODAL
-import { Modal } from "react-responsive-modal";
-
 // UTILS
 import { errorResponse } from "../../utils/error";
+import { getRoles } from "../../utils/getData";
 
 // COMPONENTS
 import Spinner from "../Spinner";
@@ -54,7 +52,13 @@ export default function Users() {
 
     // EFFECTS
     useEffect(() => {
-        getRoles();
+        const getRolesData = async () => {
+            setLoading(true);
+            const data = await getRoles();
+            setLoading(false);
+        };
+
+        getRolesData();
     }, []);
 
     useEffect(() => {
@@ -82,18 +86,6 @@ export default function Users() {
             setUsers(data.users);
             setFilteredUsers(data.users);
             setTotalPages(data.totalPages);
-        } catch (error) {
-            toast.error(errorResponse(error));
-        } finally {
-            setLoading(false);
-        }
-    };
-
-    const getRoles = async () => {
-        setLoading(true);
-        try {
-            const { data } = await clientAxios.get("/role-action/roles");
-            setRoles(data);
         } catch (error) {
             toast.error(errorResponse(error));
         } finally {

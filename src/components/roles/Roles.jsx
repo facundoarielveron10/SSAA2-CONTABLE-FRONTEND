@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 
 // UTILS
 import { errorResponse } from "../../utils/error";
+import { getRoles } from "../../utils/getData";
 
 // COMPONENTS
 import Spinner from "../Spinner";
@@ -36,20 +37,15 @@ export default function Roles() {
 
     // EFFECTS
     useEffect(() => {
-        getRoles();
+        const getRolesData = async () => {
+            const data = await getRoles();
+            setRoles(data);
+        };
+
+        getRolesData();
     }, []);
 
     // FUNCTIONS
-    const getRoles = async () => {
-        try {
-            const { data } = await clientAxios.get("/role-action/roles");
-
-            setRoles(data);
-        } catch (error) {
-            toast.error(errorResponse(error));
-        }
-    };
-
     const onOpenDeleteRoleModal = (rol) => {
         setOpen(true);
         setRoleDelete(rol);

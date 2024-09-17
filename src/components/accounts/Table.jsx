@@ -4,9 +4,6 @@ import "../../css/accounts/accounts.css";
 // ZUSTAND
 import { useLoginStore } from "../../zustand/loginStore";
 
-// COMPONENTS
-import Search from "../Search";
-
 export default function Table({ accounts }) {
     // ZUSTAND
     const { canExecute } = useLoginStore();
@@ -27,7 +24,7 @@ export default function Table({ accounts }) {
                             <th>Descripcion</th>
                             <th>Tipo</th>
                             <th>Saldo</th>
-                            <th>Acciones</th>
+                            <th className="accounts-head-actions">Acciones</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -37,7 +34,32 @@ export default function Table({ accounts }) {
                                 <td>{account.description}</td>
                                 <td>{account.type}</td>
                                 <td>{account.balance}</td>
-                                <td>-</td>
+                                <td>
+                                    <div className="accounts-buttons">
+                                        {canExecute("EDIT_ACCOUNT") ? (
+                                            <a
+                                                href={`edit-account/${account._id}`}
+                                                className="accounts-button-table accounts-edit button"
+                                            >
+                                                Editar
+                                            </a>
+                                        ) : (
+                                            "-"
+                                        )}
+                                        {canExecute("DELETE_ACCOUNT") ? (
+                                            <button
+                                                onClick={() =>
+                                                    console.log(account)
+                                                }
+                                                className="accounts-button-table accounts-delete button"
+                                            >
+                                                Eliminar
+                                            </button>
+                                        ) : (
+                                            "-"
+                                        )}
+                                    </div>
+                                </td>
                             </tr>
                         ))}
                     </tbody>

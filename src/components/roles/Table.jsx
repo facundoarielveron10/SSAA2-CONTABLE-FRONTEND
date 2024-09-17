@@ -17,7 +17,7 @@ export default function Table({ roles, onOpenDeleteRoleModal, handleActive }) {
                         <tr>
                             <th>Nombre</th>
                             <th>Descripcion</th>
-                            <th>Acciones</th>
+                            <th className="roles-head-actions">Acciones</th>
                         </tr>
                     </thead>
                     <tbody>
