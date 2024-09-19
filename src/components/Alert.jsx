@@ -1,40 +1,21 @@
 // CSS
 import "../css/alert.css";
+import "react-toastify/dist/ReactToastify.css";
 
 // ALERT
-import { Toaster, toast } from "react-hot-toast";
-import { FaCircleCheck } from "react-icons/fa6";
-import { GoXCircleFill } from "react-icons/go";
+import { ToastContainer } from "react-toastify";
 
 export default function Alert() {
     return (
-        <div className="alert" onClick={() => toast.dismiss()}>
-            <Toaster
-                toastOptions={{
-                    success: {
-                        icon: <FaCircleCheck />,
-                        style: {
-                            background: "#11bd11",
-                            color: "white",
-                            textTransform: "uppercase",
-                            fontWeight: "bold",
-                            width: "100%",
-                        },
-                    },
-                    error: {
-                        icon: <GoXCircleFill />,
-                        style: {
-                            background: "#c70a0a",
-                            color: "white",
-                            textTransform: "uppercase",
-                            fontWeight: "bold",
-                            width: "100%",
-                        },
-                    },
-                }}
-                position="top-right"
-                reverseOrder={false}
-            />
-        </div>
+        <ToastContainer
+            position="top-right"
+            autoClose={5000}
+            closeOnClick
+            pauseOnFocusLoss
+            draggable
+            pauseOnHover
+            theme="colored"
+            className="alert"
+        />
     );
 }

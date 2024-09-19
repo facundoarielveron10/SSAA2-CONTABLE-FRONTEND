@@ -13,7 +13,7 @@ import { useEffect, useState } from "react";
 import clientAxios from "../../config/ClientAxios";
 
 // ALERTS
-import toast from "react-hot-toast";
+import { toast } from "react-toastify";
 import Alert from "../Alert.jsx";
 
 // ZUSTAND
@@ -28,6 +28,7 @@ export default function Edit({ id }) {
     const [passwordConfirm, setPasswordConfirm] = useState("");
     const [role, setRole] = useState("");
     const [roles, setRoles] = useState([]);
+    const [userData, setUserData] = useState({});
 
     // ZUSTAND
     const { user, logout } = useLoginStore();
@@ -43,6 +44,16 @@ export default function Edit({ id }) {
 
         if ([name, lastname, email, role].includes("")) {
             toast.error("Todos los campos son obligatorios");
+            return;
+        }
+
+        if (
+            name === userData.name &&
+            lastname === userData.lastname &&
+            email === userData.email &&
+            role === userData.role.name
+        ) {
+            toast.error("No se han realizado cambios");
             return;
         }
 
@@ -72,6 +83,7 @@ export default function Edit({ id }) {
         try {
             const { data } = await clientAxios.get(`/user/user/${id}`);
 
+            setUserData(data);
             setName(data?.name);
             setLastname(data?.lastname);
             setEmail(data?.email);

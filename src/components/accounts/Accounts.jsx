@@ -12,7 +12,7 @@ import { errorResponse } from "../../utils/error";
 import Spinner from "../Spinner";
 
 // ALERTS
-import toast from "react-hot-toast";
+import { toast } from "react-toastify";
 import Alert from "../Alert";
 
 // AXIOS
@@ -32,6 +32,7 @@ export default function Accounts() {
     const [currentPage, setCurrentPage] = useState(1);
     const [totalPages, setTotalPages] = useState(1);
     const [limit] = useState(10);
+    const [loading, setLoading] = useState(false);
 
     // ZUSTAND
     const { canExecute } = useLoginStore();
@@ -44,6 +45,7 @@ export default function Accounts() {
     // FUNCTIONS
     const getAccounts = async () => {
         try {
+            setLoading(true);
             const { data } = await clientAxios.get(
                 `/account/accounts?page=${currentPage}&limit=${limit}`
             );
@@ -52,6 +54,8 @@ export default function Accounts() {
             setTotalPages(data.totalPages);
         } catch (error) {
             toast.error(errorResponse(error));
+        } finally {
+            setLoading(false);
         }
     };
 
@@ -77,7 +81,7 @@ export default function Accounts() {
                     en el sistema, donde tambien se puede crear, editar y
                     elminar cuentas
                 </p>
-                {accounts.length === 0 ? (
+                {loading ? (
                     <div className="accounts-spinner">
                         <Spinner />
                     </div>

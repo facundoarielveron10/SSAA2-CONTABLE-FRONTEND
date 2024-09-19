@@ -18,7 +18,7 @@ const {id} = Astro.params;
 ---
 
 <Layout title="Editar Usuario - SSAA2">
-	<LayoutAuth client:only="react" page="create-role">
+	<LayoutAuth client:only="react" page="edit-user">
 		<Edit client:only="react" id={id}/>
 	</LayoutAuth>
 </Layout>

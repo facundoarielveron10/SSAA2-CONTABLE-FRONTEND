@@ -14,7 +14,7 @@ import clientAxios from "../../config/ClientAxios";
 
 // ALERTS
 import Alert from "../Alert.jsx";
-import toast from "react-hot-toast";
+import { toast } from "react-toastify";
 
 export default function Create() {
     // STATES

@@ -5,7 +5,7 @@ import { isLoggedIn } from '../../utils/verifyAuth';
 // COMPONENTS
 import Layout from '../../layouts/Layout.astro';
 import LayoutAuth from '../../layouts/LayoutAuth';
-import Edit from "../../components/roles/Edit"
+import Edit from "../../components/accounts/Edit"
 
 // REDIRECT
 const token = Astro.cookies.get("AUTH_TOKEN");
@@ -17,8 +17,8 @@ if (!isLoggedIn(token)) {
 const {id} = Astro.params;
 ---
 
-<Layout title="Editar Rol - SSAA2">
-	<LayoutAuth client:only="react" page="edit-role">
+<Layout title="Editar Cuenta - SSAA2">
+	<LayoutAuth client:only="react" page="edit-account">
 		<Edit client:only="react" id={id}/>
 	</LayoutAuth>
 </Layout>

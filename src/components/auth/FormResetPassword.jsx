@@ -15,7 +15,7 @@ import { errorResponse } from "../../utils/error";
 
 // COMPONENTS
 import Alert from "../Alert";
-import toast from "react-hot-toast";
+import { toast } from "react-toastify";
 
 export default function FormResetPassword() {
     // STATES

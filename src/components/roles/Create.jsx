@@ -14,7 +14,7 @@ import Spinner from "../Spinner";
 import Pagination from "../Pagination";
 
 // ALERTS
-import toast from "react-hot-toast";
+import { toast } from "react-toastify";
 import Alert from "../Alert";
 
 // AXIOS

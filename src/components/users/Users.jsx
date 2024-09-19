@@ -19,7 +19,7 @@ import Pagination from "../Pagination";
 import Search from "../Search";
 
 // ALERTS
-import toast from "react-hot-toast";
+import { toast } from "react-toastify";
 import Alert from "../Alert";
 
 // ZUSTAND

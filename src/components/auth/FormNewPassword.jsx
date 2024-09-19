@@ -15,7 +15,7 @@ import Spinner from "../Spinner";
 
 // ALERTS
 import Alert from "../Alert";
-import toast from "react-hot-toast";
+import { toast } from "react-toastify";
 
 export default function FormNewPassword() {
     // STATES

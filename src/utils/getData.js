@@ -1,5 +1,5 @@
 // TOAST
-import toast from "react-hot-toast";
+import { toast } from "react-toastify";
 
 // UTILS
 import { errorResponse } from "./error";

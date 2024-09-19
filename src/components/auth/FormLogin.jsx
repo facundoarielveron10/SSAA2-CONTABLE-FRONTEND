@@ -14,7 +14,7 @@ import { errorResponse } from "../../utils/error";
 import { useLoginStore } from "../../zustand/loginStore";
 
 // ALERTS
-import toast from "react-hot-toast";
+import { toast } from "react-toastify";
 import Alert from "../Alert";
 
 export default function FormLogin() {

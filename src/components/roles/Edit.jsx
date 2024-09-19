@@ -15,7 +15,7 @@ import Action from "./Action.jsx";
 import Pagination from "../Pagination.jsx";
 
 // ALERTS
-import toast from "react-hot-toast";
+import { toast } from "react-toastify";
 import Alert from "../Alert.jsx";
 
 // AXIOS
@@ -30,6 +30,7 @@ export default function Edit({ id }) {
 
     // STATES
     const [actions, setActions] = useState([]);
+    const [role, setRole] = useState({});
     const [currentPage, setCurrentPage] = useState(1);
     const [totalPages, setTotalPages] = useState(1);
     const [limit] = useState(5);
@@ -47,7 +48,7 @@ export default function Edit({ id }) {
     useEffect(() => {
         const getActionsData = async () => {
             setLoading(true);
-            const data = await getActions();
+            const data = await getActions(currentPage, limit, selectedType);
             setActions(data.actions);
             setTotalPages(data.totalPages);
             setLoading(false);
@@ -72,6 +73,7 @@ export default function Edit({ id }) {
                 (roleAction) => roleAction.action.name
             );
 
+            setRole(role);
             setName(role.name);
             setNameDescriptive(role.nameDescriptive);
             setDescription(role.description);
@@ -103,6 +105,15 @@ export default function Edit({ id }) {
 
         if ([name, nameDescriptive, description].includes("")) {
             toast.error("Todos los campos son obligatorios");
+            return;
+        }
+
+        if (
+            name === role.name &&
+            nameDescriptive === role.nameDescriptive &&
+            description === role.description
+        ) {
+            toast.error("No se han realizado cambios");
             return;
         }
 
@@ -224,6 +235,7 @@ export default function Edit({ id }) {
                         <div className="createEditRole-actions">
                             {actions.map((action) => (
                                 <Action
+                                    key={action._id}
                                     action={action}
                                     selectedActions={selectedActions}
                                     setSelectedActions={setSelectedActions}

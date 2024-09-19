@@ -13,7 +13,7 @@ import { getRoles } from "../../utils/getData";
 import Spinner from "../Spinner";
 
 // ALERTS
-import toast from "react-hot-toast";
+import { toast } from "react-toastify";
 import Alert from "../Alert";
 
 // AXIOS
