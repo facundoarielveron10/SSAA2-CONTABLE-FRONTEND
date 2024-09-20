@@ -10,6 +10,8 @@ import { errorResponse } from "../../utils/error";
 
 // COMPONENTS
 import Spinner from "../Spinner";
+import Table from "./Table.jsx";
+import Pagination from "../Pagination.jsx";
 
 // ALERTS
 import { toast } from "react-toastify";
@@ -21,14 +23,9 @@ import clientAxios from "../../config/ClientAxios";
 // ZUSTAND
 import { useLoginStore } from "../../zustand/loginStore";
 
-// MODAL
-import Table from "./Table.jsx";
-import Pagination from "../Pagination.jsx";
-
 export default function Accounts() {
     // STATES
     const [accounts, setAccounts] = useState([]);
-    const [open, setOpen] = useState(false);
     const [currentPage, setCurrentPage] = useState(1);
     const [totalPages, setTotalPages] = useState(1);
     const [limit] = useState(10);

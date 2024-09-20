@@ -17,6 +17,9 @@ import { IoIosArrowForward } from "react-icons/io";
 import { toast } from "react-toastify";
 import Alert from "../Alert";
 
+// COMPONENTS
+import Logo from "../Logo";
+
 export default function FormRegister() {
     // STATES
     const [name, setName] = useState("");
@@ -61,6 +64,10 @@ export default function FormRegister() {
     return (
         <>
             <Alert />
+            {/* LOGO */}
+            <div className="form-logo">
+                <Logo animation={true} name={true} width={80} height={60} />
+            </div>
             <form className="form" onSubmit={handleSubmit}>
                 {/* NAME */}
                 <div className="form-group">

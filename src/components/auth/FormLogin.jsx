@@ -17,6 +17,9 @@ import { useLoginStore } from "../../zustand/loginStore";
 import { toast } from "react-toastify";
 import Alert from "../Alert";
 
+// COMPONENTS
+import Logo from "../Logo";
+
 export default function FormLogin() {
     // ZUSTAND
     const { isSubmitting, successSubmitted, errorSubmitting, submitLogin } =
@@ -66,6 +69,10 @@ export default function FormLogin() {
         <>
             {/* ALERTA */}
             <Alert />
+            {/* LOGO */}
+            <div className="form-logo">
+                <Logo animation={true} name={true} width={80} height={60} />
+            </div>
             <form className="form" onSubmit={handleSubmit}>
                 {/* EMAIL */}
                 <div className="form-group">

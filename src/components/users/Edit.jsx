@@ -70,6 +70,7 @@ export default function Edit({ id }) {
 
             toast.success(data);
             resetValues();
+            getUser();
 
             if (id === user?.id) {
                 logout();

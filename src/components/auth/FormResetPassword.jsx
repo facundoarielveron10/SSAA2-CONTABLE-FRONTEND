@@ -16,6 +16,7 @@ import { errorResponse } from "../../utils/error";
 // COMPONENTS
 import Alert from "../Alert";
 import { toast } from "react-toastify";
+import Logo from "../Logo";
 
 export default function FormResetPassword() {
     // STATES
@@ -49,6 +50,10 @@ export default function FormResetPassword() {
     return (
         <>
             <Alert />
+            {/* LOGO */}
+            <div className="form-logo">
+                <Logo animation={true} name={true} width={80} height={60} />
+            </div>
             <form className="form" onSubmit={handleSubmit}>
                 {/* EMAIL */}
                 <div className="form-group">

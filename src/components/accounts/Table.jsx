@@ -46,18 +46,6 @@ export default function Table({ accounts }) {
                                         ) : (
                                             "-"
                                         )}
-                                        {canExecute("DELETE_ACCOUNT") ? (
-                                            <button
-                                                onClick={() =>
-                                                    console.log(account)
-                                                }
-                                                className="accounts-button-table accounts-delete button"
-                                            >
-                                                Eliminar
-                                            </button>
-                                        ) : (
-                                            "-"
-                                        )}
                                     </div>
                                 </td>
                             </tr>

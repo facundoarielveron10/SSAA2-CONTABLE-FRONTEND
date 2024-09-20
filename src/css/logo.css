@@ -1,0 +1,38 @@
+.logo {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    user-select: none;
+}
+
+.logo-name {
+    margin: 0;
+    font-size: 1.4rem;
+    font-weight: bold;
+    font-family: "Reddit Sans Condensed", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 900;
+    font-style: normal;
+    background: linear-gradient(126deg, #8018c4 0%, #6200ee 50%, #4d0bc6 100%);
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+}
+
+.click-indicator {
+    position: absolute;
+    top: 0;
+    right: 0;
+    background-color: #f00; /* Color del indicador (rojo en este caso) */
+    color: #fff; /* Color del texto del indicador */
+    border-radius: 50%; /* Forma circular */
+    width: 24px; /* Ancho del indicador */
+    height: 24px; /* Alto del indicador */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px; /* Tamaño del texto del indicador */
+    cursor: pointer; /* Cursor de clic */
+    font-weight: bold; /* Hacer el texto negrita */
+}

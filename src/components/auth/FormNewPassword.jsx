@@ -12,6 +12,7 @@ import { errorResponse } from "../../utils/error";
 
 // COMPONENTS
 import Spinner from "../Spinner";
+import Logo from "../Logo";
 
 // ALERTS
 import Alert from "../Alert";
@@ -80,6 +81,10 @@ export default function FormNewPassword() {
     return (
         <>
             <Alert />
+            {/* LOGO */}
+            <div className="form-logo">
+                <Logo animation={true} name={true} width={80} height={60} />
+            </div>
             {isValidToken ? (
                 <form className="form" onSubmit={handleSubmitNewPassword}>
                     {/* PASSWORD */}

@@ -4,6 +4,9 @@ import "../../css/navbar.css";
 // ZUSTAND
 import { useLoginStore } from "../../zustand/loginStore";
 
+// COMPONENTS
+import Logo from "../Logo";
+
 export default function NavbarDesktop() {
     // ZUSTAND
     const { logout, canExecute } = useLoginStore();
@@ -18,7 +21,7 @@ export default function NavbarDesktop() {
             <div className="navbar-container">
                 <div className="navbar-logo">
                     <a href="/" className="navbar-link">
-                        Logo aqui
+                        <Logo />
                     </a>
                     <div className="navbar-separator"></div>
                 </div>

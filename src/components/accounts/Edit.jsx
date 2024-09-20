@@ -45,12 +45,13 @@ export default function Edit({ id }) {
 
         try {
             const { data } = await clientAxios.post("/account/edit-account", {
+                idAccount: id,
                 name,
                 description,
             });
 
             toast.success(data);
-            resetValues();
+            getAccount();
         } catch (error) {
             toast.error(errorResponse(error));
         }

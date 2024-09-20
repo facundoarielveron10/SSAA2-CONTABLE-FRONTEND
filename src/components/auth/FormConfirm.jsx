@@ -12,6 +12,7 @@ import { errorResponse } from "../../utils/error";
 
 // COMPONENTS
 import Spinner from "../Spinner";
+import Logo from "../Logo";
 
 // ALERTS
 import { toast } from "react-toastify";
@@ -50,6 +51,10 @@ export default function FormLogin() {
     return (
         <>
             <Alert />
+            {/* LOGO */}
+            <div className="form-logo">
+                <Logo animation={true} name={true} width={80} height={60} />
+            </div>
             <form className="form" onSubmit={handleSubmit}>
                 {/* TOKEN */}
                 <div className="form-group">
