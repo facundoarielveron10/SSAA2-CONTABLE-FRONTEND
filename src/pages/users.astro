@@ -15,7 +15,7 @@ if (!isLoggedIn(token)) {
 ---
 
 <Layout title="Usuarios - SSAA2">
-	<LayoutAuth client:only="react" page="users">
+	<LayoutAuth client:only="react" action="GET_USERS">
 		<ListUsers client:only="react"/>
 	</LayoutAuth>
 </Layout>

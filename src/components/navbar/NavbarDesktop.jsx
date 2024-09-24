@@ -41,6 +41,11 @@ export default function NavbarDesktop() {
                             Cuentas
                         </a>
                     ) : null}
+                    {canExecute("GET_DIARY") ? (
+                        <a href="/diary-book" className="navbar-link">
+                            Libro Diario
+                        </a>
+                    ) : null}
                     <button className="button" onClick={handleLogout}>
                         Cerrar Sesión
                     </button>

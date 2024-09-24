@@ -8,7 +8,7 @@ import { errorResponse } from "./error";
 import clientAxios from "../config/ClientAxios";
 
 export const getTypeActions = () => {
-    const types = ["Usuarios", "Roles", "Cuentas"];
+    const types = ["Usuarios", "Roles", "Cuentas", "Libros"];
 
     return types;
 };

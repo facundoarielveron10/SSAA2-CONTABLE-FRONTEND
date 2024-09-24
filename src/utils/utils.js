@@ -1,9 +1,16 @@
-export const hasChanges = (newData, originalData) => {
-    return !Object.entries(newData).every(([key, value]) => {
-        if (key === "role") {
-            return value === originalData.role.name;
-        }
+export const haveArraysChanged = (originalArray, editedArray) => {
+    if (originalArray.length !== editedArray.length) {
+        return true;
+    }
 
-        return value === originalData[key];
-    });
+    const originalSorted = [...originalArray].sort();
+    const editedSorted = [...editedArray].sort();
+
+    for (let i = 0; i < originalSorted.length; i++) {
+        if (originalSorted[i] !== editedSorted[i]) {
+            return true;
+        }
+    }
+
+    return false;
 };

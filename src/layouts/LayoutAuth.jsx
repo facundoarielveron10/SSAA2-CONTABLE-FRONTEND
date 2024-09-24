@@ -8,16 +8,18 @@ import DarkMode from "../components/DarkMode.jsx";
 // ZUSTAND
 import { useLoginStore } from "../zustand/loginStore";
 
-export default function LayoutAuth({ children, page }) {
+export default function LayoutAuth({ children, action }) {
     // ZUSTAND
     const { canExecute, initializeTheme } = useLoginStore();
 
     // EFFECTS
     useEffect(() => {
-        if (page === "users" && !canExecute("GET_USERS")) {
-            window.location.assign("/");
+        if (action) {
+            if (!canExecute(action)) {
+                window.location.assign("/");
+            }
         }
-    }, [page]);
+    }, [action]);
 
     useEffect(() => {
         initializeTheme();

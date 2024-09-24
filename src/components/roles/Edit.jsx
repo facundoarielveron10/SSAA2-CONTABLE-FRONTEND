@@ -8,6 +8,7 @@ import { useEffect, useState } from "react";
 // UTILS
 import { errorResponse } from "../../utils/error";
 import { getActions, getTypeActions } from "../../utils/getData";
+import { haveArraysChanged } from "../../utils/utils.js";
 
 // COMPONENTS
 import Spinner from "../Spinner.jsx";
@@ -38,6 +39,7 @@ export default function Edit({ id }) {
     const [nameDescriptive, setNameDescriptive] = useState("");
     const [description, setDescription] = useState("");
     const [selectedType, setSelectedType] = useState("");
+    const [selectedActionsOriginal, setSelectedActionsOriginal] = useState([]);
     const [selectedActions, setSelectedActions] = useState([]);
     const [loading, setLoading] = useState(false);
 
@@ -78,6 +80,7 @@ export default function Edit({ id }) {
             setNameDescriptive(role.nameDescriptive);
             setDescription(role.description);
             setSelectedActions(actionNames);
+            setSelectedActionsOriginal(actionNames);
         } catch (error) {
             toast.error(errorResponse(error));
         }
@@ -109,6 +112,7 @@ export default function Edit({ id }) {
         }
 
         if (
+            !haveArraysChanged(selectedActionsOriginal, selectedActions) &&
             name === role.name &&
             nameDescriptive === role.nameDescriptive &&
             description === role.description

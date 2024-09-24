@@ -4,9 +4,6 @@ import "../../css/users/users.css";
 // ZUSTAND
 import { useLoginStore } from "../../zustand/loginStore";
 
-// COMPONENTS
-import Search from "../Search";
-
 export default function Table({
     users,
     onOpenChangeRoleModal,

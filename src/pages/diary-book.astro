@@ -4,8 +4,8 @@ import { isLoggedIn } from '../utils/verifyAuth';
 
 // COMPONENTS
 import Layout from '../layouts/Layout.astro';
-import RolesComponent from "../components/roles/Roles";
 import LayoutAuth from '../layouts/LayoutAuth';
+import Book from '../components/Diary/Book';
 
 // REDIRECT
 const token = Astro.cookies.get("AUTH_TOKEN");
@@ -14,8 +14,8 @@ if (!isLoggedIn(token)) {
 }
 ---
 
-<Layout title="Roles - SSAA2">
-	<LayoutAuth client:only="react" action="GET_ROLES">
-		<RolesComponent client:only="react"/>
+<Layout title="Libro Diario - SSAA2">
+	<LayoutAuth client:only="react" action="GET_DIARY">
+		<Book client:only="react"/>
 	</LayoutAuth>
 </Layout>

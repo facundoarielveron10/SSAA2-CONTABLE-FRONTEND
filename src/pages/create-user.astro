@@ -18,7 +18,7 @@ if (!isLoggedIn(token)) {
 ---
 
 <Layout title="Crear Usuario - SSAA2" container={false}>
-	<LayoutAuth client:only="react" page="create-user">
+	<LayoutAuth client:only="react" action="CREATE_USER">
 		<div class="register">
 			<Create client:only="react"/>
 		</div>

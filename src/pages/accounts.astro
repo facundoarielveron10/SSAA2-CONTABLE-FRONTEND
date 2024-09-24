@@ -15,7 +15,7 @@ if (!isLoggedIn(token)) {
 ---
 
 <Layout title="Cuentas - SSAA2">
-	<LayoutAuth client:only="react" page="accounts">
+	<LayoutAuth client:only="react" action="GET_ACCOUNTS">
 		<AccountsComponent client:only="react"/>
 	</LayoutAuth>
 </Layout>
