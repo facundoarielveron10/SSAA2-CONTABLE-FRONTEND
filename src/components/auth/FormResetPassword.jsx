@@ -74,7 +74,7 @@ export default function FormResetPassword() {
             </form>
             {/* ENLACES */}
             <div className="form-links">
-                <a className="form-link" href="/register">
+                <a className="form-link" href="/login">
                     <IoIosArrowForward /> Iniciar Sesión
                 </a>
                 <a className="form-link" href="/register">

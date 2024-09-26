@@ -55,6 +55,7 @@ export default function Users() {
         const getRolesData = async () => {
             setLoading(true);
             const data = await getRoles();
+            setRoles(data);
             setLoading(false);
         };
 
