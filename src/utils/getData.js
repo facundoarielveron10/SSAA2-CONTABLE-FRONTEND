@@ -31,6 +31,18 @@ export const getActions = async (currentPage, limit, selectedType) => {
 
         return data;
     } catch (error) {
-        toast.error(errorResponse());
+        toast.error(errorResponse(error));
+    }
+};
+
+export const getAccounts = async (currentPage, limit) => {
+    try {
+        const { data } = await clientAxios.get(
+            `/account/accounts?page=${currentPage}&limit=${limit}`
+        );
+
+        return data;
+    } catch (error) {
+        toast.error(errorResponse(error));
     }
 };

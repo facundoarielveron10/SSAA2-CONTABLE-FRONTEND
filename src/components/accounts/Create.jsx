@@ -3,10 +3,11 @@ import "../../css/accounts/create-edit.css";
 import "../../css/auth/form.css";
 
 // REACT
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 // UTILS
 import { errorResponse } from "../../utils/error";
+import { getAccounts } from "../../utils/getData";
 
 // ALERTS
 import { toast } from "react-toastify";
@@ -20,12 +21,16 @@ export default function Create() {
     const [name, setName] = useState("");
     const [description, setDescription] = useState("");
     const [type, setType] = useState("");
+    const [account, setAccount] = useState("");
+    const [accounts, setAccounts] = useState([]);
+    const [loading, setLoading] = useState(false);
 
     // FUNCTIONS
     const resetValues = () => {
         setName("");
         setDescription("");
         setType("");
+        setAccount("");
     };
 
     const handleSubmit = async (e) => {
@@ -41,6 +46,7 @@ export default function Create() {
                 name,
                 description,
                 type,
+                accountId: account,
             });
 
             toast.success(data);
@@ -49,6 +55,23 @@ export default function Create() {
             toast.error(errorResponse(error));
         }
     };
+
+    // EFFECTS
+    useEffect(() => {
+        const getAccountsData = async () => {
+            try {
+                setLoading(true);
+                const data = await getAccounts();
+                setAccounts(data.accounts);
+            } catch (error) {
+                toast.error(errorResponse(error));
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        getAccountsData();
+    }, []);
 
     return (
         <>
@@ -106,13 +129,37 @@ export default function Create() {
                             onChange={(e) => setType(e.target.value)}
                         >
                             <option disabled defaultChecked value="">
-                                -- Selecciona un tipo de cuenta --
+                                Selecciona un tipo de cuenta
                             </option>
                             <option value="Activo">Activo</option>
                             <option value="Pasivo">Pasivo</option>
-                            <option value="Resultado+">Resultado +</option>
-                            <option value="Resultado-">Resultado -</option>
+                            <option value="R+">Resultado +</option>
+                            <option value="R-">Resultado -</option>
                             <option value="PN">Patrimonio Neto</option>
+                        </select>
+                    </div>
+
+                    <div className="createEditAccount-typeAccount">
+                        <label
+                            className="createEditAccount-type-label"
+                            htmlFor="type"
+                        >
+                            Hijo/a de cuenta
+                        </label>
+                        <select
+                            className="createEditAccount-type-select"
+                            id="account"
+                            value={account}
+                            onChange={(e) => setAccount(e.target.value)}
+                        >
+                            <option defaultChecked value="">
+                                Ninguna cuenta
+                            </option>
+                            {accounts.map((account) => (
+                                <option key={account._id} value={account._id}>
+                                    {account.nameAccount}
+                                </option>
+                            ))}
                         </select>
                     </div>
 

@@ -45,7 +45,7 @@ export default function ChangeRoleModal({
                             className="listUser-modal-option"
                             value=""
                         >
-                            -- Seleccionar Rol --
+                            Seleccionar Rol
                         </option>
                         {roles.length > 0
                             ? roles.map((rol) => (

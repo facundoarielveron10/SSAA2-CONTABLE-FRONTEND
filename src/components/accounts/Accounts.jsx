@@ -6,7 +6,8 @@ import "react-responsive-modal/styles.css";
 import { useEffect, useState } from "react";
 
 // UTILS
-import { errorResponse } from "../../utils/error";
+import { getAccounts } from "../../utils/getData.js";
+import { errorResponse } from "../../utils/error.js";
 
 // COMPONENTS
 import Spinner from "../Spinner";
@@ -16,9 +17,6 @@ import Pagination from "../Pagination.jsx";
 // ALERTS
 import { toast } from "react-toastify";
 import Alert from "../Alert";
-
-// AXIOS
-import clientAxios from "../../config/ClientAxios";
 
 // ZUSTAND
 import { useLoginStore } from "../../zustand/loginStore";
@@ -36,26 +34,23 @@ export default function Accounts() {
 
     // EFFECTS
     useEffect(() => {
-        getAccounts();
+        const getAccountsData = async () => {
+            try {
+                setLoading(true);
+                const data = await getAccounts(currentPage, limit);
+                setAccounts(data.accounts);
+                setTotalPages(data.totalPages);
+            } catch (error) {
+                toast.error(errorResponse(error));
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        getAccountsData();
     }, [currentPage]);
 
     // FUNCTIONS
-    const getAccounts = async () => {
-        try {
-            setLoading(true);
-            const { data } = await clientAxios.get(
-                `/account/accounts?page=${currentPage}&limit=${limit}`
-            );
-
-            setAccounts(data.accounts);
-            setTotalPages(data.totalPages);
-        } catch (error) {
-            toast.error(errorResponse(error));
-        } finally {
-            setLoading(false);
-        }
-    };
-
     const handleNextPage = () => {
         if (currentPage < totalPages) {
             setCurrentPage(currentPage + 1);

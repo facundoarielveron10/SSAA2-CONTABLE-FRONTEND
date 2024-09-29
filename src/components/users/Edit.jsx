@@ -198,7 +198,7 @@ export default function Edit({ id }) {
                                 className="createEditUser-option"
                                 value=""
                             >
-                                -- Seleccionar Rol --
+                                Seleccionar Rol
                             </option>
                             {roles.length > 0
                                 ? roles.map((rol) => (
