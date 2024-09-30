@@ -1,0 +1,130 @@
+.createSeat {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--backgroundColor);
+    padding: 1.5rem;
+    border-radius: 8px;
+    color: var(--textColor);
+}
+
+.createSeat-form {
+    width: 600px;
+}
+
+.createSeat-group,
+.form-input.createSeat-input {
+    width: 97%;
+}
+
+.createSeat-account {
+    width: 100%;
+}
+
+.createSeat-account-label {
+    margin-bottom: 0.5rem;
+}
+
+.createSeat-account-select {
+    width: 100%;
+    padding: 10px;
+    background-color: var(--backgroundInput);
+    color: var(--textColor);
+    border: none;
+    border-radius: 4px;
+    font-size: 16px;
+    appearance: none;
+    outline: none;
+    transition: border-color 0.3s;
+}
+
+.createSeat-account-select:hover {
+    border-color: var(--primaryDarkColor);
+}
+
+.createSeat-account-select:focus {
+    border-color: var(--primaryDarkColor);
+}
+
+.createSeat-add-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 1rem;
+    width: 100%;
+}
+
+.createSeat-add {
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--primaryColor);
+    border: none;
+    border-radius: 50%;
+    color: var(--backgroundTextColor);
+    transition: background-color 0.3s;
+}
+
+.createSeat-icon {
+    width: 40px;
+    height: 50px;
+}
+
+.createSeat-button {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    margin-top: 2rem;
+}
+
+.createSeat-seats-empty {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 2rem;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+.createSeat-seats-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* 3 columnas en desktop */
+    gap: 1rem; /* Espacio entre las cartas */
+    margin-top: 2rem; /* Espacio superior */
+}
+
+.createSeat-seat-card {
+    background-color: var(--backgroundInput);
+    border-radius: 8px;
+    padding: 1rem;
+    color: var(--textColor);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s;
+}
+
+.createSeat-seat-card:hover {
+    transform: scale(1.05);
+}
+
+.createSeat-description,
+.createSeat-account,
+.createSeat-value {
+    margin: 0.5rem 0; /* Espaciado entre elementos dentro de la carta */
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .createSeat-seats-container {
+        grid-template-columns: repeat(2, 1fr); /* 2 columnas en tablets */
+    }
+}
+
+@media (max-width: 480px) {
+    .createSeat-seats-container {
+        grid-template-columns: 1fr; /* 1 columna en móviles */
+    }
+}

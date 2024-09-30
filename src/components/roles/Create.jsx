@@ -181,7 +181,7 @@ export default function Create() {
                             />
                         </div>
                     </div>
-
+                    {/* TIPO DE ACCIONES */}
                     <div className="createEditRole-typeRole">
                         <label
                             className="createEditRole-type-label"

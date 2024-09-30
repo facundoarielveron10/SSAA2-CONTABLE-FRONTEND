@@ -1,0 +1,230 @@
+// CSS
+import "../../css/books/createSeat.css";
+import "../../css/auth/form.css";
+
+// REACT
+import { useEffect, useState } from "react";
+
+// UTILS
+import { errorResponse } from "../../utils/error";
+
+// ICONS
+import { IoIosAdd } from "react-icons/io";
+
+// ALERTS
+import { toast } from "react-toastify";
+import Alert from "../Alert";
+
+// AXIOS
+import clientAxios from "../../config/ClientAxios";
+import { getAccounts } from "../../utils/getData";
+
+export default function CreateSeat() {
+    // STATES
+    const [description, setDescription] = useState("");
+    const [account, setAccount] = useState("");
+    const [debe, setDebe] = useState(0);
+    const [haber, setHaber] = useState(0);
+    const [seats, setSeats] = useState([]);
+    const [accounts, setAccounts] = useState([]);
+
+    // EFFECTS
+    useEffect(() => {
+        const getAccountsData = async () => {
+            try {
+                const data = await getAccounts();
+                setAccounts(data.accounts);
+            } catch (error) {
+                toast.error(errorResponse(error));
+            }
+        };
+
+        getAccountsData();
+    }, []);
+
+    // FUNCTIONS
+    const resetValues = () => {};
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        console.log("Enviar...");
+
+        try {
+        } catch (error) {
+            toast.error(errorResponse(error));
+        }
+    };
+
+    const handleChangeValue = (value, type) => {
+        if (type === "debe") setDebe(value === "" ? 0 : Number(value));
+        if (type === "haber") setHaber(value === "" ? 0 : Number(value));
+    };
+
+    const handleAdd = () => {
+        if (!description || !account || debe < 0 || haber < 0) {
+            toast.error("Todos los campos son obligatorios");
+            return;
+        }
+
+        if (debe > 0 && haber > 0) {
+            toast.error("Valores de Debe y Haber incorrectos");
+            return;
+        }
+
+        if (debe > 0) {
+            setHaber(0);
+        } else if (haber > 0) {
+            setDebe(0);
+        }
+
+        const newSeat = {
+            description,
+            account,
+            debe,
+            haber,
+        };
+
+        setSeats((prevSeats) => [...prevSeats, newSeat]);
+
+        resetValues();
+
+        toast.success("Asiento agregado correctamente.");
+    };
+
+    const getNameAccount = (accountId) => {
+        const accountData = accounts.find(
+            (account) => account._id === accountId
+        );
+
+        if (accountData) {
+            return accountData.nameAccount;
+        } else {
+            return null;
+        }
+    };
+
+    return (
+        <>
+            <Alert />
+            <div className="createSeat">
+                <h1 className="title">Creacion de Asiento</h1>
+                <p className="paragraph">
+                    Completa el siguiente formulario para crear un nuevo
+                    asiento, donde debera ir presionando en el mas para ir
+                    sumando datos.
+                </p>
+
+                <form className="createSeat-form" onSubmit={handleSubmit}>
+                    <div className="form">
+                        {/* DESCRIPCION */}
+                        <div className="form-group createSeat-group">
+                            <label className="form-label" htmlFor="name">
+                                Descripcion del Asiento
+                            </label>
+                            <input
+                                className="form-input createSeat-input"
+                                type="text"
+                                id="description"
+                                value={description}
+                                onChange={(e) => setDescription(e.target.value)}
+                            />
+                        </div>
+                        {/* CUENTAS */}
+                        <div className="createSeat-account">
+                            <label
+                                className="createSeat-account-label form-label"
+                                htmlFor="accounts"
+                            >
+                                Cuenta
+                            </label>
+                            <select
+                                className="createSeat-account-select"
+                                id="accounts"
+                                value={account}
+                                onChange={(e) => setAccount(e.target.value)}
+                            >
+                                <option defaultChecked value="">
+                                    Selecciona una cuenta
+                                </option>
+                                {accounts.map((account) => (
+                                    <option
+                                        key={account._id}
+                                        value={account._id}
+                                    >
+                                        {account.nameAccount}
+                                    </option>
+                                ))}
+                            </select>
+                        </div>
+                        {/* DEBE */}
+                        <div className="form-group createSeat-group">
+                            <label className="form-label" htmlFor="name">
+                                Debe del Asiento
+                            </label>
+                            <input
+                                className="form-input createSeat-input"
+                                type="number"
+                                id="debe"
+                                min={0}
+                                value={debe}
+                                onChange={(e) =>
+                                    handleChangeValue(e.target.value, "debe")
+                                }
+                            />
+                        </div>
+                        {/* HABER */}
+                        <div className="form-group createSeat-group">
+                            <label className="form-label" htmlFor="name">
+                                Haber del Asiento
+                            </label>
+                            <input
+                                className="form-input createSeat-input"
+                                type="number"
+                                id="haber"
+                                min={0}
+                                value={haber}
+                                onChange={(e) =>
+                                    handleChangeValue(e.target.value, "haber")
+                                }
+                            />
+                        </div>
+                        {/* AGREGAR ASIENTO */}
+                        <div className="createSeat-add-container">
+                            <button
+                                type="button"
+                                onClick={handleAdd}
+                                className="createSeat-add"
+                            >
+                                <IoIosAdd className="createSeat-icon" />
+                            </button>
+                        </div>
+                    </div>
+                    <button type="submit" className="createSeat-button button">
+                        Crear Asiento
+                    </button>
+                </form>
+
+                {seats.length === 0 ? (
+                    <p className="createSeat-seats-empty">
+                        Aun no se ha agregado ningun asiento
+                    </p>
+                ) : (
+                    <div className="createSeat-seats-container">
+                        {seats.map((seat, index) => (
+                            <div className="createSeat-seat-card" key={index}>
+                                <p className="createSeat-description">
+                                    {seat.description}
+                                </p>
+                                <p className="createSeat-account">
+                                    {getNameAccount(seat.account)}
+                                </p>
+                                <p className="createSeat-value">{seat.debe}</p>
+                                <p className="createSeat-value">{seat.haber}</p>
+                            </div>
+                        ))}
+                    </div>
+                )}
+            </div>
+        </>
+    );
+}
