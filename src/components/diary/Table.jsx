@@ -1,10 +1,13 @@
 // CSS
-import "../../css/users/users.css";
+import "../../css/books/diary.css";
+
+// UTILS
+import { getDateNow } from "../../utils/getData";
 
 // ZUSTAND
 import { useLoginStore } from "../../zustand/loginStore";
 
-export default function Table({}) {
+export default function Table({ seats, getNameAccount }) {
     // ZUSTAND
     const { canExecute } = useLoginStore();
 
@@ -24,18 +27,14 @@ export default function Table({}) {
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td>24/09/2024</td>
-                        <td>Caja</td>
-                        <td>50.000</td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td>24/09/2024</td>
-                        <td>Deudores por ventas</td>
-                        <td></td>
-                        <td>50.000</td>
-                    </tr>
+                    {seats.map((seat, index) => (
+                        <tr key={index}>
+                            <td>{getDateNow()}</td>
+                            <td>{getNameAccount(seat.account)}</td>
+                            <td>${seat.debe}</td>
+                            <td>${seat.haber}</td>
+                        </tr>
+                    ))}
                 </tbody>
             </table>
         </div>

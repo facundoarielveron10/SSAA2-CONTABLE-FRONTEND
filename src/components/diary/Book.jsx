@@ -55,7 +55,7 @@ export default function Book() {
                     </div>
                 ) : (
                     <div className="diary-seating-container">
-                        <Table />
+                        {/* <Table /> */}
                         <Pagination
                             handleNextPage={handleNextPage}
                             handlePreviousPage={handlePreviousPage}

@@ -6,6 +6,7 @@ import "../../css/auth/form.css";
 import { useEffect, useState } from "react";
 
 // UTILS
+import { getAccounts, getDateNow } from "../../utils/getData";
 import { errorResponse } from "../../utils/error";
 
 // ICONS
@@ -17,7 +18,9 @@ import Alert from "../Alert";
 
 // AXIOS
 import clientAxios from "../../config/ClientAxios";
-import { getAccounts } from "../../utils/getData";
+
+// COMPONENTS
+import Table from "./Table";
 
 export default function CreateSeat() {
     // STATES
@@ -43,7 +46,11 @@ export default function CreateSeat() {
     }, []);
 
     // FUNCTIONS
-    const resetValues = () => {};
+    const resetValues = () => {
+        setAccount("");
+        setDebe(0);
+        setHaber(0);
+    };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -61,7 +68,7 @@ export default function CreateSeat() {
     };
 
     const handleAdd = () => {
-        if (!description || !account || debe < 0 || haber < 0) {
+        if (!account || debe < 0 || haber < 0) {
             toast.error("Todos los campos son obligatorios");
             return;
         }
@@ -78,7 +85,6 @@ export default function CreateSeat() {
         }
 
         const newSeat = {
-            description,
             account,
             debe,
             haber,
@@ -116,6 +122,9 @@ export default function CreateSeat() {
 
                 <form className="createSeat-form" onSubmit={handleSubmit}>
                     <div className="form">
+                        <h2 className="createSeat-form-title">
+                            Descripcion del asiento
+                        </h2>
                         {/* DESCRIPCION */}
                         <div className="form-group createSeat-group">
                             <label className="form-label" htmlFor="name">
@@ -129,6 +138,11 @@ export default function CreateSeat() {
                                 onChange={(e) => setDescription(e.target.value)}
                             />
                         </div>
+                    </div>
+                    <div className="form">
+                        <h2 className="createSeat-form-title">
+                            Datos del Asiento
+                        </h2>
                         {/* CUENTAS */}
                         <div className="createSeat-account">
                             <label
@@ -210,18 +224,7 @@ export default function CreateSeat() {
                     </p>
                 ) : (
                     <div className="createSeat-seats-container">
-                        {seats.map((seat, index) => (
-                            <div className="createSeat-seat-card" key={index}>
-                                <p className="createSeat-description">
-                                    {seat.description}
-                                </p>
-                                <p className="createSeat-account">
-                                    {getNameAccount(seat.account)}
-                                </p>
-                                <p className="createSeat-value">{seat.debe}</p>
-                                <p className="createSeat-value">{seat.haber}</p>
-                            </div>
-                        ))}
+                        <Table seats={seats} getNameAccount={getNameAccount} />
                     </div>
                 )}
             </div>

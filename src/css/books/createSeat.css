@@ -10,7 +10,17 @@
 }
 
 .createSeat-form {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
     width: 600px;
+}
+
+.createSeat-form-title {
+    margin: 0 0 0.5rem 0;
+    width: 100%;
+    text-align: start;
+    text-transform: uppercase;
 }
 
 .createSeat-group,
@@ -78,7 +88,6 @@
     justify-content: center;
     align-items: center;
     width: 100%;
-    margin-top: 2rem;
 }
 
 .createSeat-seats-empty {
@@ -91,40 +100,36 @@
 }
 
 .createSeat-seats-container {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr); /* 3 columnas en desktop */
-    gap: 1rem; /* Espacio entre las cartas */
-    margin-top: 2rem; /* Espacio superior */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-top: 2rem;
+    width: 1000px;
 }
 
-.createSeat-seat-card {
-    background-color: var(--backgroundInput);
-    border-radius: 8px;
-    padding: 1rem;
+.createSeat-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.createSeat-table thead {
+    color: var(--backgroundTextColor);
+}
+
+.createSeat-table tbody {
     color: var(--textColor);
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s;
 }
 
-.createSeat-seat-card:hover {
-    transform: scale(1.05);
+.createSeat-table th,
+.createSeat-table td {
+    padding: 10px;
+    text-align: left;
 }
 
-.createSeat-description,
-.createSeat-account,
-.createSeat-value {
-    margin: 0.5rem 0; /* Espaciado entre elementos dentro de la carta */
+.createSeat-table th {
+    background-color: var(--primaryDarkColor);
 }
 
-/* Responsive Design */
-@media (max-width: 768px) {
-    .createSeat-seats-container {
-        grid-template-columns: repeat(2, 1fr); /* 2 columnas en tablets */
-    }
-}
-
-@media (max-width: 480px) {
-    .createSeat-seats-container {
-        grid-template-columns: 1fr; /* 1 columna en móviles */
-    }
+.createSeat-table tr:nth-child(even) {
+    background-color: var(--backgroundInput);
 }

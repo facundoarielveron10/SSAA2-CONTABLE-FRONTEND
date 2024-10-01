@@ -37,12 +37,26 @@ export const getActions = async (currentPage, limit, selectedType) => {
 
 export const getAccounts = async (currentPage, limit) => {
     try {
-        const { data } = await clientAxios.get(
-            `/account/accounts?page=${currentPage}&limit=${limit}`
-        );
+        const endpoint =
+            currentPage && limit
+                ? `/account/accounts?page=${currentPage}&limit=${limit}`
+                : `/account/accounts`;
+
+        const { data } = await clientAxios.get(endpoint);
 
         return data;
     } catch (error) {
         toast.error(errorResponse(error));
     }
+};
+
+export const getDateNow = () => {
+    const today = new Date();
+    const day = String(today.getDate()).padStart(2, "0");
+    const month = String(today.getMonth() + 1).padStart(2, "0");
+    const year = today.getFullYear();
+
+    const formattedDate = `${day}/${month}/${year}`;
+
+    return formattedDate;
 };

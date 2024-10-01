@@ -21,16 +21,15 @@ export default function Create() {
     const [name, setName] = useState("");
     const [description, setDescription] = useState("");
     const [type, setType] = useState("");
-    const [account, setAccount] = useState("");
+    const [account, setAccount] = useState(null);
     const [accounts, setAccounts] = useState([]);
-    const [loading, setLoading] = useState(false);
 
     // FUNCTIONS
     const resetValues = () => {
         setName("");
         setDescription("");
         setType("");
-        setAccount("");
+        setAccount(null);
     };
 
     const handleSubmit = async (e) => {
@@ -60,13 +59,10 @@ export default function Create() {
     useEffect(() => {
         const getAccountsData = async () => {
             try {
-                setLoading(true);
                 const data = await getAccounts();
                 setAccounts(data.accounts);
             } catch (error) {
                 toast.error(errorResponse(error));
-            } finally {
-                setLoading(false);
             }
         };
 
@@ -152,7 +148,7 @@ export default function Create() {
                             value={account}
                             onChange={(e) => setAccount(e.target.value)}
                         >
-                            <option defaultChecked value="">
+                            <option defaultChecked value={null}>
                                 Ninguna cuenta
                             </option>
                             {accounts.map((account) => (
