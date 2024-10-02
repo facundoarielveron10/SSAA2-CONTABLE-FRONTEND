@@ -75,6 +75,17 @@
     align-items: center;
 }
 
+.accounts-table-header {
+    display: flex;
+    justify-content: space-between;
+    align-content: center;
+    color: var(--textColor);
+    font-weight: bold;
+    text-transform: uppercase;
+    border-top: 1px solid #2e2e2e;
+    margin-top: 0.5rem;
+}
+
 .accounts-table {
     width: 100%;
     border-collapse: collapse;
@@ -136,4 +147,24 @@
     align-items: center;
     width: 100%;
     margin-top: 1rem;
+}
+
+.accounts-table-col-code {
+    width: 10%;
+}
+
+.accounts-table-col-name {
+    width: 25%;
+}
+
+.accounts-table-col-description {
+    width: 45%;
+}
+
+.accounts-table-col-balance {
+    width: 10%;
+}
+
+.accounts-table-col-actions {
+    width: 10%;
 }

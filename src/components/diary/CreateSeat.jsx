@@ -6,7 +6,6 @@ import "../../css/auth/form.css";
 import { useEffect, useState } from "react";
 
 // UTILS
-import { getAccounts } from "../../utils/getData";
 import { generateID } from "../../utils/utils";
 import { errorResponse } from "../../utils/error";
 
@@ -34,16 +33,7 @@ export default function CreateSeat() {
 
     // EFFECTS
     useEffect(() => {
-        const getAccountsData = async () => {
-            try {
-                const data = await getAccounts();
-                setAccounts(data.accounts);
-            } catch (error) {
-                toast.error(errorResponse(error));
-            }
-        };
-
-        getAccountsData();
+        getAccounts();
     }, []);
 
     // FUNCTIONS
@@ -51,6 +41,18 @@ export default function CreateSeat() {
         setAccount("");
         setDebe(0);
         setHaber(0);
+    };
+
+    const getAccounts = async () => {
+        try {
+            const { data } = await clientAxios.get(
+                "/account/accounts/childless"
+            );
+
+            setAccounts(data);
+        } catch (error) {
+            toast.error(errorResponse(error));
+        }
     };
 
     const handleSubmit = async (e) => {
