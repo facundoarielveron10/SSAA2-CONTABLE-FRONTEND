@@ -60,3 +60,14 @@ export const getDateNow = () => {
 
     return formattedDate;
 };
+
+export const getTotalsDebeHaber = (seats) => {
+    return seats.reduce(
+        (totals, seat) => {
+            totals.debe += seat.debe;
+            totals.haber += seat.haber;
+            return totals;
+        },
+        { debe: 0, haber: 0 }
+    );
+};

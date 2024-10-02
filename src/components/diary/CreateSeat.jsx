@@ -21,6 +21,7 @@ import clientAxios from "../../config/ClientAxios";
 
 // COMPONENTS
 import Table from "./Table";
+import { getTotalsDebeHaber } from "../../utils/getData";
 
 export default function CreateSeat() {
     // STATES
@@ -57,9 +58,26 @@ export default function CreateSeat() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        console.log("Enviar...");
+        const { debe: totalDebe, haber: totalHaber } =
+            getTotalsDebeHaber(seats);
+
+        if (!description) {
+            toast.error("El Campo Descripcion es Obligatorio");
+            return;
+        }
+
+        if (seats.length < 2) {
+            toast.error("Debe por lo menos contender 2 operaciones");
+            return;
+        }
+
+        if (totalDebe - totalHaber !== 0) {
+            toast.error("Valores de Debe y Haber Incorrectos");
+            return;
+        }
 
         try {
+            console.log("Enviar los datos: ", seats);
         } catch (error) {
             toast.error(errorResponse(error));
         }
