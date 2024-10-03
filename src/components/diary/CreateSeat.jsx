@@ -6,7 +6,8 @@ import "../../css/auth/form.css";
 import { useEffect, useState } from "react";
 
 // UTILS
-import { getAccounts, getDateNow } from "../../utils/getData";
+import { getAccounts } from "../../utils/getData";
+import { generateID } from "../../utils/utils";
 import { errorResponse } from "../../utils/error";
 
 // ICONS
@@ -68,7 +69,7 @@ export default function CreateSeat() {
     };
 
     const handleAdd = () => {
-        if (!account || debe < 0 || haber < 0) {
+        if (!account || (debe <= 0 && haber <= 0)) {
             toast.error("Todos los campos son obligatorios");
             return;
         }
@@ -85,6 +86,7 @@ export default function CreateSeat() {
         }
 
         const newSeat = {
+            id: generateID(),
             account,
             debe,
             haber,
@@ -95,6 +97,11 @@ export default function CreateSeat() {
         resetValues();
 
         toast.success("Asiento agregado correctamente.");
+    };
+
+    const handleDelete = (seatId) => {
+        const seatsFilter = seats.filter((seat) => seat.id !== seatId);
+        setSeats(seatsFilter);
     };
 
     const getNameAccount = (accountId) => {
@@ -224,7 +231,11 @@ export default function CreateSeat() {
                     </p>
                 ) : (
                     <div className="createSeat-seats-container">
-                        <Table seats={seats} getNameAccount={getNameAccount} />
+                        <Table
+                            seats={seats}
+                            getNameAccount={getNameAccount}
+                            handleDelete={handleDelete}
+                        />
                     </div>
                 )}
             </div>

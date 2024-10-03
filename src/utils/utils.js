@@ -14,3 +14,14 @@ export const haveArraysChanged = (originalArray, editedArray) => {
 
     return false;
 };
+
+export const generateID = () => {
+    const characters =
+        "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+    let id = "";
+    for (let i = 0; i < 5; i++) {
+        id += characters.charAt(Math.floor(Math.random() * characters.length));
+    }
+
+    return id;
+};

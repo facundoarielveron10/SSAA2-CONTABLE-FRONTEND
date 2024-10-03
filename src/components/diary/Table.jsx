@@ -7,7 +7,10 @@ import { getDateNow } from "../../utils/getData";
 // ZUSTAND
 import { useLoginStore } from "../../zustand/loginStore";
 
-export default function Table({ seats, getNameAccount }) {
+// ICONS
+import { FaTrashAlt } from "react-icons/fa";
+
+export default function Table({ seats, getNameAccount, handleDelete }) {
     // ZUSTAND
     const { canExecute } = useLoginStore();
 
@@ -24,6 +27,7 @@ export default function Table({ seats, getNameAccount }) {
                         <th>Cuentas</th>
                         <th>Debe</th>
                         <th>Haber</th>
+                        <th>Acciones</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -33,6 +37,15 @@ export default function Table({ seats, getNameAccount }) {
                             <td>{getNameAccount(seat.account)}</td>
                             <td>${seat.debe}</td>
                             <td>${seat.haber}</td>
+                            <td className="createSeat-delete-container">
+                                <button
+                                    type="button"
+                                    onClick={() => handleDelete(seat.id)}
+                                    className="createSeat-delete button"
+                                >
+                                    <FaTrashAlt />
+                                </button>
+                            </td>
                         </tr>
                     ))}
                 </tbody>

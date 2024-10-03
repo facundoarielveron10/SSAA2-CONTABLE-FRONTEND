@@ -133,3 +133,15 @@
 .createSeat-table tr:nth-child(even) {
     background-color: var(--backgroundInput);
 }
+
+.createSeat-delete-container {
+    width: 10%;
+}
+
+.createSeat-delete {
+    background-color: var(--colorDelete);
+}
+
+.createSeat-delete:hover {
+    background-color: var(--colorDeleteDark);
+}
