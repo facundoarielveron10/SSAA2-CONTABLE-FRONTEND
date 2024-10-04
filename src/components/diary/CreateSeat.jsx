@@ -77,12 +77,18 @@ export default function CreateSeat() {
         }
 
         try {
-            console.log("Enviar los datos: ", seats);
+            const { data } = await clientAxios.post(
+                "/account-seat/create-seat",
+                {
+                    description,
+                    seats,
+                }
+            );
         } catch (error) {
             toast.error(errorResponse(error));
         }
     };
-
+    console.log(seats);
     const handleChangeValue = (value, type) => {
         if (type === "debe") setDebe(value === "" ? 0 : Number(value));
         if (type === "haber") setHaber(value === "" ? 0 : Number(value));
