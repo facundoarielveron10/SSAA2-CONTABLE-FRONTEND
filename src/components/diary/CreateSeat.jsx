@@ -84,11 +84,16 @@ export default function CreateSeat() {
                     seats,
                 }
             );
+
+            toast.success(data);
+            resetValues();
+            setSeats([]);
+            setDescription("");
         } catch (error) {
             toast.error(errorResponse(error));
         }
     };
-    console.log(seats);
+
     const handleChangeValue = (value, type) => {
         if (type === "debe") setDebe(value === "" ? 0 : Number(value));
         if (type === "haber") setHaber(value === "" ? 0 : Number(value));

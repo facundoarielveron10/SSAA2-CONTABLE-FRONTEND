@@ -3,6 +3,7 @@ import "../../css/books/diary.css";
 
 // UTILS
 import { getDateNow } from "../../utils/getData";
+import { formatBalance } from "../../utils/format";
 
 // ZUSTAND
 import { useLoginStore } from "../../zustand/loginStore";
@@ -35,8 +36,8 @@ export default function Table({ seats, getNameAccount, handleDelete }) {
                         <tr key={index}>
                             <td>{getDateNow()}</td>
                             <td>{getNameAccount(seat.account)}</td>
-                            <td>${seat.debe}</td>
-                            <td>${seat.haber}</td>
+                            <td>${formatBalance(seat.debe)}</td>
+                            <td>${formatBalance(seat.haber)}</td>
                             <td className="createSeat-delete-container">
                                 <button
                                     type="button"

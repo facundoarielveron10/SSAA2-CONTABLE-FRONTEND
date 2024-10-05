@@ -4,11 +4,14 @@ import "../../css/accounts/accounts.css";
 // ZUSTAND
 import { useLoginStore } from "../../zustand/loginStore";
 
+// UTILS
+import { formatBalance } from "../../utils/format";
+
 export default function Table({ accounts }) {
     // ZUSTAND
     const { canExecute } = useLoginStore();
 
-    // Códigos por tipo de cuenta
+    // CODES
     const codesByType = {
         Activo: 1000,
         Pasivo: 2000,
@@ -17,7 +20,7 @@ export default function Table({ accounts }) {
         PN: 5000,
     };
 
-    // Nombres formateados por tipo de cuenta
+    // NAMES
     const formattedTypeNames = {
         Activo: "Activo",
         Pasivo: "Pasivo",
@@ -26,7 +29,7 @@ export default function Table({ accounts }) {
         PN: "Patrimonio Neto",
     };
 
-    // Separar cuentas por tipo
+    // FUNCTIONS
     const groupedAccounts = accounts.reduce((acc, account) => {
         const { type } = account;
         if (!acc[type]) {
@@ -84,7 +87,7 @@ export default function Table({ accounts }) {
                                             {account.description}
                                         </td>
                                         <td className="accounts-table-col-balance">
-                                            {account.balance}
+                                            ${formatBalance(account.balance)}
                                         </td>
                                         <td className="accounts-table-col-actions">
                                             <div className="accounts-buttons">
