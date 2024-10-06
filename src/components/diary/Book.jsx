@@ -5,14 +5,20 @@ import "../../css/books/diary.css";
 import { useState } from "react";
 
 // COMPONENTS
-import Alert from "../Alert";
 import Spinner from "../Spinner";
-import Search from "../Search";
-import Table from "./Table";
+import Table from "./TablePreview";
 import Pagination from "../Pagination";
 
 // ZUSTAND
 import { useLoginStore } from "../../zustand/loginStore";
+
+// ALERT
+import { toast } from "react-toastify";
+import Alert from "../Alert";
+
+// UTILS
+import { errorResponse } from "../../utils/error";
+import clientAxios from "../../config/ClientAxios";
 
 export default function Book() {
     // STATES
@@ -25,6 +31,17 @@ export default function Book() {
     const { canExecute } = useLoginStore();
 
     // FUNTIONS
+    const getDiary = async () => {
+        setLoading(true);
+        try {
+            const { data } = await clientAxios.get("/account-seat/diary");
+        } catch (error) {
+            toast.error(errorResponse(error));
+        } finally {
+            setLoading(true);
+        }
+    };
+
     const handleNextPage = () => {
         if (currentPage < totalPages) {
             setCurrentPage(currentPage + 1);
@@ -55,7 +72,7 @@ export default function Book() {
                     </div>
                 ) : (
                     <div className="diary-seating-container">
-                        {/* <Table /> */}
+                        <Table />
                         <Pagination
                             handleNextPage={handleNextPage}
                             handlePreviousPage={handlePreviousPage}

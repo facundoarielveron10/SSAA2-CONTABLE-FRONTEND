@@ -20,7 +20,7 @@ import Alert from "../Alert";
 import clientAxios from "../../config/ClientAxios";
 
 // COMPONENTS
-import Table from "./Table";
+import TablePreview from "./TablePreview";
 import { getTotalsDebeHaber } from "../../utils/getData";
 
 export default function CreateSeat() {
@@ -262,7 +262,7 @@ export default function CreateSeat() {
                     </p>
                 ) : (
                     <div className="createSeat-seats-container">
-                        <Table
+                        <TablePreview
                             seats={seats}
                             getNameAccount={getNameAccount}
                             handleDelete={handleDelete}

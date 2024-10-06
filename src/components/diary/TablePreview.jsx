@@ -5,7 +5,10 @@ import "../../css/books/diary.css";
 import { getDateNow } from "../../utils/getData";
 import { formatBalance } from "../../utils/format";
 
-export default function TablePreview({ seats }) {
+// ICONS
+import { FaTrashAlt } from "react-icons/fa";
+
+export default function TablePreview({ seats, getNameAccount, handleDelete }) {
     return (
         <div className="diary-seating">
             <div className="diary-header">
@@ -19,15 +22,25 @@ export default function TablePreview({ seats }) {
                         <th>Cuentas</th>
                         <th>Debe</th>
                         <th>Haber</th>
+                        <th>Acciones</th>
                     </tr>
                 </thead>
                 <tbody>
                     {seats.map((seat, index) => (
                         <tr key={index}>
-                            <td>{seat.date}</td>
+                            <td>{getDateNow()}</td>
                             <td>{getNameAccount(seat.account)}</td>
                             <td>${formatBalance(seat.debe)}</td>
                             <td>${formatBalance(seat.haber)}</td>
+                            <td className="createSeat-delete-container">
+                                <button
+                                    type="button"
+                                    onClick={() => handleDelete(seat.id)}
+                                    className="createSeat-delete button"
+                                >
+                                    <FaTrashAlt />
+                                </button>
+                            </td>
                         </tr>
                     ))}
                 </tbody>
