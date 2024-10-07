@@ -7,7 +7,6 @@ import { useEffect, useState } from "react";
 // COMPONENTS
 import Spinner from "../Spinner";
 import Table from "./Table";
-import Pagination from "../Pagination";
 
 // ZUSTAND
 import { useLoginStore } from "../../zustand/loginStore";
@@ -25,10 +24,7 @@ import clientAxios from "../../config/ClientAxios";
 export default function Book() {
     // STATES
     const [loading, setLoading] = useState(false);
-    const [currentPage, setCurrentPage] = useState(1);
-    const [totalPages, setTotalPages] = useState(1);
     const [seats, setSeats] = useState([]);
-    const [limit] = useState(10);
 
     // ZUSTAND
     const { canExecute } = useLoginStore();
@@ -37,29 +33,13 @@ export default function Book() {
     const getDiary = async () => {
         setLoading(true);
         try {
-            const { data } = await clientAxios.get(
-                `/account-seat/diary?page=${currentPage}&limit=${limit}`
-            );
+            const { data } = await clientAxios.get("/account-seat/diary");
 
             setSeats(data.seats);
-            setCurrentPage(data.currentPage);
-            setTotalPages(data.totalPages);
         } catch (error) {
             toast.error(errorResponse(error));
         } finally {
             setLoading(false);
-        }
-    };
-
-    const handleNextPage = () => {
-        if (currentPage < totalPages) {
-            setCurrentPage(currentPage + 1);
-        }
-    };
-
-    const handlePreviousPage = () => {
-        if (currentPage > 1) {
-            setCurrentPage(currentPage - 1);
         }
     };
 
@@ -87,12 +67,6 @@ export default function Book() {
                 ) : (
                     <div className="diary-seating-container">
                         <Table seats={seats} />
-                        <Pagination
-                            handleNextPage={handleNextPage}
-                            handlePreviousPage={handlePreviousPage}
-                            currentPage={currentPage}
-                            totalPages={totalPages}
-                        />
                     </div>
                 )}
             </div>

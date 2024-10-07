@@ -24,9 +24,6 @@ import { useLoginStore } from "../../zustand/loginStore";
 export default function Accounts() {
     // STATES
     const [accounts, setAccounts] = useState([]);
-    const [currentPage, setCurrentPage] = useState(1);
-    const [totalPages, setTotalPages] = useState(1);
-    const [limit] = useState(10);
     const [loading, setLoading] = useState(false);
 
     // ZUSTAND
@@ -37,9 +34,8 @@ export default function Accounts() {
         const getAccountsData = async () => {
             try {
                 setLoading(true);
-                const data = await getAccounts(currentPage, limit);
+                const data = await getAccounts();
                 setAccounts(data.accounts);
-                setTotalPages(data.totalPages);
             } catch (error) {
                 toast.error(errorResponse(error));
             } finally {
@@ -48,20 +44,7 @@ export default function Accounts() {
         };
 
         getAccountsData();
-    }, [currentPage]);
-
-    // FUNCTIONS
-    const handleNextPage = () => {
-        if (currentPage < totalPages) {
-            setCurrentPage(currentPage + 1);
-        }
-    };
-
-    const handlePreviousPage = () => {
-        if (currentPage > 1) {
-            setCurrentPage(currentPage - 1);
-        }
-    };
+    }, []);
 
     return (
         <>
@@ -80,14 +63,6 @@ export default function Accounts() {
                 ) : (
                     <div>
                         <Table accounts={accounts} />
-                        {accounts.length > 0 ? (
-                            <Pagination
-                                handleNextPage={handleNextPage}
-                                handlePreviousPage={handlePreviousPage}
-                                currentPage={currentPage}
-                                totalPages={totalPages}
-                            />
-                        ) : null}
                     </div>
                 )}
             </div>

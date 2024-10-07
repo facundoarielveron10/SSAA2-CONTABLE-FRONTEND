@@ -21,6 +21,9 @@
     padding: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     width: 1000px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
 }
 
 .diary-header {
@@ -35,6 +38,12 @@
     text-transform: uppercase;
     color: var(--textColor);
     margin: 0;
+}
+
+.diary-table-container {
+    flex-grow: 1;
+    overflow-y: auto;
+    max-height: calc(100vh - 60px);
 }
 
 .diary-table {
@@ -87,6 +96,17 @@
 
 .diary-table-col-haber {
     width: 12.5%;
+}
+
+.diary-no-seats {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.5rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    color: var(--textColor);
 }
 
 .diary-spinner {
