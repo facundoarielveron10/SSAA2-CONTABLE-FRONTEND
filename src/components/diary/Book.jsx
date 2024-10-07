@@ -2,11 +2,11 @@
 import "../../css/books/diary.css";
 
 // REACT
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 // COMPONENTS
 import Spinner from "../Spinner";
-import Table from "./TablePreview";
+import Table from "./Table";
 import Pagination from "../Pagination";
 
 // ZUSTAND
@@ -18,6 +18,8 @@ import Alert from "../Alert";
 
 // UTILS
 import { errorResponse } from "../../utils/error";
+
+// AXIOS
 import clientAxios from "../../config/ClientAxios";
 
 export default function Book() {
@@ -25,6 +27,7 @@ export default function Book() {
     const [loading, setLoading] = useState(false);
     const [currentPage, setCurrentPage] = useState(1);
     const [totalPages, setTotalPages] = useState(1);
+    const [seats, setSeats] = useState([]);
     const [limit] = useState(10);
 
     // ZUSTAND
@@ -34,11 +37,17 @@ export default function Book() {
     const getDiary = async () => {
         setLoading(true);
         try {
-            const { data } = await clientAxios.get("/account-seat/diary");
+            const { data } = await clientAxios.get(
+                `/account-seat/diary?page=${currentPage}&limit=${limit}`
+            );
+
+            setSeats(data.seats);
+            setCurrentPage(data.currentPage);
+            setTotalPages(data.totalPages);
         } catch (error) {
             toast.error(errorResponse(error));
         } finally {
-            setLoading(true);
+            setLoading(false);
         }
     };
 
@@ -53,6 +62,11 @@ export default function Book() {
             setCurrentPage(currentPage - 1);
         }
     };
+
+    // EFFECTS
+    useEffect(() => {
+        getDiary();
+    }, []);
 
     return (
         <>
@@ -72,7 +86,7 @@ export default function Book() {
                     </div>
                 ) : (
                     <div className="diary-seating-container">
-                        <Table />
+                        <Table seats={seats} />
                         <Pagination
                             handleNextPage={handleNextPage}
                             handlePreviousPage={handlePreviousPage}

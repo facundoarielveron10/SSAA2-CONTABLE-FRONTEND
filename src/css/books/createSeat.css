@@ -134,7 +134,8 @@
     background-color: var(--backgroundInput);
 }
 
-.createSeat-delete-container {
+.diary-seating .createSeat-delete-container {
+    text-align: center;
     width: 10%;
 }
 

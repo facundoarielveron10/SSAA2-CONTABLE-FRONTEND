@@ -54,14 +54,39 @@
 .diary-table td {
     padding: 10px;
     text-align: left;
+    border: 1px solid #2e2e2e;
 }
 
 .diary-table th {
     background-color: var(--primaryDarkColor);
 }
 
-.diary-table tr:nth-child(even) {
-    background-color: var(--backgroundInput);
+.diary-seating .diary-haber {
+    padding-left: 4rem;
+}
+
+.diary-table-col-date {
+    width: 10%;
+}
+
+.diary-table-col-description {
+    width: 20%;
+}
+
+.diary-table-col-user {
+    width: 20%;
+}
+
+.diary-table-col-accounts {
+    width: 25%;
+}
+
+.diary-table-col-debe {
+    width: 12.5%;
+}
+
+.diary-table-col-haber {
+    width: 12.5%;
 }
 
 .diary-spinner {

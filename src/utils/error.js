@@ -6,6 +6,7 @@ export const errorResponse = (error) => {
     } else if (error?.response?.data?.error) {
         return error?.response?.data?.error;
     } else {
+        console.error(error);
         return "Hubo un error, recargue y vuelva a intentar";
     }
 };
