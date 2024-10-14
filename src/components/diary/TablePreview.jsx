@@ -10,8 +10,14 @@ import { formatBalance } from "../../utils/format";
 
 // ICONS
 import { FaTrashAlt } from "react-icons/fa";
+import { FaPencil } from "react-icons/fa6";
 
-export default function TablePreview({ seats, getNameAccount, handleDelete }) {
+export default function TablePreview({
+    seats,
+    getNameAccount,
+    handleDelete,
+    handleEdit,
+}) {
     // ZUSTAND
     const { user } = useLoginStore();
 
@@ -29,7 +35,7 @@ export default function TablePreview({ seats, getNameAccount, handleDelete }) {
                         <th className="diary-table-col-accounts">Cuentas</th>
                         <th className="diary-table-col-debe">Debe</th>
                         <th className="diary-table-col-haber">Haber</th>
-                        <th>Acciones</th>
+                        <th className="diary-table-col-actions">Acciones</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -43,28 +49,37 @@ export default function TablePreview({ seats, getNameAccount, handleDelete }) {
                             </td>
                             <td
                                 className={`${
-                                    seat.haber > 0 ? "diary-haber" : ""
+                                    seat.amount.type === "haber"
+                                        ? "diary-haber"
+                                        : ""
                                 } diary-table-col-accounts`}
                             >
                                 {getNameAccount(seat.account)}
                             </td>
                             <td className="diary-table-col-debe">
-                                {seat.debe > 0
-                                    ? `$${formatBalance(seat.debe)}`
+                                {seat.amount.type === "debe"
+                                    ? `$${formatBalance(seat.amount.amount)}`
                                     : ""}
                             </td>
                             <td className="diary-table-col-haber">
-                                {seat.haber > 0
-                                    ? `$${formatBalance(seat.haber)}`
+                                {seat.amount.type === "haber"
+                                    ? `$${formatBalance(seat.amount.amount)}`
                                     : ""}
                             </td>
-                            <td className="createSeat-delete-container">
+                            <td className="createSeat-actions-container">
                                 <button
                                     type="button"
                                     onClick={() => handleDelete(seat.id)}
                                     className="createSeat-delete button"
                                 >
                                     <FaTrashAlt />
+                                </button>
+                                <button
+                                    type="button"
+                                    onClick={() => handleEdit(seat)}
+                                    className="button"
+                                >
+                                    <FaPencil />
                                 </button>
                             </td>
                         </tr>

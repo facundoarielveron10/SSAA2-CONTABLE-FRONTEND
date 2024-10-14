@@ -8,7 +8,7 @@ import { errorResponse } from "./error";
 import clientAxios from "../config/ClientAxios";
 
 export const getTypeActions = () => {
-    const types = ["Usuarios", "Roles", "Cuentas", "Libros"];
+    const types = ["Usuarios", "Roles", "Cuentas", "Libros", "Asientos"];
 
     return types;
 };
@@ -64,8 +64,12 @@ export const getDateNow = () => {
 export const getTotalsDebeHaber = (seats) => {
     return seats.reduce(
         (totals, seat) => {
-            totals.debe += seat.debe;
-            totals.haber += seat.haber;
+            const { amount } = seat;
+            if (amount.type === "debe") {
+                totals.debe += amount.amount;
+            } else if (amount.type === "haber") {
+                totals.haber += amount.amount;
+            }
             return totals;
         },
         { debe: 0, haber: 0 }

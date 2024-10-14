@@ -5,7 +5,7 @@ import { isLoggedIn } from '../utils/verifyAuth';
 // COMPONENTS
 import Layout from '../layouts/Layout.astro';
 import LayoutAuth from '../layouts/LayoutAuth';
-import Create from "../components/seats/CreateSeat"
+import SeatsContent from "../components/seats/Seats";
 
 // REDIRECT
 const token = Astro.cookies.get("AUTH_TOKEN");
@@ -14,8 +14,8 @@ if (!isLoggedIn(token)) {
 }
 ---
 
-<Layout title="Crear Asiento - SSAA2">
-	<LayoutAuth client:only="react" action="CREATE_SEAT">
-		<Create client:only="react"/>
+<Layout title="Asientos - SSAA2">
+	<LayoutAuth client:only="react" action="GET_SEATS">
+		<SeatsContent client:only="react"/>
 	</LayoutAuth>
 </Layout>

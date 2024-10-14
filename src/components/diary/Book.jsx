@@ -8,9 +8,6 @@ import { useEffect, useState } from "react";
 import Spinner from "../Spinner";
 import Table from "./Table";
 
-// ZUSTAND
-import { useLoginStore } from "../../zustand/loginStore";
-
 // ALERT
 import { toast } from "react-toastify";
 import Alert from "../Alert";
@@ -25,9 +22,6 @@ export default function Book() {
     // STATES
     const [loading, setLoading] = useState(false);
     const [seats, setSeats] = useState([]);
-
-    // ZUSTAND
-    const { canExecute } = useLoginStore();
 
     // FUNTIONS
     const getDiary = async () => {
@@ -70,11 +64,6 @@ export default function Book() {
                     </div>
                 )}
             </div>
-            {canExecute("CREATE_SEAT") ? (
-                <a href="create-seat" className="diary-button button">
-                    Crear asiento
-                </a>
-            ) : null}
         </>
     );
 }

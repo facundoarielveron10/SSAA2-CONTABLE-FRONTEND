@@ -41,6 +41,11 @@ export default function NavbarDesktop() {
                             Cuentas
                         </a>
                     ) : null}
+                    {canExecute("GET_SEATS") ? (
+                        <a href="/seats" className="navbar-link">
+                            Asientos
+                        </a>
+                    ) : null}
                     {canExecute("GET_DIARY") ? (
                         <a href="/diary-book" className="navbar-link">
                             Libro Diario

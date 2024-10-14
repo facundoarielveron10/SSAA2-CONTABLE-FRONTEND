@@ -28,6 +28,52 @@
     width: 97%;
 }
 
+.createSeat-subgroup {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.createSeat-subgroup-input {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 60%;
+}
+
+.createSeat-accountButtons {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5rem;
+    width: 40%;
+}
+
+.createSeat-accountButton {
+    text-decoration: none;
+    font-size: 0.7rem;
+}
+
+.createSeat-checkouts {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 2rem;
+    width: 40%;
+}
+
+.createSeat-checkout {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.createSeat-checkout .checkout {
+    position: unset;
+}
+
 .createSeat-account {
     width: 100%;
 }
@@ -134,12 +180,13 @@
     background-color: var(--backgroundInput);
 }
 
-.diary-seating .createSeat-delete-container {
+.diary-seating .createSeat-actions-container {
     text-align: center;
-    width: 10%;
+    width: 15%;
 }
 
 .createSeat-delete {
+    margin-right: 0.5rem;
     background-color: var(--colorDelete);
 }
 

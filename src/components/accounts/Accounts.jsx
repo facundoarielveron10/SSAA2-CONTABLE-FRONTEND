@@ -12,7 +12,6 @@ import { errorResponse } from "../../utils/error.js";
 // COMPONENTS
 import Spinner from "../Spinner";
 import Table from "./Table.jsx";
-import Pagination from "../Pagination.jsx";
 
 // ALERTS
 import { toast } from "react-toastify";
