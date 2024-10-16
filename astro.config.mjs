@@ -10,4 +10,9 @@ export default defineConfig({
     adapter: node({
         mode: "standalone",
     }),
+    vite: {
+        ssr: {
+            noExternal: ["react-toastify/dist/", "react-datepicker/dist/"],
+        },
+    },
 });
