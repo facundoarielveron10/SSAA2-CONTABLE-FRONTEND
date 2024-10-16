@@ -1,5 +1,5 @@
 // CSS
-import "../../css/roles/create-edit.css";
+import "@styles/roles/create-edit.css";
 
 export default function Action({
     action,

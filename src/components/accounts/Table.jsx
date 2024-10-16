@@ -1,5 +1,5 @@
 // CSS
-import "../../css/accounts/accounts.css";
+import "@styles/accounts/accounts.css";
 
 // ZUSTAND
 import { useLoginStore } from "../../zustand/loginStore";

@@ -1,5 +1,5 @@
 // CSS
-import "../../css/seats/seats.css";
+import "@styles/seats/seats.css";
 
 // REACT
 import { useEffect, useState } from "react";
@@ -23,22 +23,20 @@ import clientAxios from "../../config/ClientAxios";
 import { useLoginStore } from "../../zustand/loginStore";
 
 export default function Seats() {
-    // STATES
-    const [loading, setLoading] = useState(false);
-    const [currentPage, setCurrentPage] = useState(1);
-    const [totalPages, setTotalPages] = useState(1);
-    const [limit] = useState(10);
-    const [seats, setSeats] = useState([]);
-
     // ZUSTAND
     const { canExecute } = useLoginStore();
 
     // FUNTIONS
     const getSeats = async () => {
+        if (!startDate || !endDate) {
+            toast.error("Se debe colocar ambas fechas");
+            return;
+        }
+
         setLoading(true);
         try {
             const { data } = await clientAxios.get(
-                `/account-seat/seats?page=${currentPage}&limit=${limit}`
+                `/account-seat/seats?page=${currentPage}&limit=${limit}&from=${startDate}&to=${endDate}`
             );
             setSeats(data.seats);
             setTotalPages(data.totalPages);
@@ -60,6 +58,40 @@ export default function Seats() {
             setCurrentPage(currentPage - 1);
         }
     };
+
+    const getDefaultDate = () => {
+        const currentDate = new Date();
+
+        const firstDayOfMonth = new Date(
+            currentDate.getFullYear(),
+            currentDate.getMonth(),
+            1
+        );
+
+        const lastDayOfMonth = new Date(
+            currentDate.getFullYear(),
+            currentDate.getMonth() + 1,
+            0
+        );
+
+        return { firstDayOfMonth, lastDayOfMonth };
+    };
+
+    const handleFilterDate = () => {
+        getSeats();
+    };
+
+    // CONSTANTS
+    const { firstDayOfMonth, lastDayOfMonth } = getDefaultDate();
+
+    // STATES
+    const [loading, setLoading] = useState(false);
+    const [currentPage, setCurrentPage] = useState(1);
+    const [totalPages, setTotalPages] = useState(1);
+    const [limit] = useState(10);
+    const [seats, setSeats] = useState([]);
+    const [startDate, setStartDate] = useState(firstDayOfMonth);
+    const [endDate, setEndDate] = useState(lastDayOfMonth);
 
     // EFFECTS
     useEffect(() => {
@@ -84,16 +116,21 @@ export default function Seats() {
                     </div>
                 ) : (
                     <div className="seats-container">
+                        <Table
+                            seats={seats}
+                            startDate={startDate}
+                            setStartDate={setStartDate}
+                            endDate={endDate}
+                            setEndDate={setEndDate}
+                            handleFilterDate={handleFilterDate}
+                        />
                         {seats.length > 0 ? (
-                            <>
-                                <Table seats={seats} />
-                                <Pagination
-                                    handleNextPage={handleNextPage}
-                                    handlePreviousPage={handlePreviousPage}
-                                    currentPage={currentPage}
-                                    totalPages={totalPages}
-                                />
-                            </>
+                            <Pagination
+                                handleNextPage={handleNextPage}
+                                handlePreviousPage={handlePreviousPage}
+                                currentPage={currentPage}
+                                totalPages={totalPages}
+                            />
                         ) : null}
                     </div>
                 )}

@@ -1,5 +1,5 @@
 // CSS
-import "../css/pagination.css";
+import "@styles/pagination.css";
 
 export default function Pagination({
     handleNextPage,

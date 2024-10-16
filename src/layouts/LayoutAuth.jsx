@@ -25,6 +25,19 @@ export default function LayoutAuth({ children, action }) {
         initializeTheme();
     }, [initializeTheme]);
 
+    useEffect(() => {
+        const reloadStyles = () => {
+            const links = document.querySelectorAll("style[type='text/css']");
+            links.forEach((link) => {
+                const href = link.href;
+                link.href = "";
+                link.href = href;
+            });
+        };
+
+        reloadStyles();
+    }, []);
+
     return (
         <>
             <Navbar />

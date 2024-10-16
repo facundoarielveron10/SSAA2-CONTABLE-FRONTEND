@@ -1,6 +1,6 @@
 // CSS
-import "../../css/users/create-edit.css";
-import "../../css/auth/form.css";
+import "@styles/users/create-edit.css";
+import "@styles/auth/form.css";
 
 // UTILS
 import { errorResponse } from "../../utils/error";

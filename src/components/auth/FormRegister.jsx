@@ -1,5 +1,5 @@
 // CSS
-import "../../css/auth/form.css";
+import "@styles/auth/form.css";
 
 // UTILS
 import { errorResponse } from "../../utils/error";

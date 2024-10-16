@@ -1,6 +1,6 @@
 // CSS
-import "../../css/roles/create-edit.css";
-import "../../css/auth/form.css";
+import "@styles/roles/create-edit.css";
+import "@styles/auth/form.css";
 
 // REACT
 import { useEffect, useState } from "react";

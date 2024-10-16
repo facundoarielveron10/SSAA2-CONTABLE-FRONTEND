@@ -1,5 +1,5 @@
 // CSS
-import "../../css/books/diary.css";
+import "@styles/books/diary.css";
 
 // ZUSTAND
 import { useLoginStore } from "../../zustand/loginStore";

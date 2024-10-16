@@ -48,7 +48,7 @@
 .seats-dates {
     display: flex;
     justify-content: center;
-    align-items: center;
+    align-items: flex-end;
     gap: 1rem;
 }
 
@@ -152,11 +152,16 @@
 }
 
 .seats-table-description {
-    width: 50%;
+    width: 40%;
 }
 
 .seats-table-actions {
     width: 10%;
+}
+
+.seats-table td.seats-table-actions,
+.seats-table th.seats-table-actions {
+    text-align: end;
 }
 
 .seats-table-actions a {

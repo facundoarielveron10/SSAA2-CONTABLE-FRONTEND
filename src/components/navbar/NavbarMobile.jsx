@@ -1,5 +1,5 @@
 // CSS
-import "../../css/navbar.css";
+import "@styles/navbar.css";
 
 // REACT
 import { useState } from "react";

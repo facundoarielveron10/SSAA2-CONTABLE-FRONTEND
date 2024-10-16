@@ -1,9 +1,6 @@
 // CSS
-import "../../css/seats/seats.css";
+import "@styles/seats/seats.css";
 import "react-datepicker/dist/react-datepicker.css";
-
-// REACT
-import { useEffect, useState } from "react";
 
 // COMPONENTS
 import DatePicker from "react-datepicker";
@@ -11,38 +8,14 @@ import DatePicker from "react-datepicker";
 // UTILS
 import { formatDate } from "../../utils/format";
 
-export default function Table({ seats }) {
-    // STATES
-    const [startDate, setStartDate] = useState(null);
-    const [endDate, setEndDate] = useState(null);
-
-    // FUNCTIONS
-    const getDefaultDate = () => {
-        const currentDate = new Date();
-
-        const firstDayOfMonth = new Date(
-            currentDate.getFullYear(),
-            currentDate.getMonth(),
-            1
-        );
-
-        const lastDayOfMonth = new Date(
-            currentDate.getFullYear(),
-            currentDate.getMonth() + 1,
-            0
-        );
-
-        return { firstDayOfMonth, lastDayOfMonth };
-    };
-
-    // EFFECTS
-    useEffect(() => {
-        const { firstDayOfMonth, lastDayOfMonth } = getDefaultDate();
-
-        setStartDate(firstDayOfMonth);
-        setEndDate(lastDayOfMonth);
-    }, []);
-
+export default function Table({
+    seats,
+    startDate,
+    setStartDate,
+    endDate,
+    setEndDate,
+    handleFilterDate,
+}) {
     return (
         <div className="seats-list">
             <div className="seats-header">
@@ -73,6 +46,15 @@ export default function Table({ seats }) {
                             className="seats-date"
                             minDate={startDate}
                         />
+                    </div>
+                    <div className="seats-date-button">
+                        <button
+                            type="button"
+                            className="button"
+                            onClick={handleFilterDate}
+                        >
+                            Filtrar
+                        </button>
                     </div>
                 </div>
             </div>

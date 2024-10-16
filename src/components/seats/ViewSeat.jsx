@@ -1,5 +1,5 @@
 // CSS
-import "../../css/seats/seat.css";
+import "@styles/seats/seat.css";
 
 // REACT
 import { useEffect, useState } from "react";

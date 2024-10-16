@@ -1,6 +1,6 @@
 // CSS
-import "../../css/seats/createSeat.css";
-import "../../css/auth/form.css";
+import "@styles/seats/createSeat.css";
+import "@styles/auth/form.css";
 
 // REACT
 import { useEffect, useState } from "react";
@@ -225,6 +225,12 @@ export default function CreateSeat() {
                                     </select>
                                 </div>
                                 <div className="createSeat-accountButtons">
+                                    <a
+                                        href="/accounts"
+                                        className="createSeat-accountButton button"
+                                    >
+                                        Plan de cuentas
+                                    </a>
                                     <a
                                         href="/create-account"
                                         className="createSeat-accountButton button"

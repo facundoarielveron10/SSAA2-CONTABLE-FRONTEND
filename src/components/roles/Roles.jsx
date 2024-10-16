@@ -1,5 +1,5 @@
 // CSS
-import "../../css/roles/roles.css";
+import "@styles/roles/roles.css";
 import "react-responsive-modal/styles.css";
 
 // REACT
