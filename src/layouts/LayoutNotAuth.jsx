@@ -1,3 +1,9 @@
+// CSS
+import "@styles/auth/form.css";
+import "@styles/logo.css";
+import "@styles/darkmode.css";
+import "@styles/alert.css";
+
 // REACT
 import { useEffect } from "react";
 

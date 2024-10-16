@@ -1,7 +1,3 @@
-// CSS
-import "@styles/users/create-edit.css";
-import "@styles/auth/form.css";
-
 // UTILS
 import { errorResponse } from "../../utils/error";
 import { getRoles } from "../../utils/getData.js";

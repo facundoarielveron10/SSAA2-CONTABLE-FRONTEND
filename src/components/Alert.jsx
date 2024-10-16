@@ -1,5 +1,4 @@
 // CSS
-import "@styles/alert.css";
 import "react-toastify/dist/ReactToastify.css";
 
 // ALERT

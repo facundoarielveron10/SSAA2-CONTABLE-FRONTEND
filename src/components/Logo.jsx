@@ -1,6 +1,3 @@
-// CSS
-import "@styles/logo.css";
-
 // ANIMATED
 import { useSpring, animated } from "react-spring";
 

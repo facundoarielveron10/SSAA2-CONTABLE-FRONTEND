@@ -1,3 +1,23 @@
+// CSS
+import "@styles/accounts/accounts.css";
+import "@styles/accounts/create-edit.css";
+import "@styles/books/diary.css";
+import "@styles/navbar.css";
+import "@styles/roles/roles.css";
+import "@styles/roles/create-edit.css";
+import "@styles/seats/createSeat.css";
+import "@styles/seats/seats.css";
+import "@styles/seats/seat.css";
+import "@styles/users/create-edit.css";
+import "@styles/auth/form.css";
+import "@styles/users/users.css";
+import "@styles/pagination.css";
+import "@styles/search.css";
+import "@styles/spinner.css";
+import "@styles/logo.css";
+import "@styles/darkmode.css";
+import "@styles/alert.css";
+
 // REACT
 import { useEffect } from "react";
 

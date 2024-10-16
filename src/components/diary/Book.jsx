@@ -1,6 +1,3 @@
-// CSS
-import "@styles/books/diary.css";
-
 // REACT
 import { useEffect, useState } from "react";
 

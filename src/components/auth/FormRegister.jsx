@@ -1,6 +1,3 @@
-// CSS
-import "@styles/auth/form.css";
-
 // UTILS
 import { errorResponse } from "../../utils/error";
 

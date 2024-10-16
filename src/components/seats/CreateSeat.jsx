@@ -1,7 +1,3 @@
-// CSS
-import "@styles/seats/createSeat.css";
-import "@styles/auth/form.css";
-
 // REACT
 import { useEffect, useState } from "react";
 

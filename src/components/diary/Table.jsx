@@ -1,6 +1,5 @@
-// CSS
+// COMPONENTS
 import { Fragment } from "react/jsx-runtime";
-import "@styles/books/diary.css";
 
 // UTILS
 import { formatBalance, formatDate } from "../../utils/format";

@@ -1,7 +1,3 @@
-// CSS
-import "@styles/accounts/create-edit.css";
-import "@styles/auth/form.css";
-
 // REACT
 import { useEffect, useState } from "react";
 

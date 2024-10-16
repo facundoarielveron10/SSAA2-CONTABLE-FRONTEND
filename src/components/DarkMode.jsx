@@ -1,6 +1,3 @@
-// CSS
-import "@styles/darkmode.css";
-
 // ZUSTAND
 import { useLoginStore } from "../zustand/loginStore";
 

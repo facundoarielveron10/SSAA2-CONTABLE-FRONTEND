@@ -1,5 +1,4 @@
 // CSS
-import "@styles/seats/seats.css";
 import "react-datepicker/dist/react-datepicker.css";
 
 // COMPONENTS

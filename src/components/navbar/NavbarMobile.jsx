@@ -1,6 +1,3 @@
-// CSS
-import "@styles/navbar.css";
-
 // REACT
 import { useState } from "react";
 

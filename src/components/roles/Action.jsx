@@ -1,6 +1,3 @@
-// CSS
-import "@styles/roles/create-edit.css";
-
 export default function Action({
     action,
     selectedActions,

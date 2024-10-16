@@ -1,6 +1,3 @@
-// CSS
-import "@styles/search.css";
-
 // ICONS
 import { FaSearch } from "react-icons/fa";
 

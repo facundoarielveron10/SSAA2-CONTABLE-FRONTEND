@@ -1,6 +1,3 @@
-// CSS
-import "@styles/auth/form.css";
-
 // REACT
 import { useState } from "react";
 

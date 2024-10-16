@@ -1,5 +1,4 @@
 // CSS
-import "@styles/users/users.css";
 import "react-responsive-modal/styles.css";
 
 // REACT
