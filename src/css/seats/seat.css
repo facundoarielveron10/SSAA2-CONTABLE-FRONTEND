@@ -1,0 +1,17 @@
+.seat {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--backgroundColor);
+    padding: 1.5rem;
+    border-radius: 8px;
+    color: var(--textColor);
+}
+
+.seat-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}

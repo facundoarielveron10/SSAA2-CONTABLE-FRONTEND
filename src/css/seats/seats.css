@@ -90,6 +90,10 @@
     background-color: var(--primaryDarkColor);
 }
 
+.seats-table tr {
+    height: 50px;
+}
+
 .seats-table tr:nth-child(even) {
     background-color: var(--backgroundInput);
 }
@@ -113,4 +117,8 @@
 
 .seats-table-actions {
     width: 10%;
+}
+
+.seats-table-actions a {
+    text-decoration: none;
 }

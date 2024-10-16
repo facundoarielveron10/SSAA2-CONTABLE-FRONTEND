@@ -5,13 +5,13 @@ import "../../css/books/diary.css";
 // UTILS
 import { formatBalance, formatDate } from "../../utils/format";
 
-export default function TablePreview({ seats }) {
+export default function Table({ seats }) {
     return (
         <div className="diary-seating">
             <div className="diary-header">
                 <h2 className="diary-subtitle">Asientos</h2>
             </div>
-            {seats.length === 0 ? (
+            {seats?.length === 0 ? (
                 <p className="diary-no-seats">No hay ningun asiento</p>
             ) : (
                 <div className="diary-table-container">
@@ -34,16 +34,16 @@ export default function TablePreview({ seats }) {
                         </thead>
                         <tbody>
                             {seats
-                                .sort(
+                                ?.sort(
                                     (a, b) =>
                                         new Date(a.seat.date) -
                                         new Date(b.seat.date)
                                 )
-                                .map((seat, index) => (
+                                ?.map((seat, index) => (
                                     <Fragment key={index}>
-                                        {seat.accountSeats
-                                            .sort((a, b) => b.debe - a.debe)
-                                            .map(
+                                        {seat?.accountSeats
+                                            ?.sort((a, b) => b.debe - a.debe)
+                                            ?.map(
                                                 (accountSeat, accountIndex) => (
                                                     <tr key={accountIndex}>
                                                         {accountIndex === 0 && (

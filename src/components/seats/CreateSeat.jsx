@@ -1,5 +1,5 @@
 // CSS
-import "../../css/books/createSeat.css";
+import "../../css/seats/createSeat.css";
 import "../../css/auth/form.css";
 
 // REACT

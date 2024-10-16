@@ -1,0 +1,24 @@
+---
+// AUTH
+import { isLoggedIn } from '../../utils/verifyAuth';
+
+// COMPONENTS
+import Layout from '../../layouts/Layout.astro';
+import LayoutAuth from '../../layouts/LayoutAuth';
+import ViewSeat from "../../components/seats/ViewSeat"
+
+// REDIRECT
+const token = Astro.cookies.get("AUTH_TOKEN");
+if (!isLoggedIn(token)) {
+	return Astro.redirect("/login")
+}
+
+// ID
+const {id} = Astro.params;
+---
+
+<Layout title="Ver Asiento - SSAA2">
+	<LayoutAuth client:only="react" action="CREATE_SEAT">
+		<ViewSeat client:only="react" id={id}/>
+	</LayoutAuth>
+</Layout>

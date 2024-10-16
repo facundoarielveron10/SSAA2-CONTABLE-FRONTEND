@@ -48,7 +48,12 @@ export default function Table({ seats }) {
                                     {seat.description}
                                 </td>
                                 <td className="seats-table-actions">
-                                    <button className="button">Ver</button>
+                                    <a
+                                        href={`/seat/${seat._id}`}
+                                        className="button"
+                                    >
+                                        Ver
+                                    </a>
                                 </td>
                             </tr>
                         ))}
