@@ -1,21 +1,81 @@
 // CSS
 import "../../css/seats/seats.css";
+import "react-datepicker/dist/react-datepicker.css";
+
+// REACT
+import { useEffect, useState } from "react";
+
+// COMPONENTS
+import DatePicker from "react-datepicker";
 
 // UTILS
 import { formatDate } from "../../utils/format";
 
-// ZUSTAND
-import { useLoginStore } from "../../zustand/loginStore";
-
 export default function Table({ seats }) {
-    // ZUSTAND
-    const { canExecute } = useLoginStore();
+    // STATES
+    const [startDate, setStartDate] = useState(null);
+    const [endDate, setEndDate] = useState(null);
 
     // FUNCTIONS
+    const getDefaultDate = () => {
+        const currentDate = new Date();
+
+        const firstDayOfMonth = new Date(
+            currentDate.getFullYear(),
+            currentDate.getMonth(),
+            1
+        );
+
+        const lastDayOfMonth = new Date(
+            currentDate.getFullYear(),
+            currentDate.getMonth() + 1,
+            0
+        );
+
+        return { firstDayOfMonth, lastDayOfMonth };
+    };
+
+    // EFFECTS
+    useEffect(() => {
+        const { firstDayOfMonth, lastDayOfMonth } = getDefaultDate();
+
+        setStartDate(firstDayOfMonth);
+        setEndDate(lastDayOfMonth);
+    }, []);
 
     return (
         <div className="seats-list">
-            <h2 className="seats-subtitle">Asientos</h2>
+            <div className="seats-header">
+                <h2 className="seats-subtitle">Asientos</h2>
+                <div className="seats-dates">
+                    {/* FECHA DESDE */}
+                    <div className="seats-date-picker">
+                        <label>Fecha Desde:</label>
+                        <DatePicker
+                            selected={startDate}
+                            onChange={(date) => setStartDate(date)}
+                            dateFormat="dd/MM/yyyy"
+                            isClearable
+                            placeholderText="Selecciona una fecha"
+                            className="seats-date"
+                            maxDate={endDate}
+                        />
+                    </div>
+                    {/* FECHA HASTA */}
+                    <div className="seats-date-picker">
+                        <label>Fecha Hasta:</label>
+                        <DatePicker
+                            selected={endDate}
+                            onChange={(date) => setEndDate(date)}
+                            dateFormat="dd/MM/yyyy"
+                            isClearable
+                            placeholderText="Selecciona una fecha"
+                            className="seats-date"
+                            minDate={startDate}
+                        />
+                    </div>
+                </div>
+            </div>
 
             {seats.length === 0 ? (
                 <p className="seats-no-seats">

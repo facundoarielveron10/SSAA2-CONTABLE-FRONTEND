@@ -38,6 +38,46 @@
     width: 1000px;
 }
 
+.seats-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.5rem;
+}
+
+.seats-dates {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+}
+
+.seats-date {
+    padding: 0.5rem;
+    border: none;
+    border-radius: 4px;
+    background-color: var(--backgroundInput);
+    color: var(--textColor);
+    transition: background-color 0.3s;
+}
+
+.seats-date:hover {
+    background-color: var(--backgroundInputHover);
+}
+
+.seats-date-picker {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.seats-date-picker label {
+    font-weight: bold;
+    text-transform: uppercase;
+    color: var(--textColor);
+    margin-bottom: 0.5rem;
+}
+
 .seats-subtitle {
     font-weight: bold;
     text-transform: uppercase;
