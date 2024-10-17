@@ -409,6 +409,60 @@ template {
     display: none;
 }
 
+/* CHECKBOX */
+/* Estilo contenedor del checkbox */
+.checkbox-wrapper {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+}
+
+/* Ocultar el checkbox nativo */
+.checkbox-wrapper input[type="checkbox"] {
+    display: none;
+}
+
+/* Estilo del checkbox personalizado */
+.checkbox-wrapper label {
+    position: relative;
+    width: 20px;
+    height: 20px;
+    background-color: transparent;
+    border: 2px solid #6200ee;
+    border-radius: 6px;
+    transition: all 0.3s ease;
+}
+
+/* Estilo del ícono de marca */
+.checkbox-wrapper label::after {
+    content: "";
+    position: absolute;
+    width: 4px;
+    height: 10px;
+    border: solid white;
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
+    top: 2px;
+    left: 7px;
+    opacity: 0;
+    transition: all 0.3s ease;
+}
+
+.checkbox-wrapper input[type="checkbox"]:checked + label {
+    background-color: #6200ee;
+    border-color: #6200ee;
+}
+
+.checkbox-wrapper input[type="checkbox"]:checked + label::after {
+    opacity: 1;
+}
+
+.checkbox-wrapper span {
+    margin-left: 10px;
+    color: #333;
+    font-size: 16px;
+}
+
 /* MODAL */
 .customOverlay {
     background: #222222b3 !important;

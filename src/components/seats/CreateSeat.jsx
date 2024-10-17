@@ -7,6 +7,7 @@ import { errorResponse } from "../../utils/error";
 
 // ICONS
 import { IoIosAdd } from "react-icons/io";
+import { FaPencil } from "react-icons/fa6";
 
 // ALERTS
 import { toast } from "react-toastify";
@@ -18,7 +19,7 @@ import clientAxios from "../../config/ClientAxios";
 // COMPONENTS
 import TablePreview from "../diary/TablePreview";
 import { getTotalsDebeHaber } from "../../utils/getData";
-import Checkbox from "react-simple-checkbox";
+import Checkbox from "../Checkbox";
 
 export default function CreateSeat() {
     // STATES
@@ -29,6 +30,8 @@ export default function CreateSeat() {
     const [haber, setHaber] = useState(false);
     const [seats, setSeats] = useState([]);
     const [accounts, setAccounts] = useState([]);
+    const [isEditing, setIsEditing] = useState(false);
+    const [seatIdEditing, setSeatIdEditing] = useState(null);
 
     // EFFECTS
     useEffect(() => {
@@ -41,6 +44,8 @@ export default function CreateSeat() {
         setDebe(false);
         setHaber(false);
         setAmount(0);
+        setIsEditing(false); // Resetea la edición
+        setSeatIdEditing(null);
     };
 
     const getAccounts = async () => {
@@ -96,7 +101,7 @@ export default function CreateSeat() {
         setAmount(value === "" ? 0 : Number(value));
     };
 
-    const handleAdd = () => {
+    const handleAddOrEdit = () => {
         if (!account || amount <= 0) {
             toast.error("Todos los campos son obligatorios");
             return;
@@ -112,28 +117,58 @@ export default function CreateSeat() {
             return;
         }
 
-        const newSeat = {
-            id: generateID(),
-            account,
-            amount: {
-                amount,
-                type: debe ? "debe" : haber ? "haber" : null,
-            },
-        };
+        if (isEditing && seatIdEditing) {
+            // Editar el asiento existente
+            const updatedSeats = seats.map((seat) =>
+                seat.id === seatIdEditing
+                    ? {
+                          ...seat,
+                          account,
+                          amount: {
+                              amount,
+                              type: debe ? "debe" : "haber",
+                          },
+                      }
+                    : seat
+            );
+            setSeats(updatedSeats);
+            toast.success("Asiento editado correctamente");
+        } else {
+            // Agregar nuevo asiento
+            const newSeat = {
+                id: generateID(),
+                account,
+                amount: {
+                    amount,
+                    type: debe ? "debe" : haber ? "haber" : null,
+                },
+            };
 
-        setSeats((prevSeats) => [...prevSeats, newSeat]);
+            setSeats((prevSeats) => [...prevSeats, newSeat]);
+            toast.success("Asiento agregado correctamente");
+        }
+
         resetValues();
-
-        toast.success("Asiento agregado correctamente.");
     };
 
     const handleDelete = (seatId) => {
         const seatsFilter = seats.filter((seat) => seat.id !== seatId);
         setSeats(seatsFilter);
+        setAccount("");
+        setAmount(0);
+        setDebe(false);
+        setHaber(false);
+        setIsEditing(false);
+        setSeatIdEditing(null);
     };
 
     const handleEdit = (seat) => {
-        console.log(seat);
+        setAccount(seat.account);
+        setAmount(seat.amount.amount);
+        setDebe(seat.amount.type === "debe");
+        setHaber(seat.amount.type === "haber");
+        setIsEditing(true);
+        setSeatIdEditing(seat.id);
     };
 
     const getNameAccount = (accountId) => {
@@ -262,15 +297,12 @@ export default function CreateSeat() {
                                             Debe
                                         </label>
                                         <Checkbox
-                                            className="checkout"
                                             id="debe"
-                                            color={"#6200ee"}
-                                            size={3}
-                                            tickSize={2}
                                             checked={debe}
-                                            tickAnimationDuration={250}
-                                            onChange={(value) =>
-                                                handleDebeChange(value)
+                                            onChange={(e) =>
+                                                handleDebeChange(
+                                                    e.target.checked
+                                                )
                                             }
                                         />
                                     </div>
@@ -282,15 +314,12 @@ export default function CreateSeat() {
                                             Haber
                                         </label>
                                         <Checkbox
-                                            className="checkout"
                                             id="haber"
-                                            color={"#6200ee"}
-                                            size={3}
-                                            tickSize={2}
                                             checked={haber}
-                                            tickAnimationDuration={250}
-                                            onChange={(value) =>
-                                                handleHaberChange(value)
+                                            onChange={(e) =>
+                                                handleHaberChange(
+                                                    e.target.checked
+                                                )
                                             }
                                         />
                                     </div>
@@ -300,10 +329,14 @@ export default function CreateSeat() {
                         <div className="createSeat-add-container">
                             <button
                                 type="button"
-                                onClick={handleAdd}
+                                onClick={handleAddOrEdit}
                                 className="createSeat-add"
                             >
-                                <IoIosAdd className="createSeat-icon" />
+                                {isEditing ? (
+                                    <FaPencil className="createSeat-icon-edit" />
+                                ) : (
+                                    <IoIosAdd className="createSeat-icon" />
+                                )}
                             </button>
                         </div>
                     </div>
