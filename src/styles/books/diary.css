@@ -33,6 +33,63 @@
     margin-bottom: 0.5rem;
 }
 
+.diary-header-actions {
+    display: flex;
+    align-items: flex-end;
+    gap: 1rem;
+}
+
+.diary-reverse-button {
+    cursor: pointer;
+    background-color: transparent;
+    border: none;
+    color: var(--textColor);
+    transition: all;
+    transition-duration: 300ms;
+}
+
+.diary-reverse-button:hover {
+    color: var(--primaryColor);
+}
+
+.diary-reverse-icon {
+    height: 25px;
+    width: 25px;
+}
+
+.diary-dates {
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    gap: 1rem;
+}
+
+.diary-date {
+    padding: 0.5rem;
+    border: none;
+    border-radius: 4px;
+    background-color: var(--backgroundInput);
+    color: var(--textColor);
+    transition: background-color 0.3s;
+}
+
+.diary-date:hover {
+    background-color: var(--backgroundInputHover);
+}
+
+.diary-date-picker {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.diary-date-picker label {
+    font-weight: bold;
+    text-transform: uppercase;
+    color: var(--textColor);
+    margin-bottom: 0.5rem;
+}
+
 .diary-subtitle {
     font-weight: bold;
     text-transform: uppercase;

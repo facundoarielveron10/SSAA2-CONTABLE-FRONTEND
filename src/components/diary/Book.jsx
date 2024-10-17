@@ -16,15 +16,18 @@ import { errorResponse } from "../../utils/error";
 import clientAxios from "../../config/ClientAxios";
 
 export default function Book() {
-    // STATES
-    const [loading, setLoading] = useState(false);
-    const [seats, setSeats] = useState([]);
-
     // FUNTIONS
     const getDiary = async () => {
+        if (!startDate || !endDate) {
+            toast.error("Se debe colocar ambas fechas");
+            return;
+        }
+
         setLoading(true);
         try {
-            const { data } = await clientAxios.get("/account-seat/diary");
+            const { data } = await clientAxios.get(
+                `/account-seat/diary?from=${startDate}&to=${endDate}&reverse=${reverse}`
+            );
 
             setSeats(data.seats);
         } catch (error) {
@@ -34,10 +37,42 @@ export default function Book() {
         }
     };
 
+    const getDefaultDate = () => {
+        const currentDate = new Date();
+
+        const firstDayOfMonth = new Date(
+            currentDate.getFullYear(),
+            currentDate.getMonth(),
+            1
+        );
+
+        const lastDayOfMonth = new Date(
+            currentDate.getFullYear(),
+            currentDate.getMonth() + 1,
+            0
+        );
+
+        return { firstDayOfMonth, lastDayOfMonth };
+    };
+
+    const handleFilterDate = () => {
+        getDiary();
+    };
+
+    // CONSTANTS
+    const { firstDayOfMonth, lastDayOfMonth } = getDefaultDate();
+
+    // STATES
+    const [loading, setLoading] = useState(false);
+    const [seats, setSeats] = useState([]);
+    const [startDate, setStartDate] = useState(firstDayOfMonth);
+    const [endDate, setEndDate] = useState(lastDayOfMonth);
+    const [reverse, setReverse] = useState(false);
+
     // EFFECTS
     useEffect(() => {
         getDiary();
-    }, []);
+    }, [reverse]);
 
     return (
         <>
@@ -57,7 +92,16 @@ export default function Book() {
                     </div>
                 ) : (
                     <div className="diary-seating-container">
-                        <Table seats={seats} />
+                        <Table
+                            seats={seats}
+                            startDate={startDate}
+                            setStartDate={setStartDate}
+                            endDate={endDate}
+                            setEndDate={setEndDate}
+                            handleFilterDate={handleFilterDate}
+                            reverse={reverse}
+                            setReverse={setReverse}
+                        />
                     </div>
                 )}
             </div>
