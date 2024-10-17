@@ -7,6 +7,9 @@ import DatePicker from "react-datepicker";
 // UTILS
 import { formatDate } from "../../utils/format";
 
+// ICONS
+import { FaLongArrowAltDown, FaLongArrowAltUp } from "react-icons/fa";
+
 export default function Table({
     seats,
     startDate,
@@ -14,46 +17,63 @@ export default function Table({
     endDate,
     setEndDate,
     handleFilterDate,
+    reverse,
+    setReverse,
 }) {
     return (
         <div className="seats-list">
             <div className="seats-header">
                 <h2 className="seats-subtitle">Asientos</h2>
-                <div className="seats-dates">
-                    {/* FECHA DESDE */}
-                    <div className="seats-date-picker">
-                        <label>Fecha Desde:</label>
-                        <DatePicker
-                            selected={startDate}
-                            onChange={(date) => setStartDate(date)}
-                            dateFormat="dd/MM/yyyy"
-                            isClearable
-                            placeholderText="Selecciona una fecha"
-                            className="seats-date"
-                            maxDate={endDate}
-                        />
-                    </div>
-                    {/* FECHA HASTA */}
-                    <div className="seats-date-picker">
-                        <label>Fecha Hasta:</label>
-                        <DatePicker
-                            selected={endDate}
-                            onChange={(date) => setEndDate(date)}
-                            dateFormat="dd/MM/yyyy"
-                            isClearable
-                            placeholderText="Selecciona una fecha"
-                            className="seats-date"
-                            minDate={startDate}
-                        />
-                    </div>
-                    <div className="seats-date-button">
+                <div className="seats-header-actions">
+                    <div className="seats-reverse">
                         <button
                             type="button"
-                            className="button"
-                            onClick={handleFilterDate}
+                            className={"seats-reverse-button"}
+                            onClick={() => setReverse(!reverse)}
                         >
-                            Filtrar
+                            {reverse ? (
+                                <FaLongArrowAltDown className="seats-reverse-icon" />
+                            ) : (
+                                <FaLongArrowAltUp className="seats-reverse-icon" />
+                            )}
                         </button>
+                    </div>
+                    <div className="seats-dates">
+                        {/* FECHA DESDE */}
+                        <div className="seats-date-picker">
+                            <label>Fecha Desde:</label>
+                            <DatePicker
+                                selected={startDate}
+                                onChange={(date) => setStartDate(date)}
+                                dateFormat="dd/MM/yyyy"
+                                isClearable
+                                placeholderText="Selecciona una fecha"
+                                className="seats-date"
+                                maxDate={endDate}
+                            />
+                        </div>
+                        {/* FECHA HASTA */}
+                        <div className="seats-date-picker">
+                            <label>Fecha Hasta:</label>
+                            <DatePicker
+                                selected={endDate}
+                                onChange={(date) => setEndDate(date)}
+                                dateFormat="dd/MM/yyyy"
+                                isClearable
+                                placeholderText="Selecciona una fecha"
+                                className="seats-date"
+                                minDate={startDate}
+                            />
+                        </div>
+                        <div className="seats-date-button">
+                            <button
+                                type="button"
+                                className="button"
+                                onClick={handleFilterDate}
+                            >
+                                Filtrar
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>

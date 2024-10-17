@@ -45,6 +45,30 @@
     margin-bottom: 0.5rem;
 }
 
+.seats-header-actions {
+    display: flex;
+    align-items: flex-end;
+    gap: 1rem;
+}
+
+.seats-reverse-button {
+    cursor: pointer;
+    background-color: transparent;
+    border: none;
+    color: var(--textColor);
+    transition: all;
+    transition-duration: 300ms;
+}
+
+.seats-reverse-button:hover {
+    color: var(--primaryColor);
+}
+
+.seats-reverse-icon {
+    height: 25px;
+    width: 25px;
+}
+
 .seats-dates {
     display: flex;
     justify-content: center;

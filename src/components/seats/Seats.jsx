@@ -33,7 +33,7 @@ export default function Seats() {
         setLoading(true);
         try {
             const { data } = await clientAxios.get(
-                `/account-seat/seats?page=${currentPage}&limit=${limit}&from=${startDate}&to=${endDate}`
+                `/account-seat/seats?page=${currentPage}&limit=${limit}&from=${startDate}&to=${endDate}&reverse=${reverse}`
             );
             setSeats(data.seats);
             setTotalPages(data.totalPages);
@@ -89,11 +89,12 @@ export default function Seats() {
     const [seats, setSeats] = useState([]);
     const [startDate, setStartDate] = useState(firstDayOfMonth);
     const [endDate, setEndDate] = useState(lastDayOfMonth);
+    const [reverse, setReverse] = useState(false);
 
     // EFFECTS
     useEffect(() => {
         getSeats();
-    }, [currentPage]);
+    }, [currentPage, reverse]);
 
     return (
         <>
@@ -120,6 +121,8 @@ export default function Seats() {
                             endDate={endDate}
                             setEndDate={setEndDate}
                             handleFilterDate={handleFilterDate}
+                            reverse={reverse}
+                            setReverse={setReverse}
                         />
                         {seats.length > 0 ? (
                             <Pagination
