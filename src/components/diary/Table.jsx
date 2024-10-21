@@ -6,7 +6,8 @@ import DatePicker from "react-datepicker";
 import { formatBalance, formatDate } from "../../utils/format";
 
 // ICONS
-import { FaLongArrowAltDown, FaLongArrowAltUp } from "react-icons/fa";
+import { FaArrowDownUpAcrossLine } from "react-icons/fa6";
+import { BsFiletypeXlsx, BsFiletypePdf } from "react-icons/bs";
 
 export default function Table({
     seats,
@@ -15,6 +16,8 @@ export default function Table({
     endDate,
     setEndDate,
     handleFilterDate,
+    exportToExcel,
+    exportToPDF,
     reverse,
     setReverse,
 }) {
@@ -24,17 +27,20 @@ export default function Table({
                 <h2 className="diary-subtitle">Asientos</h2>
                 <div className="diary-header-actions">
                     <div className="diary-reverse">
-                        <button
-                            type="button"
-                            className={"diary-reverse-button"}
+                        <FaArrowDownUpAcrossLine
+                            className="diary-reverse-button"
                             onClick={() => setReverse(!reverse)}
-                        >
-                            {reverse ? (
-                                <FaLongArrowAltDown className="diary-reverse-icon" />
-                            ) : (
-                                <FaLongArrowAltUp className="diary-reverse-icon" />
-                            )}
-                        </button>
+                        />
+                    </div>
+                    <div className="diary-export">
+                        <BsFiletypeXlsx
+                            className="diary-export-button diary-excel"
+                            onClick={exportToExcel}
+                        />
+                        <BsFiletypePdf
+                            className="diary-export-button diary-pdf"
+                            onClick={exportToPDF}
+                        />
                     </div>
                     <div className="diary-dates">
                         {/* FECHA DESDE */}

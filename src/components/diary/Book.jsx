@@ -15,6 +15,11 @@ import { errorResponse } from "../../utils/error";
 // AXIOS
 import clientAxios from "../../config/ClientAxios";
 
+// EXPORT
+import * as XLSX from "xlsx";
+import jsPDF from "jspdf";
+import "jspdf-autotable";
+
 export default function Book() {
     // FUNTIONS
     const getDiary = async () => {
@@ -59,6 +64,47 @@ export default function Book() {
         getDiary();
     };
 
+    const exportToExcel = () => {
+        const formattedData = seats
+            .map((entry) => {
+                return entry.accountSeats.map((account) => ({
+                    Fecha: new Date(entry.seat.date).toLocaleDateString(),
+                    Descripción: entry.seat.description,
+                    Cuenta: account.account,
+                    Debe: account.debe,
+                    Haber: account.haber,
+                }));
+            })
+            .flat();
+
+        const worksheet = XLSX.utils.json_to_sheet(formattedData);
+        const workbook = XLSX.utils.book_new();
+        XLSX.utils.book_append_sheet(workbook, worksheet, "Libro Diario");
+        XLSX.writeFile(workbook, "libro_diario.xlsx");
+    };
+
+    const exportToPDF = () => {
+        const doc = new jsPDF();
+        const formattedData = seats
+            .map((entry) => {
+                return entry.accountSeats.map((account) => [
+                    new Date(entry.seat.date).toLocaleDateString(),
+                    entry.seat.description,
+                    account.account,
+                    account.debe,
+                    account.haber,
+                ]);
+            })
+            .flat();
+
+        doc.autoTable({
+            head: [["Fecha", "Descripción", "Cuenta", "Debe", "Haber"]],
+            body: formattedData,
+        });
+
+        doc.save("libro_diario.pdf");
+    };
+
     // CONSTANTS
     const { firstDayOfMonth, lastDayOfMonth } = getDefaultDate();
 
@@ -83,7 +129,7 @@ export default function Book() {
                     En esta sección se encuentra el Libro Diario, donde se
                     detallan las transacciones contables de la empresa. Cada
                     asiento muestra la fecha, el usuario que registro el
-                    asiento,las cuentas involucradas, y los montos
+                    asiento, las cuentas involucradas, y los montos
                     correspondientes al Debe y al Haber.
                 </p>
 
@@ -100,6 +146,8 @@ export default function Book() {
                             endDate={endDate}
                             setEndDate={setEndDate}
                             handleFilterDate={handleFilterDate}
+                            exportToExcel={exportToExcel}
+                            exportToPDF={exportToPDF}
                             reverse={reverse}
                             setReverse={setReverse}
                         />
