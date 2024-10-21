@@ -89,9 +89,6 @@ export default function Table({
                                 <th className="diary-table-col-description">
                                     Descripción
                                 </th>
-                                <th className="diary-table-col-user">
-                                    Usuario
-                                </th>
                                 <th className="diary-table-col-accounts">
                                     Cuentas
                                 </th>
@@ -132,16 +129,6 @@ export default function Table({
                                                                 seat.seat
                                                                     .description
                                                             }
-                                                        </td>
-                                                        <td
-                                                            className="diary-table-col-user"
-                                                            rowSpan={
-                                                                seat
-                                                                    .accountSeats
-                                                                    .length
-                                                            }
-                                                        >
-                                                            {seat.seat.user}
                                                         </td>
                                                     </>
                                                 )}

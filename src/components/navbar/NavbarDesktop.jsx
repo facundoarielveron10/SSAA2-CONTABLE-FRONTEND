@@ -48,6 +48,11 @@ export default function NavbarDesktop() {
                             Libro Diario
                         </a>
                     ) : null}
+                    {canExecute("GET_LEDGER") ? (
+                        <a href="/ledger" className="navbar-link">
+                            Libro Mayor
+                        </a>
+                    ) : null}
                     <button className="button" onClick={handleLogout}>
                         Cerrar Sesión
                     </button>

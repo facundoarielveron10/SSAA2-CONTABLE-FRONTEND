@@ -171,8 +171,13 @@
     width: 20%;
 }
 
-.seats-table-number {
+.seats-table-user {
     width: 20%;
+}
+
+.seats-table-number {
+    text-align: center;
+    width: 10%;
 }
 
 .seats-table-description {

@@ -66,9 +66,8 @@ export default function Edit({ id }) {
 
             const { role } = data;
             const { actions } = data;
-
             const actionNames = actions.map(
-                (roleAction) => roleAction.action.name
+                (roleAction) => roleAction?.action?.name
             );
 
             setRole(role);

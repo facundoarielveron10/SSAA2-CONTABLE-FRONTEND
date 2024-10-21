@@ -80,10 +80,11 @@ export default function Book() {
             <div className="diary">
                 <h1 className="title">Libro Diario</h1>
                 <p className="paragraph">
-                    En esta sección se registran los asientos del Libro Diario,
-                    donde se detallan las transacciones contables de la empresa.
-                    Cada asiento muestra la fecha, las cuentas involucradas, y
-                    los montos correspondientes al Debe y al Haber.
+                    En esta sección se encuentra el Libro Diario, donde se
+                    detallan las transacciones contables de la empresa. Cada
+                    asiento muestra la fecha, el usuario que registro el
+                    asiento,las cuentas involucradas, y los montos
+                    correspondientes al Debe y al Haber.
                 </p>
 
                 {loading ? (

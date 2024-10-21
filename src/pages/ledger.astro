@@ -1,0 +1,21 @@
+---
+// AUTH
+import { isLoggedIn } from '../utils/verifyAuth';
+
+// COMPONENTS
+import Layout from '../layouts/Layout.astro';
+import LayoutAuth from '../layouts/LayoutAuth';
+import Book from '../components/ledger/Book';
+
+// REDIRECT
+const token = Astro.cookies.get("AUTH_TOKEN");
+if (!isLoggedIn(token)) {
+	return Astro.redirect("/login")
+}
+---
+
+<Layout title="Libro Mayor - SSAA2">
+	<LayoutAuth client:only="react" action="GET_LEDGER">
+		<Book client:only="react"/>
+	</LayoutAuth>
+</Layout>

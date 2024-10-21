@@ -2,6 +2,7 @@
 import "@styles/accounts/accounts.css";
 import "@styles/accounts/create-edit.css";
 import "@styles/books/diary.css";
+import "@styles/books/ledger.css";
 import "@styles/navbar.css";
 import "@styles/roles/roles.css";
 import "@styles/roles/create-edit.css";

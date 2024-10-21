@@ -87,6 +87,7 @@ export default function Table({
                     <thead>
                         <tr>
                             <th className="seats-table-date">Fecha</th>
+                            <th className="seats-table-date">Usuario</th>
                             <th className="seats-table-number">
                                 Numero de Asiento
                             </th>
@@ -101,6 +102,9 @@ export default function Table({
                             <tr key={seat._id}>
                                 <td className="seats-table-date">
                                     {formatDate(seat.date)}
+                                </td>
+                                <td className="seats-table-user">
+                                    {seat.user.email}
                                 </td>
                                 <td className="seats-table-number">
                                     {seat.number}

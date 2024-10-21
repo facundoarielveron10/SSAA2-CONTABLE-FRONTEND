@@ -57,14 +57,19 @@ export default function NavbarMobile() {
                                 <a href="/accounts">Cuentas</a>
                             </li>
                         ) : null}
+                        {canExecute("GET_SEATS") ? (
+                            <li>
+                                <a href="/seats">Asientos</a>
+                            </li>
+                        ) : null}
                         {canExecute("GET_DIARY") ? (
                             <li>
                                 <a href="/diary-book">Libro Diario</a>
                             </li>
                         ) : null}
-                        {canExecute("GET_SEATS") ? (
+                        {canExecute("GET_LEDGER") ? (
                             <li>
-                                <a href="/seats">Asientos</a>
+                                <a href="/ledger">Libro Mayor</a>
                             </li>
                         ) : null}
                         <li>
