@@ -5,6 +5,7 @@ import { isLoggedIn } from '../utils/verifyAuth';
 // COMPONENTS
 import Layout from '../layouts/Layout.astro';
 import LayoutAuth from "../layouts/LayoutAuth.jsx";
+import Home from "../components/home/Home.jsx";
 
 // REDIRECT
 const isAuth = Astro.cookies.get("AUTH_TOKEN");
@@ -14,6 +15,6 @@ if (!isLoggedIn(isAuth)) {
 ---
 <Layout title="Inicio - SSAA2">
 	<LayoutAuth client:only="react" action="">
-		{}
+		<Home client:only="react"/>
 	</LayoutAuth>
 </Layout>

@@ -19,6 +19,8 @@ import "@styles/logo.css";
 import "@styles/darkmode.css";
 import "@styles/alert.css";
 import "@styles/export.css";
+import "@styles/home/card.css";
+import "@styles/home/home.css";
 
 // CSS (External)
 import "react-datepicker/dist/react-datepicker.css";

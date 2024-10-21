@@ -1,0 +1,53 @@
+.home-card {
+    background-color: var(--backgroundCard);
+    border: 1px solid var(--backgroundColor);
+    border-radius: 8px;
+    box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px,
+        rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
+    margin: 1rem;
+    padding: 1.5rem;
+    text-align: center;
+}
+
+.home-card-iframe {
+    position: relative;
+    width: 100%;
+    height: 350px;
+    overflow: hidden;
+}
+
+.home-card-preview {
+    width: 100%;
+    height: 100%;
+    border: none;
+    pointer-events: none;
+}
+
+.home-card-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: var(--backgroundTransparent);
+}
+
+.home-card-title {
+    color: var(--textColor);
+    font-size: 2rem;
+    margin: 1rem 0;
+}
+
+.home-card-description {
+    color: var(--textColor);
+}
+
+.home-card-button {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.home-card-button a {
+    text-decoration: none;
+}

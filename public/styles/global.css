@@ -6,6 +6,7 @@
     --backgroundColorDark: #0a0a0a;
     --backgroundCard: #1e1e1e;
     --backgroundInput: #2e2e2e;
+    --backgroundTransparent: #0a0a0ab1;
     --colorDelete: #eb1f1f;
     --colorDeleteDark: #b81818;
     --textColor: #cccccc;
@@ -19,6 +20,7 @@ body[theme="light"] {
     --backgroundColor: #ececec;
     --backgroundCard: #e4e4e4;
     --backgroundInput: #cccccc;
+    --backgroundTransparent: #ecececb1;
     --colorDelete: #eb1f1f;
     --colorDeleteDark: #b81818;
     --textColor: #1d1d1d;
