@@ -8,7 +8,6 @@ import { formatBalance, formatDate } from "../../utils/format";
 
 // ICONS
 import { FaArrowDownUpAcrossLine } from "react-icons/fa6";
-import { BsFiletypeXlsx, BsFiletypePdf } from "react-icons/bs";
 
 export default function Table({
     seats,

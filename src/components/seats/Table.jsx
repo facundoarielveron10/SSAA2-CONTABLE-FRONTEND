@@ -5,7 +5,7 @@ import DatePicker from "react-datepicker";
 import { formatDate } from "../../utils/format";
 
 // ICONS
-import { FaLongArrowAltDown, FaLongArrowAltUp } from "react-icons/fa";
+import { FaArrowDownUpAcrossLine } from "react-icons/fa6";
 
 export default function Table({
     seats,
@@ -23,17 +23,10 @@ export default function Table({
                 <h2 className="seats-subtitle">Asientos</h2>
                 <div className="seats-header-actions">
                     <div className="seats-reverse">
-                        <button
-                            type="button"
-                            className={"seats-reverse-button"}
+                        <FaArrowDownUpAcrossLine
+                            className="seats-reverse-button"
                             onClick={() => setReverse(!reverse)}
-                        >
-                            {reverse ? (
-                                <FaLongArrowAltDown className="seats-reverse-icon" />
-                            ) : (
-                                <FaLongArrowAltUp className="seats-reverse-icon" />
-                            )}
-                        </button>
+                        />
                     </div>
                     <div className="seats-dates">
                         {/* FECHA DESDE */}
