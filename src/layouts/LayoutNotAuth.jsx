@@ -3,6 +3,7 @@ import "@styles/auth/form.css";
 import "@styles/logo.css";
 import "@styles/darkmode.css";
 import "@styles/alert.css";
+import "@styles/spinner.css";
 
 // REACT
 import { useEffect } from "react";
