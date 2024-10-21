@@ -1,6 +1,3 @@
-// CSS
-import "react-datepicker/dist/react-datepicker.css";
-
 // REACT
 import { useEffect, useState } from "react";
 
@@ -8,6 +5,8 @@ import { useEffect, useState } from "react";
 import Spinner from "../Spinner";
 import Search from "../Search";
 import Ledger from "./Ledger";
+import DatePicker from "react-datepicker";
+import Pagination from "../Pagination";
 
 // ALERT
 import { toast } from "react-toastify";
@@ -18,20 +17,36 @@ import { errorResponse } from "../../utils/error";
 
 // AXIOS
 import clientAxios from "../../config/ClientAxios";
-import DatePicker from "react-datepicker";
 
 export default function Book() {
+    // STATES
+    const [currentPage, setCurrentPage] = useState(1);
+    const [totalPages, setTotalPages] = useState(1);
+    const [limit] = useState(4);
+
     // FUNTIONS
     const getLedger = async (clean) => {
+        if (!startDate || !endDate) {
+            toast.error("Se debe colocar ambas fechas");
+            return;
+        }
+
         let endpoint = clean
-            ? `/account-seat/ledger?from=${startDate}&to=${endDate}`
-            : `/account-seat/ledger?from=${startDate}&to=${endDate}&search=${search}`;
+            ? `/account-seat/ledger?page=${currentPage}&limit=${limit}&from=${startDate}&to=${endDate}`
+            : `/account-seat/ledger?page=${currentPage}&limit=${limit}&from=${startDate}&to=${endDate}&search=${search}`;
 
         setLoading(true);
         try {
             const { data } = await clientAxios.get(endpoint);
 
-            setLedger(data.ledger);
+            // Ordenar las cuentas por la cantidad de seats (de mayor a menor)
+            const sortedLedger = data.ledger.sort(
+                (a, b) => b.seats.length - a.seats.length
+            );
+
+            setLedger(sortedLedger);
+            setTotalPages(data.totalPages);
+            setCurrentPage(data.currentPage);
         } catch (error) {
             toast.error(errorResponse(error));
         } finally {
@@ -70,6 +85,18 @@ export default function Book() {
         getLedger();
     };
 
+    const handleNextPage = () => {
+        if (currentPage < totalPages) {
+            setCurrentPage(currentPage + 1);
+        }
+    };
+
+    const handlePreviousPage = () => {
+        if (currentPage > 1) {
+            setCurrentPage(currentPage - 1);
+        }
+    };
+
     // CONSTANTS
     const { firstDayOfMonth, lastDayOfMonth } = getDefaultDate();
 
@@ -83,7 +110,7 @@ export default function Book() {
     // EFFECTS
     useEffect(() => {
         getLedger();
-    }, []);
+    }, [currentPage]);
 
     return (
         <>
@@ -161,19 +188,31 @@ export default function Book() {
                                 No hay cuentas para mostrar
                             </p>
                         ) : (
-                            ledger.map((account, index) => (
-                                <Ledger
-                                    key={index}
-                                    name={account.account.nameAccount}
-                                    type={account.account.type}
-                                    seats={account.seats}
-                                    openingBalance={account.openingBalance}
-                                    finalBalance={account.finalBalance}
-                                />
-                            ))
+                            <>
+                                {ledger.map((account, index) => (
+                                    <div>
+                                        <Ledger
+                                            key={index}
+                                            name={account.account.nameAccount}
+                                            type={account.account.type}
+                                            seats={account.seats}
+                                            openingBalance={
+                                                account.openingBalance
+                                            }
+                                            finalBalance={account.finalBalance}
+                                        />
+                                    </div>
+                                ))}
+                            </>
                         )}
                     </div>
                 )}
+                <Pagination
+                    handleNextPage={handleNextPage}
+                    handlePreviousPage={handlePreviousPage}
+                    currentPage={currentPage}
+                    totalPages={totalPages}
+                />
             </div>
         </>
     );

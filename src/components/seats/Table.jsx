@@ -1,6 +1,3 @@
-// CSS
-import "react-datepicker/dist/react-datepicker.css";
-
 // COMPONENTS
 import DatePicker from "react-datepicker";
 

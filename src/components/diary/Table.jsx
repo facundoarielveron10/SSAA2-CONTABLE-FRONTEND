@@ -1,6 +1,3 @@
-// CSS
-import "react-datepicker/dist/react-datepicker.css";
-
 // COMPONENTS
 import { Fragment } from "react/jsx-runtime";
 import DatePicker from "react-datepicker";

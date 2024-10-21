@@ -1,4 +1,4 @@
-// CSS
+// CSS (Interns)
 import "@styles/accounts/accounts.css";
 import "@styles/accounts/create-edit.css";
 import "@styles/books/diary.css";
@@ -18,6 +18,9 @@ import "@styles/spinner.css";
 import "@styles/logo.css";
 import "@styles/darkmode.css";
 import "@styles/alert.css";
+
+// CSS (External)
+import "react-datepicker/dist/react-datepicker.css";
 
 // REACT
 import { useEffect } from "react";
