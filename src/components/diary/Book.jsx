@@ -80,7 +80,7 @@ export default function Book() {
         const worksheet = XLSX.utils.json_to_sheet(formattedData);
         const workbook = XLSX.utils.book_new();
         XLSX.utils.book_append_sheet(workbook, worksheet, "Libro Diario");
-        XLSX.writeFile(workbook, "libro_diario.xlsx");
+        XLSX.writeFile(workbook, "LibroDiario.xlsx");
     };
 
     const exportToPDF = () => {
@@ -102,7 +102,7 @@ export default function Book() {
             body: formattedData,
         });
 
-        doc.save("libro_diario.pdf");
+        doc.save("LibroDiario.pdf");
     };
 
     // CONSTANTS

@@ -39,16 +39,14 @@
     gap: 1rem;
 }
 
-.diary-reverse,
-.diary-export {
+.diary-reverse {
     display: flex;
     justify-content: center;
     align-items: center;
     gap: 0.5rem;
 }
 
-.diary-reverse-button,
-.diary-export-button {
+.diary-reverse-button {
     cursor: pointer;
     height: 35px;
     width: 35px;
@@ -62,22 +60,6 @@
 
 .diary-reverse-button:hover {
     color: var(--primaryDarkColor);
-}
-
-.diary-excel {
-    color: #33c481;
-}
-
-.diary-excel:hover {
-    color: #1d8d59;
-}
-
-.diary-pdf {
-    color: #ff5733;
-}
-
-.diary-pdf:hover {
-    color: #d24221;
 }
 
 .diary-dates {

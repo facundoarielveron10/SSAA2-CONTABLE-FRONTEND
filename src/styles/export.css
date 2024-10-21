@@ -1,0 +1,30 @@
+.export {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.export-button {
+    cursor: pointer;
+    height: 35px;
+    width: 35px;
+    transition: all;
+    transition-duration: 300ms;
+}
+
+.export-excel {
+    color: #33c481;
+}
+
+.export-excel:hover {
+    color: #1d8d59;
+}
+
+.export-pdf {
+    color: #ff5733;
+}
+
+.export-pdf:hover {
+    color: #d24221;
+}

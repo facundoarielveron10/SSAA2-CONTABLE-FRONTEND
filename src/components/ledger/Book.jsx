@@ -18,6 +18,12 @@ import { errorResponse } from "../../utils/error";
 // AXIOS
 import clientAxios from "../../config/ClientAxios";
 
+// EXPORT
+import * as XLSX from "xlsx";
+import jsPDF from "jspdf";
+import "jspdf-autotable";
+import Export from "../Export";
+
 export default function Book() {
     // STATES
     const [currentPage, setCurrentPage] = useState(1);
@@ -97,6 +103,104 @@ export default function Book() {
         }
     };
 
+    const exportToExcel = () => {
+        const wb = XLSX.utils.book_new();
+
+        ledger.forEach((account) => {
+            const { nameAccount, openingBalance } = account.account;
+
+            // Inicializar con la fila de "Saldo Inicial"
+            const dataForExcel = [
+                {
+                    Fecha: "",
+                    Descripción: "Saldo Inicial",
+                    Debe: "",
+                    Haber: "",
+                    Saldo: openingBalance || 0, // Si no hay saldo inicial, mostrar 0
+                },
+            ];
+
+            // Añadir los asientos de la cuenta
+            const seatsData = account.seats.map((seat) => ({
+                Fecha: new Date(seat.seat.date).toLocaleDateString("es-ES"),
+                Descripción: seat.seat.description,
+                Debe: seat.debe ? seat.debe : "",
+                Haber: seat.haber ? seat.haber : "",
+                Saldo: seat.balance ? seat.balance : "",
+            }));
+
+            // Añadir los asientos después del Saldo Inicial
+            dataForExcel.push(...seatsData);
+
+            // Añadir la fila de "Saldo Final"
+            dataForExcel.push({
+                Fecha: "",
+                Descripción: "Saldo Final",
+                Debe: "",
+                Haber: "",
+                Saldo: account.finalBalance || "",
+            });
+
+            // Crear la hoja de trabajo con la información
+            const ws = XLSX.utils.json_to_sheet(dataForExcel, {
+                skipHeader: true,
+            });
+
+            // Añadir los encabezados en la primera fila
+            XLSX.utils.sheet_add_aoa(
+                ws,
+                [["Fecha", "Descripción", "Debe", "Haber", "Saldo"]],
+                { origin: "A1" }
+            );
+
+            // Añadir la hoja al libro de trabajo
+            XLSX.utils.book_append_sheet(wb, ws, nameAccount);
+        });
+
+        // Exportar el archivo Excel
+        XLSX.writeFile(wb, "LibroMayor.xlsx");
+    };
+
+    const exportToPDF = () => {
+        const doc = new jsPDF();
+
+        ledger.forEach((account, idx) => {
+            const { nameAccount } = account.account;
+
+            // Crear los datos con el saldo inicial y final en la columna de Saldo
+            const rows = account.seats.map((seat) => [
+                new Date(seat.seat.date).toLocaleDateString("es-ES"),
+                seat.seat.description,
+                seat.debe ? seat.debe : "-",
+                seat.haber ? seat.haber : "-",
+                seat.balance,
+            ]);
+
+            // Insertamos el saldo inicial y final
+            rows.unshift(["", "Saldo Inicial", "", "", account.openingBalance]);
+            rows.push(["", "Saldo Final", "", "", account.finalBalance]);
+
+            // Configuración del PDF
+            doc.setFontSize(12);
+            doc.text(`Cuenta: ${nameAccount}`, 14, 20 + idx * 40); // Título con nombre de la cuenta
+            doc.autoTable({
+                head: [["Fecha", "Descripción", "Debe", "Haber", "Saldo"]], // Header con columnas fijas
+                body: rows,
+                startY: 30 + idx * 40,
+                theme: "grid", // Tema de tabla con líneas para mayor claridad
+                headStyles: { fillColor: [100, 100, 255] }, // Color del encabezado
+                margin: { top: 20 },
+            });
+
+            if (idx < ledger.length - 1) {
+                doc.addPage(); // Agregar nueva página si hay más cuentas
+            }
+        });
+
+        // Guardar el archivo PDF
+        doc.save("LibroMayor.pdf");
+    };
+
     // CONSTANTS
     const { firstDayOfMonth, lastDayOfMonth } = getDefaultDate();
 
@@ -168,6 +272,12 @@ export default function Book() {
                                 Filtrar
                             </button>
                         </div>
+                        <Export
+                            excel={true}
+                            pdf={true}
+                            exportToExcel={exportToExcel}
+                            exportToPDF={exportToPDF}
+                        />
                     </div>
                 </div>
 
@@ -190,9 +300,8 @@ export default function Book() {
                         ) : (
                             <>
                                 {ledger.map((account, index) => (
-                                    <div>
+                                    <div key={index}>
                                         <Ledger
-                                            key={index}
                                             name={account.account.nameAccount}
                                             type={account.account.type}
                                             seats={account.seats}
@@ -207,12 +316,14 @@ export default function Book() {
                         )}
                     </div>
                 )}
-                <Pagination
-                    handleNextPage={handleNextPage}
-                    handlePreviousPage={handlePreviousPage}
-                    currentPage={currentPage}
-                    totalPages={totalPages}
-                />
+                {ledger.length > 0 ? (
+                    <Pagination
+                        handleNextPage={handleNextPage}
+                        handlePreviousPage={handlePreviousPage}
+                        currentPage={currentPage}
+                        totalPages={totalPages}
+                    />
+                ) : null}
             </div>
         </>
     );

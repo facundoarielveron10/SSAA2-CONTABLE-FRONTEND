@@ -1,6 +1,7 @@
 // COMPONENTS
 import { Fragment } from "react/jsx-runtime";
 import DatePicker from "react-datepicker";
+import Export from "../Export";
 
 // UTILS
 import { formatBalance, formatDate } from "../../utils/format";
@@ -32,16 +33,12 @@ export default function Table({
                             onClick={() => setReverse(!reverse)}
                         />
                     </div>
-                    <div className="diary-export">
-                        <BsFiletypeXlsx
-                            className="diary-export-button diary-excel"
-                            onClick={exportToExcel}
-                        />
-                        <BsFiletypePdf
-                            className="diary-export-button diary-pdf"
-                            onClick={exportToPDF}
-                        />
-                    </div>
+                    <Export
+                        excel={true}
+                        pdf={true}
+                        exportToExcel={exportToExcel}
+                        exportToPDF={exportToPDF}
+                    />
                     <div className="diary-dates">
                         {/* FECHA DESDE */}
                         <div className="diary-date-picker">

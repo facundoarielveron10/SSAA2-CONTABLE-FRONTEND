@@ -18,6 +18,7 @@ import "@styles/spinner.css";
 import "@styles/logo.css";
 import "@styles/darkmode.css";
 import "@styles/alert.css";
+import "@styles/export.css";
 
 // CSS (External)
 import "react-datepicker/dist/react-datepicker.css";
