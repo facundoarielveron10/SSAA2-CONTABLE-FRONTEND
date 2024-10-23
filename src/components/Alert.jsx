@@ -1,6 +1,3 @@
-// CSS
-import "react-toastify/dist/ReactToastify.css";
-
 // ALERT
 import { ToastContainer } from "react-toastify";
 

@@ -105,7 +105,6 @@ export default function Table({
                                                 {accountIndex === 0 && (
                                                     <>
                                                         <td
-                                                            className="diary-table-col-date"
                                                             rowSpan={
                                                                 seat
                                                                     .accountSeats
@@ -117,7 +116,6 @@ export default function Table({
                                                             )}
                                                         </td>
                                                         <td
-                                                            className="diary-table-col-description"
                                                             rowSpan={
                                                                 seat
                                                                     .accountSeats
@@ -136,18 +134,18 @@ export default function Table({
                                                         accountSeat.haber > 0
                                                             ? "diary-haber"
                                                             : ""
-                                                    } diary-table-col-accounts`}
+                                                    }`}
                                                 >
                                                     {accountSeat.account}
                                                 </td>
-                                                <td className="diary-table-col-debe">
+                                                <td>
                                                     {accountSeat.debe > 0
                                                         ? `$${formatBalance(
                                                               accountSeat.debe
                                                           )}`
                                                         : ""}
                                                 </td>
-                                                <td className="diary-table-col-haber">
+                                                <td>
                                                     {accountSeat.haber > 0
                                                         ? `$${formatBalance(
                                                               accountSeat.haber

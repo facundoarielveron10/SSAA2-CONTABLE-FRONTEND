@@ -43,9 +43,8 @@ export default function Create() {
                 type,
                 accountId: account,
             });
-
-            toast.success(data);
             resetValues();
+            toast.success(data);
         } catch (error) {
             toast.error(errorResponse(error));
         }

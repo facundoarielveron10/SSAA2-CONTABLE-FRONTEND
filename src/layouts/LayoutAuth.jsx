@@ -24,6 +24,7 @@ import "@styles/home/home.css";
 
 // CSS (External)
 import "react-datepicker/dist/react-datepicker.css";
+import "react-toastify/dist/ReactToastify.css";
 
 // REACT
 import { useEffect } from "react";

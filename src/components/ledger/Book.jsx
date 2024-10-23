@@ -7,10 +7,11 @@ import Search from "../Search";
 import Ledger from "./Ledger";
 import DatePicker from "react-datepicker";
 import Pagination from "../Pagination";
+import Export from "../Export";
+import Alert from "../Alert";
 
 // ALERT
 import { toast } from "react-toastify";
-import Alert from "../Alert";
 
 // UTILS
 import { errorResponse } from "../../utils/error";
@@ -22,7 +23,10 @@ import clientAxios from "../../config/ClientAxios";
 import * as XLSX from "xlsx";
 import jsPDF from "jspdf";
 import "jspdf-autotable";
-import Export from "../Export";
+
+// ICONS
+import { BsTable, BsCardText } from "react-icons/bs";
+import Table from "./Table";
 
 export default function Book() {
     // STATES
@@ -210,6 +214,7 @@ export default function Book() {
     const [startDate, setStartDate] = useState(firstDayOfMonth);
     const [endDate, setEndDate] = useState(lastDayOfMonth);
     const [search, setSearch] = useState("");
+    const [table, setTable] = useState(false);
 
     // EFFECTS
     useEffect(() => {
@@ -272,6 +277,19 @@ export default function Book() {
                                 Filtrar
                             </button>
                         </div>
+                        <div className="ledger-format">
+                            {table ? (
+                                <BsCardText
+                                    className="ledger-format-button"
+                                    onClick={() => setTable(false)}
+                                />
+                            ) : (
+                                <BsTable
+                                    className="ledger-format-button"
+                                    onClick={() => setTable(true)}
+                                />
+                            )}
+                        </div>
                         <Export
                             excel={true}
                             pdf={true}
@@ -301,15 +319,34 @@ export default function Book() {
                             <>
                                 {ledger.map((account, index) => (
                                     <div key={index}>
-                                        <Ledger
-                                            name={account.account.nameAccount}
-                                            type={account.account.type}
-                                            seats={account.seats}
-                                            openingBalance={
-                                                account.openingBalance
-                                            }
-                                            finalBalance={account.finalBalance}
-                                        />
+                                        {table ? (
+                                            <Table
+                                                name={
+                                                    account.account.nameAccount
+                                                }
+                                                seats={account.seats}
+                                                openingBalance={
+                                                    account.openingBalance
+                                                }
+                                                finalBalance={
+                                                    account.finalBalance
+                                                }
+                                            />
+                                        ) : (
+                                            <Ledger
+                                                name={
+                                                    account.account.nameAccount
+                                                }
+                                                type={account.account.type}
+                                                seats={account.seats}
+                                                openingBalance={
+                                                    account.openingBalance
+                                                }
+                                                finalBalance={
+                                                    account.finalBalance
+                                                }
+                                            />
+                                        )}
                                     </div>
                                 ))}
                             </>
