@@ -4,7 +4,7 @@ import { useLoginStore } from "../../zustand/loginStore";
 // COMPONENTS
 import Logo from "../Logo";
 
-export default function NavbarDesktop() {
+export default function NavbarDesktop({ url }) {
     // ZUSTAND
     const { logout, canExecute } = useLoginStore();
 
@@ -17,39 +17,76 @@ export default function NavbarDesktop() {
         <nav className="navbar">
             <div className="navbar-container">
                 <div className="navbar-logo">
-                    <a href="/" className="navbar-link">
+                    <a
+                        href="/"
+                        className={`${
+                            url === "/" ? "navbar-link-active" : ""
+                        } navbar-link`}
+                    >
                         <Logo />
                     </a>
                     <div className="navbar-separator"></div>
                 </div>
                 <div className="navbar-links">
                     {canExecute("GET_USERS") ? (
-                        <a href="/users" className="navbar-link">
+                        <a
+                            href="/users"
+                            className={`${
+                                url === "/users" ? "navbar-link-active" : ""
+                            } navbar-link`}
+                        >
                             Usuarios
                         </a>
                     ) : null}
                     {canExecute("GET_ROLES") ? (
-                        <a href="/roles" className="navbar-link">
+                        <a
+                            href="/roles"
+                            className={`${
+                                url === "/roles" ? "navbar-link-active" : ""
+                            } navbar-link`}
+                        >
                             Roles
                         </a>
                     ) : null}
                     {canExecute("GET_ACCOUNTS") ? (
-                        <a href="/accounts" className="navbar-link">
+                        <a
+                            href="/accounts"
+                            className={`${
+                                url === "/accounts" ? "navbar-link-active" : ""
+                            } navbar-link`}
+                        >
                             Cuentas
                         </a>
                     ) : null}
                     {canExecute("GET_SEATS") ? (
-                        <a href="/seats" className="navbar-link">
+                        <a
+                            href="/seats"
+                            className={`${
+                                url === "/seats" ? "navbar-link-active" : ""
+                            } navbar-link`}
+                        >
                             Asientos
                         </a>
                     ) : null}
                     {canExecute("GET_DIARY") ? (
-                        <a href="/diary-book" className="navbar-link">
+                        <a
+                            href="/diary-book"
+                            className={`${
+                                url === "/diary-book"
+                                    ? "navbar-link-active"
+                                    : ""
+                            } navbar-link`}
+                        >
                             Libro Diario
                         </a>
                     ) : null}
                     {canExecute("GET_LEDGER") ? (
-                        <a href="/ledger" className="navbar-link">
+                        <a
+                            href="/ledger"
+                            className={`${
+                                url === "/ledger" ? "navbar-link-active" : ""
+                            } navbar-link`}
+                        >
                             Libro Mayor
                         </a>
                     ) : null}

@@ -56,6 +56,10 @@
     color: var(--primaryColor);
 }
 
+.navbar-link-active {
+    color: var(--primaryColor) !important;
+}
+
 /* MOBILE */
 .navbarMobile {
     display: flex;
@@ -133,7 +137,15 @@
     color: #fff;
     text-decoration: none;
     overflow: hidden;
+    font-size: 2rem;
 }
+
+@media (min-width: 368px) {
+    .navbarMobile-overlay ul li a {
+        font-size: 3rem;
+    }
+}
+
 .navbarMobile-overlay ul li a:hover:after,
 .navbarMobile-overlay ul li a:focus:after,
 .navbarMobile-overlay ul li a:active:after {
@@ -170,4 +182,12 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    gap: 0.1rem;
+    font-size: 2rem;
+}
+
+@media (min-width: 368px) {
+    .navbarMobile-logout {
+        font-size: 3rem;
+    }
 }

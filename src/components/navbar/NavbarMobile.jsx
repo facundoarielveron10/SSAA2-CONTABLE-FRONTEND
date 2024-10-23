@@ -10,7 +10,7 @@ import { useLoginStore } from "../../zustand/loginStore";
 // ICON
 import { CiLogout } from "react-icons/ci";
 
-export default function NavbarMobile() {
+export default function NavbarMobile({ url }) {
     // STATE
     const [isOpen, setOpen] = useState(false);
 
@@ -21,7 +21,7 @@ export default function NavbarMobile() {
     const handleLogout = () => {
         logout();
     };
-
+    console.log(url);
     return (
         <>
             <div className="navbarMobile">
@@ -40,36 +40,97 @@ export default function NavbarMobile() {
                 <nav className="navbarMobile-overlay-menu">
                     <ul>
                         <li>
-                            <a href="/">Inicio</a>
+                            <a
+                                className={`${
+                                    url === "/" ? "navbar-link-active" : ""
+                                }`}
+                                href="/"
+                            >
+                                Inicio
+                            </a>
                         </li>
                         {canExecute("GET_USERS") ? (
                             <li>
-                                <a href="/users">Usuarios</a>
+                                <a
+                                    className={`${
+                                        url === "/users"
+                                            ? "navbar-link-active"
+                                            : ""
+                                    }`}
+                                    href="/users"
+                                >
+                                    Usuarios
+                                </a>
                             </li>
                         ) : null}
                         {canExecute("GET_ROLES") ? (
                             <li>
-                                <a href="/roles">Roles</a>
+                                <a
+                                    className={`${
+                                        url === "/roles"
+                                            ? "navbar-link-active"
+                                            : ""
+                                    }`}
+                                    href="/roles"
+                                >
+                                    Roles
+                                </a>
                             </li>
                         ) : null}
                         {canExecute("GET_ACCOUNTS") ? (
                             <li>
-                                <a href="/accounts">Cuentas</a>
+                                <a
+                                    className={`${
+                                        url === "/accounts"
+                                            ? "navbar-link-active"
+                                            : ""
+                                    }`}
+                                    href="/accounts"
+                                >
+                                    Cuentas
+                                </a>
                             </li>
                         ) : null}
                         {canExecute("GET_SEATS") ? (
                             <li>
-                                <a href="/seats">Asientos</a>
+                                <a
+                                    className={`${
+                                        url === "/seats"
+                                            ? "navbar-link-active"
+                                            : ""
+                                    }`}
+                                    href="/seats"
+                                >
+                                    Asientos
+                                </a>
                             </li>
                         ) : null}
                         {canExecute("GET_DIARY") ? (
                             <li>
-                                <a href="/diary-book">Libro Diario</a>
+                                <a
+                                    className={`${
+                                        url === "/diary-book"
+                                            ? "navbar-link-active"
+                                            : ""
+                                    }`}
+                                    href="/diary-book"
+                                >
+                                    Libro Diario
+                                </a>
                             </li>
                         ) : null}
                         {canExecute("GET_LEDGER") ? (
                             <li>
-                                <a href="/ledger">Libro Mayor</a>
+                                <a
+                                    className={`${
+                                        url === "/ledger"
+                                            ? "navbar-link-active"
+                                            : ""
+                                    }`}
+                                    href="/ledger"
+                                >
+                                    Libro Mayor
+                                </a>
                             </li>
                         ) : null}
                         <li>
@@ -77,7 +138,7 @@ export default function NavbarMobile() {
                                 className="navbarMobile-logout"
                                 onClick={handleLogout}
                             >
-                                <CiLogout /> Cerrar Sesion
+                                <CiLogout />
                             </button>
                         </li>
                     </ul>

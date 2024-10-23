@@ -40,6 +40,16 @@
 
 .home-card-description {
     color: var(--textColor);
+    position: relative;
+}
+
+.home-card-expand-button {
+    background: none;
+    border: none;
+    color: var(--primaryColor);
+    cursor: pointer;
+    padding-left: 5px;
+    font-size: 0.9rem;
 }
 
 .home-card-button {
