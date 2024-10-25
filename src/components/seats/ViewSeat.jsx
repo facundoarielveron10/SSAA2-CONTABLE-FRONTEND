@@ -8,6 +8,11 @@ import { toast } from "react-toastify";
 // AXIOS
 import clientAxios from "../../config/ClientAxios";
 
+// EXPORT
+import * as XLSX from "xlsx";
+import jsPDF from "jspdf";
+import "jspdf-autotable";
+
 // COMPONENTS
 import Spinner from "../Spinner";
 import Table from "../diary/Table";
@@ -16,6 +21,48 @@ export default function ViewSeat({ id }) {
     // STATES
     const [seat, setSeat] = useState([]);
     const [loading, setLoading] = useState(false);
+
+    // FUNCTIONS
+    const exportToExcel = () => {
+        const formattedData = seat
+            .map((entry) => {
+                return entry.accountSeats.map((account) => ({
+                    Fecha: new Date(entry.seat.date).toLocaleDateString(),
+                    Descripción: entry.seat.description,
+                    Cuenta: account.account,
+                    Debe: account.debe,
+                    Haber: account.haber,
+                }));
+            })
+            .flat();
+
+        const worksheet = XLSX.utils.json_to_sheet(formattedData);
+        const workbook = XLSX.utils.book_new();
+        XLSX.utils.book_append_sheet(workbook, worksheet, "Libro Diario");
+        XLSX.writeFile(workbook, "Asiento.xlsx");
+    };
+
+    const exportToPDF = () => {
+        const doc = new jsPDF();
+        const formattedData = seat
+            .map((entry) => {
+                return entry.accountSeats.map((account) => [
+                    new Date(entry.seat.date).toLocaleDateString(),
+                    entry.seat.description,
+                    account.account,
+                    account.debe,
+                    account.haber,
+                ]);
+            })
+            .flat();
+
+        doc.autoTable({
+            head: [["Fecha", "Descripción", "Cuenta", "Debe", "Haber"]],
+            body: formattedData,
+        });
+
+        doc.save("Asiento.pdf");
+    };
 
     // EFFECTS
     useEffect(() => {
@@ -48,7 +95,16 @@ export default function ViewSeat({ id }) {
                 </p>
 
                 <div className="seat-content">
-                    {loading ? <Spinner /> : <Table seats={seat} />}
+                    {loading ? (
+                        <Spinner />
+                    ) : (
+                        <Table
+                            seats={seat}
+                            showExport={true}
+                            exportToExcel={exportToExcel}
+                            exportToPDF={exportToPDF}
+                        />
+                    )}
                 </div>
             </div>
         </>

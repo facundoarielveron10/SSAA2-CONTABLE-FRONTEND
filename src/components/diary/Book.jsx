@@ -150,6 +150,9 @@ export default function Book() {
                             exportToPDF={exportToPDF}
                             reverse={reverse}
                             setReverse={setReverse}
+                            showReverse={true}
+                            showExport={true}
+                            showDates={true}
                         />
                     </div>
                 )}

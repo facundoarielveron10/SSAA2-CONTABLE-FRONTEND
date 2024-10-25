@@ -20,61 +20,70 @@ export default function Table({
     exportToPDF,
     reverse,
     setReverse,
+    showReverse = false,
+    showDates = false,
+    showExport = false,
 }) {
     return (
         <div className="diary-seating">
             <div className="diary-header">
                 <h2 className="diary-subtitle">Asientos</h2>
                 <div className="diary-header-actions">
-                    <div className="diary-reverse">
-                        <FaArrowDownUpAcrossLine
-                            className="diary-reverse-button"
-                            onClick={() => setReverse(!reverse)}
+                    {showReverse ? (
+                        <div className="diary-reverse">
+                            <FaArrowDownUpAcrossLine
+                                className="diary-reverse-button"
+                                onClick={() => setReverse(!reverse)}
+                            />
+                        </div>
+                    ) : null}
+                    {showExport ? (
+                        <Export
+                            excel={true}
+                            pdf={true}
+                            exportToExcel={exportToExcel}
+                            exportToPDF={exportToPDF}
                         />
-                    </div>
-                    <Export
-                        excel={true}
-                        pdf={true}
-                        exportToExcel={exportToExcel}
-                        exportToPDF={exportToPDF}
-                    />
-                    <div className="diary-dates">
-                        {/* FECHA DESDE */}
-                        <div className="diary-date-picker">
-                            <label>Fecha Desde:</label>
-                            <DatePicker
-                                selected={startDate}
-                                onChange={(date) => setStartDate(date)}
-                                dateFormat="dd/MM/yyyy"
-                                isClearable
-                                placeholderText="Selecciona una fecha"
-                                className="diary-date"
-                                maxDate={endDate}
-                            />
+                    ) : null}
+                    {showDates ? (
+                        <div className="diary-dates">
+                            {/* FECHA DESDE */}
+                            <div className="diary-date-picker">
+                                <label>Fecha Desde:</label>
+                                <DatePicker
+                                    selected={startDate}
+                                    onChange={(date) => setStartDate(date)}
+                                    dateFormat="dd/MM/yyyy"
+                                    isClearable
+                                    placeholderText="Selecciona una fecha"
+                                    className="diary-date"
+                                    maxDate={endDate}
+                                />
+                            </div>
+                            {/* FECHA HASTA */}
+                            <div className="diary-date-picker">
+                                <label>Fecha Hasta:</label>
+                                <DatePicker
+                                    selected={endDate}
+                                    onChange={(date) => setEndDate(date)}
+                                    dateFormat="dd/MM/yyyy"
+                                    isClearable
+                                    placeholderText="Selecciona una fecha"
+                                    className="diary-date"
+                                    minDate={startDate}
+                                />
+                            </div>
+                            <div className="diary-date-button">
+                                <button
+                                    type="button"
+                                    className="button"
+                                    onClick={handleFilterDate}
+                                >
+                                    Filtrar
+                                </button>
+                            </div>
                         </div>
-                        {/* FECHA HASTA */}
-                        <div className="diary-date-picker">
-                            <label>Fecha Hasta:</label>
-                            <DatePicker
-                                selected={endDate}
-                                onChange={(date) => setEndDate(date)}
-                                dateFormat="dd/MM/yyyy"
-                                isClearable
-                                placeholderText="Selecciona una fecha"
-                                className="diary-date"
-                                minDate={startDate}
-                            />
-                        </div>
-                        <div className="diary-date-button">
-                            <button
-                                type="button"
-                                className="button"
-                                onClick={handleFilterDate}
-                            >
-                                Filtrar
-                            </button>
-                        </div>
-                    </div>
+                    ) : null}
                 </div>
             </div>
             {seats?.length === 0 ? (
