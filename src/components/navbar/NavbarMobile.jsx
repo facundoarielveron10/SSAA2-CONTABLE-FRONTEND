@@ -21,7 +21,7 @@ export default function NavbarMobile({ url }) {
     const handleLogout = () => {
         logout();
     };
-    console.log(url);
+
     return (
         <>
             <div className="navbarMobile">

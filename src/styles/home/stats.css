@@ -1,0 +1,112 @@
+.stats {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+}
+
+.stats-dates {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+}
+
+.stats-title {
+    text-align: center;
+    text-transform: uppercase;
+    font-size: 1rem;
+    color: var(--textColor);
+}
+
+.stats-users {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+}
+
+@media (min-width: 1068px) {
+    .stats-users {
+        flex-direction: row;
+        gap: 2rem;
+    }
+}
+
+.stats-card {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--primaryColor);
+    box-shadow: rgba(0, 0, 0, 0.09) 0px 2px 1px, rgba(0, 0, 0, 0.09) 0px 4px 2px,
+        rgba(0, 0, 0, 0.09) 0px 8px 4px, rgba(0, 0, 0, 0.09) 0px 16px 8px,
+        rgba(0, 0, 0, 0.09) 0px 32px 16px;
+    border-radius: 4px;
+    padding: 0.5rem 1rem;
+    width: 280px;
+}
+
+.stats-card-data {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    gap: 1rem;
+}
+
+.stats-card-data p,
+.stats-card-data svg {
+    color: #cccccc;
+    margin: 0;
+}
+
+.stats-card-data p {
+    font-size: 1rem;
+    text-transform: uppercase;
+    font-weight: bold;
+}
+
+.stats-seats {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.stats-filter {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.stats-filter select {
+    width: 100%;
+    padding: 0.5rem;
+    background-color: var(--backgroundInput);
+    color: var(--textColor);
+    border: 2px solid var(--primaryColor);
+    border-radius: 4px;
+    font-size: 16px;
+    appearance: none;
+    outline: none;
+    transition: border-color 0.3s;
+}
+
+.stats-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+}
+
+.stats-seats-total {
+    font-weight: bold;
+    font-size: 1.5rem;
+    text-transform: uppercase;
+    color: var(--primaryColor);
+}

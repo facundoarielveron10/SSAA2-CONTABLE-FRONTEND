@@ -6,6 +6,7 @@ import Card from "./Card";
 
 // ZUSTAND
 import { useLoginStore } from "src/zustand/loginStore";
+import Statistics from "./Statistics";
 
 export default function Home() {
     // ZUSTAND
@@ -16,13 +17,19 @@ export default function Home() {
 
     return (
         <div className="home">
-            <h1 className="title">Inicio</h1>
+            <h2 className="title">Estadisticas</h2>
+            <p className="paragraph">
+                En esta seccion se podran visualizar la estadistica de la
+                cantidad de asientos registrados en el año actual, ademas de
+                otros datos importantes
+            </p>
+            <Statistics />
+            <h1 className="title">Secciones</h1>
             <p className="paragraph">
                 En esta seccion podras encontrar acceso a todas las secciones
                 importantes del sistema, siempre y cuando tengas permisos a esas
                 secciones.
             </p>
-
             <div className="home-sections">
                 {sections.map(
                     (section, index) =>
