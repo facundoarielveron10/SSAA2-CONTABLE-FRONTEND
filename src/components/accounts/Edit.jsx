@@ -72,7 +72,7 @@ export default function Edit({ id }) {
     return (
         <>
             <Alert />
-            <div className="createEditAccount">
+            <div className="content">
                 <h1 className="title">Edicion de Cuenta</h1>
                 <p className="paragraph">
                     Edita los datos del siguiente formulario para editar una
@@ -80,39 +80,34 @@ export default function Edit({ id }) {
                     cuenta la cuenta
                 </p>
 
-                <form
-                    className="createEditAccount-form"
-                    onSubmit={handleSubmit}
-                >
-                    <div className="form">
-                        {/* NOMBRE */}
-                        <div className="form-group createEditAccount-group">
-                            <label className="form-label" htmlFor="name">
-                                Nombre de la cuenta
-                            </label>
-                            <input
-                                className="form-input createEditAccount-input"
-                                type="text"
-                                id="name"
-                                value={name}
-                                onChange={(e) => setName(e.target.value)}
-                            />
-                        </div>
-                        {/* DESCRIPCIÓN DE LA CUENTA */}
-                        <div className="form-group createEditAccount-group">
-                            <label className="form-label" htmlFor="description">
-                                Descripción de la cuenta
-                            </label>
-                            <textarea
-                                className="form-input createEditAccount-input"
-                                id="description"
-                                value={description}
-                                onChange={(e) => setDescription(e.target.value)}
-                            />
-                        </div>
+                <form className="form" onSubmit={handleSubmit}>
+                    {/* NOMBRE */}
+                    <div className="form-group">
+                        <label className="form-label" htmlFor="name">
+                            Nombre de la cuenta
+                        </label>
+                        <input
+                            className="form-input"
+                            type="text"
+                            id="name"
+                            value={name}
+                            onChange={(e) => setName(e.target.value)}
+                        />
+                    </div>
+                    {/* DESCRIPCIÓN DE LA CUENTA */}
+                    <div className="form-group">
+                        <label className="form-label" htmlFor="description">
+                            Descripción de la cuenta
+                        </label>
+                        <textarea
+                            className="form-input"
+                            id="description"
+                            value={description}
+                            onChange={(e) => setDescription(e.target.value)}
+                        />
                     </div>
 
-                    <button className="createEditAccount-button button">
+                    <button className="form-button form-submit button">
                         Editar cuenta
                     </button>
                 </form>

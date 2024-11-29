@@ -73,7 +73,7 @@ export default function Create() {
     return (
         <>
             <Alert />
-            <div className="createEditUser">
+            <div className="content">
                 <h1 className="title">Creacion de Usuario</h1>
                 <p className="paragraph">
                     Completa el siguiente formulario para crear un nuevo
@@ -148,29 +148,21 @@ export default function Create() {
                         />
                     </div>
                     {/* ROL DEL USUARIO */}
-                    <div className="form-group createEditUser-select">
+                    <div className="form-group">
                         <label className="form-label" htmlFor="passwordConfirm">
                             Rol del usuario
                         </label>
                         <select
-                            className="form-input"
+                            className="form-select"
                             value={role}
                             onChange={(e) => setRole(e.target.value)}
                         >
-                            <option
-                                disabled
-                                className="createEditUser-option"
-                                value=""
-                            >
+                            <option disabled value="">
                                 Seleccionar Rol
                             </option>
                             {roles.length > 0
                                 ? roles.map((rol) => (
-                                      <option
-                                          key={rol._id}
-                                          className="createEditUser-option"
-                                          value={rol.name}
-                                      >
+                                      <option key={rol._id} value={rol.name}>
                                           {rol.nameDescriptive}
                                       </option>
                                   ))
@@ -179,7 +171,7 @@ export default function Create() {
                     </div>
 
                     <button
-                        className="createEditUser-button form-submit button"
+                        className="form-button form-submit button"
                         type="submit"
                     >
                         Crear usuario

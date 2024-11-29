@@ -67,7 +67,7 @@ export default function Create() {
     return (
         <>
             <Alert />
-            <div className="createEditAccount">
+            <div className="content">
                 <h1 className="title">Creacion de Cuenta</h1>
                 <p className="paragraph">
                     Completa el siguiente formulario para crear una nueva
@@ -75,46 +75,38 @@ export default function Create() {
                     tipo de cuenta
                 </p>
 
-                <form
-                    className="createEditAccount-form"
-                    onSubmit={handleSubmit}
-                >
-                    <div className="form">
-                        {/* NOMBRE */}
-                        <div className="form-group createEditAccount-group">
-                            <label className="form-label" htmlFor="name">
-                                Nombre de la cuenta
-                            </label>
-                            <input
-                                className="form-input createEditAccount-input"
-                                type="text"
-                                id="name"
-                                value={name}
-                                onChange={(e) => setName(e.target.value)}
-                            />
-                        </div>
-                        {/* DESCRIPCIÓN DE LA CUENTA */}
-                        <div className="form-group createEditAccount-group">
-                            <label className="form-label" htmlFor="description">
-                                Descripción de la cuenta
-                            </label>
-                            <textarea
-                                className="form-input createEditAccount-input"
-                                id="description"
-                                value={description}
-                                onChange={(e) => setDescription(e.target.value)}
-                            />
-                        </div>
+                <form className="form" onSubmit={handleSubmit}>
+                    {/* NOMBRE */}
+                    <div className="form-group">
+                        <label className="form-label" htmlFor="name">
+                            Nombre de la cuenta
+                        </label>
+                        <input
+                            className="form-input"
+                            type="text"
+                            id="name"
+                            value={name}
+                            onChange={(e) => setName(e.target.value)}
+                        />
                     </div>
-                    <div className="createEditAccount-typeAccount">
-                        <label
-                            className="createEditAccount-type-label"
-                            htmlFor="type"
-                        >
+                    {/* DESCRIPCIÓN DE LA CUENTA */}
+                    <div className="form-group">
+                        <label className="form-label" htmlFor="description">
+                            Descripción de la cuenta
+                        </label>
+                        <textarea
+                            className="form-input"
+                            id="description"
+                            value={description}
+                            onChange={(e) => setDescription(e.target.value)}
+                        />
+                    </div>
+                    <div className="form-group">
+                        <label className="form-label" htmlFor="type">
                             Tipo de cuenta
                         </label>
                         <select
-                            className="createEditAccount-type-select"
+                            className="form-select"
                             id="type"
                             value={type}
                             onChange={(e) => setType(e.target.value)}
@@ -130,15 +122,12 @@ export default function Create() {
                         </select>
                     </div>
 
-                    <div className="createEditAccount-typeAccount">
-                        <label
-                            className="createEditAccount-type-label"
-                            htmlFor="type"
-                        >
+                    <div className="form-group">
+                        <label className="form-label" htmlFor="type">
                             Hijo/a de cuenta
                         </label>
                         <select
-                            className="createEditAccount-type-select"
+                            className="form-select"
                             id="account"
                             value={account}
                             onChange={(e) => setAccount(e.target.value)}
@@ -154,7 +143,7 @@ export default function Create() {
                         </select>
                     </div>
 
-                    <button className="createEditAccount-button button">
+                    <button className="form-button form-submit button">
                         Crear cuenta
                     </button>
                 </form>

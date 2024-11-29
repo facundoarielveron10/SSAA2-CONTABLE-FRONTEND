@@ -25,83 +25,79 @@ export default function Table({
     showExport = false,
 }) {
     return (
-        <div className="diary-seating">
-            <div className="diary-header">
-                <h2 className="diary-subtitle">Asientos</h2>
-                <div className="diary-header-actions">
-                    {showReverse ? (
-                        <div className="diary-reverse">
-                            <FaArrowDownUpAcrossLine
-                                className="diary-reverse-button"
-                                onClick={() => setReverse(!reverse)}
+        <div className="table-container">
+            <div className="table">
+                <div className="table-header">
+                    <h2 className="table-subtitle">Asientos</h2>
+                    <div className="table-header-actions">
+                        {showReverse ? (
+                            <div className="table-reverse">
+                                <FaArrowDownUpAcrossLine
+                                    className="table-reverse-button"
+                                    onClick={() => setReverse(!reverse)}
+                                />
+                            </div>
+                        ) : null}
+                        {showExport ? (
+                            <Export
+                                excel={true}
+                                pdf={true}
+                                exportToExcel={exportToExcel}
+                                exportToPDF={exportToPDF}
                             />
-                        </div>
-                    ) : null}
-                    {showExport ? (
-                        <Export
-                            excel={true}
-                            pdf={true}
-                            exportToExcel={exportToExcel}
-                            exportToPDF={exportToPDF}
-                        />
-                    ) : null}
-                    {showDates ? (
-                        <div className="diary-dates">
-                            {/* FECHA DESDE */}
-                            <div className="diary-date-picker">
-                                <label>Fecha Desde:</label>
-                                <DatePicker
-                                    selected={startDate}
-                                    onChange={(date) => setStartDate(date)}
-                                    dateFormat="dd/MM/yyyy"
-                                    isClearable
-                                    placeholderText="Selecciona una fecha"
-                                    className="diary-date"
-                                    maxDate={endDate}
-                                />
+                        ) : null}
+                        {showDates ? (
+                            <div className="table-dates">
+                                {/* FECHA DESDE */}
+                                <div className="table-date-picker">
+                                    <label>Fecha Desde:</label>
+                                    <DatePicker
+                                        selected={startDate}
+                                        onChange={(date) => setStartDate(date)}
+                                        dateFormat="dd/MM/yyyy"
+                                        isClearable
+                                        placeholderText="Selecciona una fecha"
+                                        className="table-date"
+                                        maxDate={endDate}
+                                    />
+                                </div>
+                                {/* FECHA HASTA */}
+                                <div className="table-date-picker">
+                                    <label>Fecha Hasta:</label>
+                                    <DatePicker
+                                        selected={endDate}
+                                        onChange={(date) => setEndDate(date)}
+                                        dateFormat="dd/MM/yyyy"
+                                        isClearable
+                                        placeholderText="Selecciona una fecha"
+                                        className="table-date"
+                                        minDate={startDate}
+                                    />
+                                </div>
+                                <div className="table-date-button">
+                                    <button
+                                        type="button"
+                                        className="button"
+                                        onClick={handleFilterDate}
+                                    >
+                                        Filtrar
+                                    </button>
+                                </div>
                             </div>
-                            {/* FECHA HASTA */}
-                            <div className="diary-date-picker">
-                                <label>Fecha Hasta:</label>
-                                <DatePicker
-                                    selected={endDate}
-                                    onChange={(date) => setEndDate(date)}
-                                    dateFormat="dd/MM/yyyy"
-                                    isClearable
-                                    placeholderText="Selecciona una fecha"
-                                    className="diary-date"
-                                    minDate={startDate}
-                                />
-                            </div>
-                            <div className="diary-date-button">
-                                <button
-                                    type="button"
-                                    className="button"
-                                    onClick={handleFilterDate}
-                                >
-                                    Filtrar
-                                </button>
-                            </div>
-                        </div>
-                    ) : null}
+                        ) : null}
+                    </div>
                 </div>
-            </div>
-            {seats?.length === 0 ? (
-                <p className="diary-no-seats">No hay ningun asiento</p>
-            ) : (
-                <div className="diary-table-container">
-                    <table className="diary-table">
+                {seats?.length === 0 ? (
+                    <p className="table-no-data">No hay ningun asiento</p>
+                ) : (
+                    <table className="table-content table-content-border">
                         <thead>
                             <tr>
-                                <th className="diary-table-col-date">Fecha</th>
-                                <th className="diary-table-col-description">
-                                    Descripción
-                                </th>
-                                <th className="diary-table-col-accounts">
-                                    Cuentas
-                                </th>
-                                <th className="diary-table-col-debe">Debe</th>
-                                <th className="diary-table-col-haber">Haber</th>
+                                <th className="table-10">Fecha</th>
+                                <th className="table-35">Descripción</th>
+                                <th className="table-30">Cuentas</th>
+                                <th className="table-12">Debe</th>
+                                <th className="table-12">Haber</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -141,7 +137,7 @@ export default function Table({
                                                 <td
                                                     className={`${
                                                         accountSeat.haber > 0
-                                                            ? "diary-haber"
+                                                            ? "table-haber"
                                                             : ""
                                                     }`}
                                                 >
@@ -167,8 +163,8 @@ export default function Table({
                             ))}
                         </tbody>
                     </table>
-                </div>
-            )}
+                )}
+            </div>
         </div>
     );
 }

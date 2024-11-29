@@ -1,0 +1,239 @@
+.table-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 2rem;
+    margin-top: 2rem;
+}
+
+.table {
+    background-color: var(--backgroundCard);
+    border-radius: 8px;
+    padding: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    width: 1000px;
+}
+
+.table-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.5rem;
+}
+
+.table-header-actions {
+    display: flex;
+    align-items: flex-end;
+    gap: 1rem;
+}
+
+.table-subheader {
+    display: flex;
+    justify-content: space-between;
+    align-content: center;
+    color: var(--textColor);
+    font-weight: bold;
+    text-transform: uppercase;
+    border-top: 1px solid #2e2e2e;
+    margin-top: 0.5rem;
+}
+
+.table-subtitle {
+    font-weight: bold;
+    text-transform: uppercase;
+    color: var(--textColor);
+    margin: 0;
+}
+
+.table-filter {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.table-reverse {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.table-reverse-button {
+    cursor: pointer;
+    height: 35px;
+    width: 35px;
+    color: var(--primaryColor);
+    transition: all;
+    transition-duration: 300ms;
+}
+
+.table-reverse-button:hover {
+    color: var(--primaryDarkColor);
+}
+
+.table-dates {
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    gap: 1rem;
+}
+
+.table-date {
+    padding: 0.5rem;
+    border: none;
+    border-radius: 4px;
+    background-color: var(--backgroundInput);
+    color: var(--textColor);
+    transition: background-color 0.3s;
+}
+
+.table-date:hover {
+    background-color: var(--backgroundInputHover);
+}
+
+.table-date-picker {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.table-date-picker label {
+    font-weight: bold;
+    text-transform: uppercase;
+    color: var(--textColor);
+    margin-bottom: 0.5rem;
+}
+
+.table-haber {
+    padding-left: 4rem;
+}
+
+.table-format {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.table-format-button {
+    cursor: pointer;
+    height: 35px;
+    width: 35px;
+    color: var(--primaryColor);
+    transition: all;
+    transition-duration: 300ms;
+}
+
+.table-format-button:hover {
+    color: var(--primaryDarkColor);
+}
+
+.table-content {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.table-content thead {
+    color: var(--backgroundTextColor);
+}
+
+.table-content tbody {
+    color: var(--textColor);
+}
+
+.table-content th,
+.table-content td {
+    padding: 10px;
+    text-align: left;
+}
+
+.table-content-border th,
+.table-content-border td {
+    border: 1px solid #2e2e2e;
+}
+
+.table-content th {
+    background-color: var(--primaryDarkColor);
+}
+
+.table-content tr:nth-child(even) {
+    background-color: var(--backgroundInput);
+}
+
+.table-content-border tr:nth-child(even) {
+    background-color: unset;
+}
+
+.table-head-actions {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.table-actions {
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-end;
+    gap: 0.5rem;
+}
+
+.table-button {
+    text-decoration: none;
+    font-size: 0.8rem;
+}
+
+.table-delete {
+    background-color: var(--colorDelete);
+}
+
+.table-delete:hover {
+    background-color: var(--colorDeleteDark);
+}
+
+.table-no-data {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.5rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    color: var(--textColor);
+}
+
+.table-10 {
+    width: 10%;
+}
+
+.table-12 {
+    width: 12.5%;
+}
+
+.table-15 {
+    width: 15%;
+}
+
+.table-20 {
+    width: 20%;
+}
+
+.table-25 {
+    width: 25%;
+}
+
+.table-30 {
+    width: 30%;
+}
+
+.table-35 {
+    width: 35%;
+}
+
+.table-40 {
+    width: 40%;
+}
+
+.table-45 {
+    width: 45%;
+}

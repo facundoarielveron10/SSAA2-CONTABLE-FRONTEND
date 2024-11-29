@@ -47,7 +47,7 @@ export default function Accounts() {
     return (
         <>
             <Alert />
-            <div className="accounts">
+            <div className="content">
                 <h1 className="title">Listado de Cuentas</h1>
                 <p className="paragraph">
                     En este Listado se puede ver todas las cuentas que existen
@@ -55,17 +55,15 @@ export default function Accounts() {
                     elminar cuentas
                 </p>
                 {loading ? (
-                    <div className="accounts-spinner">
+                    <div className="spinner">
                         <Spinner />
                     </div>
                 ) : (
-                    <div>
-                        <Table accounts={accounts} />
-                    </div>
+                    <Table accounts={accounts} />
                 )}
             </div>
             {canExecute("CREATE_ACCOUNT") ? (
-                <a href="create-account" className="accounts-button button">
+                <a href="create-account" className="button-position button">
                     Crear cuenta
                 </a>
             ) : null}

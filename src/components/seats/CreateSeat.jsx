@@ -195,7 +195,7 @@ export default function CreateSeat() {
     return (
         <>
             <Alert />
-            <div className="createSeat">
+            <div className="content">
                 <h1 className="title">Creacion de Asiento</h1>
                 <p className="paragraph">
                     Completa el siguiente formulario para crear un nuevo
@@ -203,150 +203,136 @@ export default function CreateSeat() {
                     sumando datos.
                 </p>
 
-                <form className="createSeat-form" onSubmit={handleSubmit}>
-                    <div className="form">
-                        <h2 className="createSeat-form-title">
-                            Descripcion del asiento
-                        </h2>
-                        <div className="form-group createSeat-group">
-                            <label className="form-label" htmlFor="description">
-                                Descripcion
-                            </label>
-                            <input
-                                className="form-input createSeat-input"
-                                type="text"
-                                id="description"
-                                value={description}
-                                onChange={(e) => setDescription(e.target.value)}
-                            />
-                        </div>
+                <form className="form" onSubmit={handleSubmit}>
+                    <h2 className="form-title">Descripcion del asiento</h2>
+                    <div className="form-group">
+                        <label className="form-label" htmlFor="description">
+                            Descripcion
+                        </label>
+                        <input
+                            className="form-input"
+                            type="text"
+                            id="description"
+                            value={description}
+                            onChange={(e) => setDescription(e.target.value)}
+                        />
                     </div>
-                    <div className="form">
-                        <h2 className="createSeat-form-title">
-                            Datos del Asiento
-                        </h2>
-                        <div className="createSeat-account">
-                            <label
-                                className="createSeat-account-label form-label"
-                                htmlFor="accounts"
-                            >
-                                Cuenta
-                            </label>
-                            <div className="createSeat-subgroup">
-                                <div className="createSeat-subgroup-input">
-                                    <select
-                                        className="createSeat-account-select"
-                                        id="accounts"
-                                        value={account}
-                                        onChange={(e) =>
-                                            setAccount(e.target.value)
-                                        }
-                                    >
-                                        <option defaultChecked value="">
-                                            Selecciona una cuenta
+                    <h2 className="form-title">Datos del Asiento</h2>
+                    <div className="form-group">
+                        <label className="form-label" htmlFor="accounts">
+                            Cuenta
+                        </label>
+                        <div className="form-subgroup">
+                            <div className="form-subgroup-input">
+                                <select
+                                    className="form-select"
+                                    id="accounts"
+                                    value={account}
+                                    onChange={(e) => setAccount(e.target.value)}
+                                >
+                                    <option defaultChecked value="">
+                                        Selecciona una cuenta
+                                    </option>
+                                    {accounts.map((account) => (
+                                        <option
+                                            key={account._id}
+                                            value={account._id}
+                                        >
+                                            {account.nameAccount}
                                         </option>
-                                        {accounts.map((account) => (
-                                            <option
-                                                key={account._id}
-                                                value={account._id}
-                                            >
-                                                {account.nameAccount}
-                                            </option>
-                                        ))}
-                                    </select>
-                                </div>
-                                <div className="createSeat-accountButtons">
-                                    <a
-                                        href="/accounts"
-                                        className="createSeat-accountButton button"
-                                    >
-                                        Plan de cuentas
-                                    </a>
-                                    <a
-                                        href="/create-account"
-                                        className="createSeat-accountButton button"
-                                    >
-                                        Agregar cuenta
-                                    </a>
-                                </div>
+                                    ))}
+                                </select>
+                            </div>
+                            <div className="form-buttons">
+                                <a
+                                    href="/accounts"
+                                    className="little-button button"
+                                >
+                                    Plan de cuentas
+                                </a>
+                                <a
+                                    href="/create-account"
+                                    className="little-button button"
+                                >
+                                    Agregar cuenta
+                                </a>
                             </div>
                         </div>
-                        <div className="form-group createSeat-group">
-                            <label className="form-label" htmlFor="amount">
-                                Monto
-                            </label>
-                            <div className="createSeat-subgroup">
-                                <div className="createSeat-subgroup-input">
-                                    <input
-                                        className="form-input createSeat-input"
-                                        type="number"
-                                        id="amount"
-                                        min={0}
-                                        value={amount}
+                    </div>
+                    <div className="form-group createSeat-group">
+                        <label className="form-label" htmlFor="amount">
+                            Monto
+                        </label>
+                        <div className="form-subgroup">
+                            <div className="form-subgroup-input">
+                                <input
+                                    className="form-input"
+                                    type="number"
+                                    id="amount"
+                                    min={0}
+                                    value={amount}
+                                    onChange={(e) =>
+                                        handleChangeValue(e.target.value)
+                                    }
+                                />
+                            </div>
+                            <div className="form-checkouts">
+                                <div className="form-checkout">
+                                    <label
+                                        className="form-label"
+                                        htmlFor="debe"
+                                    >
+                                        Debe
+                                    </label>
+                                    <Checkbox
+                                        id="debe"
+                                        checked={debe}
                                         onChange={(e) =>
-                                            handleChangeValue(e.target.value)
+                                            handleDebeChange(e.target.checked)
                                         }
                                     />
                                 </div>
-                                <div className="createSeat-checkouts">
-                                    <div className="createSeat-checkout">
-                                        <label
-                                            className="form-label"
-                                            htmlFor="debe"
-                                        >
-                                            Debe
-                                        </label>
-                                        <Checkbox
-                                            id="debe"
-                                            checked={debe}
-                                            onChange={(e) =>
-                                                handleDebeChange(
-                                                    e.target.checked
-                                                )
-                                            }
-                                        />
-                                    </div>
-                                    <div className="createSeat-checkout">
-                                        <label
-                                            className="form-label"
-                                            htmlFor="haber"
-                                        >
-                                            Haber
-                                        </label>
-                                        <Checkbox
-                                            id="haber"
-                                            checked={haber}
-                                            onChange={(e) =>
-                                                handleHaberChange(
-                                                    e.target.checked
-                                                )
-                                            }
-                                        />
-                                    </div>
+                                <div className="form-checkout">
+                                    <label
+                                        className="form-label"
+                                        htmlFor="haber"
+                                    >
+                                        Haber
+                                    </label>
+                                    <Checkbox
+                                        id="haber"
+                                        checked={haber}
+                                        onChange={(e) =>
+                                            handleHaberChange(e.target.checked)
+                                        }
+                                    />
                                 </div>
                             </div>
                         </div>
-                        <div className="createSeat-add-container">
-                            <button
-                                type="button"
-                                onClick={handleAddOrEdit}
-                                className="createSeat-add"
-                            >
-                                {isEditing ? (
-                                    <FaPencil className="createSeat-icon-edit" />
-                                ) : (
-                                    <IoIosAdd className="createSeat-icon" />
-                                )}
-                            </button>
-                        </div>
                     </div>
-                    <button type="submit" className="createSeat-button button">
+                    <div className="form-add-container">
+                        <button
+                            type="button"
+                            onClick={handleAddOrEdit}
+                            className="form-add"
+                        >
+                            {isEditing ? (
+                                <FaPencil className="form-icon-edit" />
+                            ) : (
+                                <IoIosAdd className="form-icon" />
+                            )}
+                        </button>
+                    </div>
+                    <button
+                        type="submit"
+                        className="form-button form-submit button"
+                    >
                         Crear Asiento
                     </button>
                 </form>
 
                 {seats.length === 0 ? (
-                    <p className="createSeat-seats-empty">
+                    <p className="form-empty">
                         Aun no se ha agregado ningun asiento
                     </p>
                 ) : (

@@ -224,7 +224,7 @@ export default function Book() {
     return (
         <>
             <Alert />
-            <div className="ledger">
+            <div className="content">
                 <h1 className="title">Libro Mayor</h1>
                 <p className="paragraph">
                     En esta sección se encuentra el Libro Mayor, donde se
@@ -241,9 +241,9 @@ export default function Book() {
                         setSearch={setSearch}
                     />
 
-                    <div className="ledger-dates">
+                    <div className="table-dates">
                         {/* FECHA DESDE */}
-                        <div className="ledger-date-picker">
+                        <div className="table-date-picker">
                             <label>Fecha Desde:</label>
                             <DatePicker
                                 selected={startDate}
@@ -251,12 +251,12 @@ export default function Book() {
                                 dateFormat="dd/MM/yyyy"
                                 isClearable
                                 placeholderText="Selecciona una fecha"
-                                className="ledger-filter-date"
+                                className="table-date"
                                 maxDate={endDate}
                             />
                         </div>
                         {/* FECHA HASTA */}
-                        <div className="ledger-date-picker">
+                        <div className="table-date-picker">
                             <label>Fecha Hasta:</label>
                             <DatePicker
                                 selected={endDate}
@@ -264,28 +264,26 @@ export default function Book() {
                                 dateFormat="dd/MM/yyyy"
                                 isClearable
                                 placeholderText="Selecciona una fecha"
-                                className="ledger-filter-date"
+                                className="table-date"
                                 minDate={startDate}
                             />
                         </div>
-                        <div className="ledger-date-button">
-                            <button
-                                type="button"
-                                className="button"
-                                onClick={handleFilterDate}
-                            >
-                                Filtrar
-                            </button>
-                        </div>
-                        <div className="ledger-format">
+                        <button
+                            type="button"
+                            className="button"
+                            onClick={handleFilterDate}
+                        >
+                            Filtrar
+                        </button>
+                        <div className="table-format">
                             {table ? (
                                 <BsCardText
-                                    className="ledger-format-button"
+                                    className="table-format-button"
                                     onClick={() => setTable(false)}
                                 />
                             ) : (
                                 <BsTable
-                                    className="ledger-format-button"
+                                    className="table-format-button"
                                     onClick={() => setTable(true)}
                                 />
                             )}
@@ -300,7 +298,7 @@ export default function Book() {
                 </div>
 
                 {loading ? (
-                    <div className="ledger-spinner">
+                    <div className="spinner">
                         <Spinner />
                     </div>
                 ) : (
@@ -312,7 +310,7 @@ export default function Book() {
                         } ledger-container`}
                     >
                         {ledger.length <= 0 ? (
-                            <p className="ledger-not-accounts">
+                            <p className="table-no-data">
                                 No hay cuentas para mostrar
                             </p>
                         ) : (

@@ -20,10 +20,10 @@ export default function DenyUserModal({
                 }}
             >
                 <form onSubmit={() => handleConfirmAdmin(user._id, false)}>
-                    <h2 className="listUser-modal-title">
+                    <h2 className="modal-title">
                         ¿Estás seguro de denegar el Usuario?
                     </h2>
-                    <div className="listUser-modal-user">
+                    <div className="modal-data">
                         <p>
                             Nombre: <span>{user.name}</span>
                         </p>
@@ -37,7 +37,7 @@ export default function DenyUserModal({
 
                     <button
                         type="submit"
-                        className="button listUser-delete listUser-modal-button"
+                        className="button form-button form-submit modal-delete"
                     >
                         Denegar Usuario
                     </button>

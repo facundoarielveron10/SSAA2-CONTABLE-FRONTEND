@@ -99,7 +99,7 @@ export default function Seats() {
     return (
         <>
             <Alert />
-            <div className="seats">
+            <div className="content">
                 <h1 className="title">Asientos</h1>
                 <p className="paragraph">
                     En esta sección se registran los asientos del sistema, donde
@@ -109,11 +109,11 @@ export default function Seats() {
                 </p>
 
                 {loading ? (
-                    <div className="seats-spinner">
+                    <div className="spinner">
                         <Spinner />
                     </div>
                 ) : (
-                    <div className="seats-container">
+                    <div className="table-container">
                         <Table
                             seats={seats}
                             startDate={startDate}
@@ -136,7 +136,7 @@ export default function Seats() {
                 )}
             </div>
             {canExecute("CREATE_SEAT") ? (
-                <a href="create-seat" className="seats-button button">
+                <a href="create-seat" className="button-position button">
                     Crear asiento
                 </a>
             ) : null}

@@ -14,16 +14,16 @@ export default function Action({
     };
 
     return (
-        <div key={action._id} className="createEditRole-action">
+        <div key={action._id} className="actions-action">
             <input
-                className="createEditRole-checkbox"
+                className="checkbox"
                 type="checkbox"
                 id={action._id}
                 name={action.name}
                 checked={selectedActions.includes(action.name) ? true : false}
                 onChange={(e) => handleChecked(e.target.name)}
             />
-            <label className="createEditRole-description" htmlFor={action._id}>
+            <label className="actions-description" htmlFor={action._id}>
                 {action.description}
             </label>
         </div>

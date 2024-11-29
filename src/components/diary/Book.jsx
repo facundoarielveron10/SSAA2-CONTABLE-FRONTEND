@@ -123,7 +123,7 @@ export default function Book() {
     return (
         <>
             <Alert />
-            <div className="diary">
+            <div className="content">
                 <h1 className="title">Libro Diario</h1>
                 <p className="paragraph">
                     En esta sección se encuentra el Libro Diario, donde se
@@ -134,27 +134,25 @@ export default function Book() {
                 </p>
 
                 {loading ? (
-                    <div className="diary-spinner">
+                    <div className="spinner">
                         <Spinner />
                     </div>
                 ) : (
-                    <div className="diary-seating-container">
-                        <Table
-                            seats={seats}
-                            startDate={startDate}
-                            setStartDate={setStartDate}
-                            endDate={endDate}
-                            setEndDate={setEndDate}
-                            handleFilterDate={handleFilterDate}
-                            exportToExcel={exportToExcel}
-                            exportToPDF={exportToPDF}
-                            reverse={reverse}
-                            setReverse={setReverse}
-                            showReverse={true}
-                            showExport={true}
-                            showDates={true}
-                        />
-                    </div>
+                    <Table
+                        seats={seats}
+                        startDate={startDate}
+                        setStartDate={setStartDate}
+                        endDate={endDate}
+                        setEndDate={setEndDate}
+                        handleFilterDate={handleFilterDate}
+                        exportToExcel={exportToExcel}
+                        exportToPDF={exportToPDF}
+                        reverse={reverse}
+                        setReverse={setReverse}
+                        showReverse={true}
+                        showExport={true}
+                        showDates={true}
+                    />
                 )}
             </div>
         </>

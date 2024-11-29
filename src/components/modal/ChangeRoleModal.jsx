@@ -23,37 +23,27 @@ export default function ChangeRoleModal({
                 }}
             >
                 <form onSubmit={handleChangeRole}>
-                    <h2 className="listUser-modal-title">
-                        Cambiar el rol del usuario
-                    </h2>
-                    <p className="listUser-modal-user">
+                    <h2 className="modal-title">Cambiar el rol del usuario</h2>
+                    <p className="modal-data">
                         Usuario:{" "}
                         <span>
                             {role.name} {role.lastname}
                         </span>
                     </p>
-                    <p className="listUser-modal-paragraph">
+                    <p className="modal-paragraph">
                         Selecciona el rol para el usuario
                     </p>
                     <select
-                        className="listUser-modal-select"
+                        className="form-select"
                         value={newRole}
                         onChange={(e) => setNewRole(e.target.value)}
                     >
-                        <option
-                            disabled
-                            className="listUser-modal-option"
-                            value=""
-                        >
+                        <option disabled value="">
                             Seleccionar Rol
                         </option>
                         {roles.length > 0
                             ? roles.map((rol) => (
-                                  <option
-                                      key={rol._id}
-                                      className="listUser-modal-option"
-                                      value={rol.name}
-                                  >
+                                  <option key={rol._id} value={rol.name}>
                                       {rol.nameDescriptive}
                                   </option>
                               ))
@@ -61,7 +51,7 @@ export default function ChangeRoleModal({
                     </select>
                     <button
                         type="submit"
-                        className="listUser-modal-button button"
+                        className="form-button form-submit button"
                     >
                         Cambiar
                     </button>

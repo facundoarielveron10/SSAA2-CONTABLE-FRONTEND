@@ -86,7 +86,7 @@ export default function ViewSeat({ id }) {
     return (
         <>
             <Alert />
-            <div className="seat">
+            <div className="content">
                 <h1 className="title">Asiento</h1>
                 <p className="paragraph">
                     Completa el siguiente formulario para crear un nuevo
@@ -94,18 +94,18 @@ export default function ViewSeat({ id }) {
                     sumando datos.
                 </p>
 
-                <div className="seat-content">
-                    {loading ? (
+                {loading ? (
+                    <div className="spinner">
                         <Spinner />
-                    ) : (
-                        <Table
-                            seats={seat}
-                            showExport={true}
-                            exportToExcel={exportToExcel}
-                            exportToPDF={exportToPDF}
-                        />
-                    )}
-                </div>
+                    </div>
+                ) : (
+                    <Table
+                        seats={seat}
+                        showExport={true}
+                        exportToExcel={exportToExcel}
+                        exportToPDF={exportToPDF}
+                    />
+                )}
             </div>
         </>
     );

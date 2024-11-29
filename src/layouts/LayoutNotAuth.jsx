@@ -1,5 +1,5 @@
 // CSS (Internal)
-import "@styles/auth/form.css";
+import "@styles/form.css";
 import "@styles/logo.css";
 import "@styles/darkmode.css";
 import "@styles/alert.css";

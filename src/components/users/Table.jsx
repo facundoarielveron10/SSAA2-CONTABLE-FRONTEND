@@ -16,11 +16,12 @@ export default function Table({
     const { canExecute } = useLoginStore();
 
     return (
-        <div className="listUser-list">
-            <div className="listUser-header">
-                <h2 className="listUser-subtitle">Usuarios</h2>
-                <div className="listUser-filter">
+        <div className="table">
+            <div className="table-header">
+                <h2 className="table-subtitle">Usuarios</h2>
+                <div className="table-filter">
                     <select
+                        className="form-select"
                         id="roleFilter"
                         value={selectedRole}
                         onChange={handleRoleChange}
@@ -36,18 +37,18 @@ export default function Table({
             </div>
 
             {users.length === 0 ? (
-                <p className="listUser-no-users">
+                <p className="table-no-data">
                     No hay ningún usuario disponible con este rol
                 </p>
             ) : (
-                <table className="listUser-table">
+                <table className="table-content">
                     <thead>
                         <tr>
                             <th>Nombre</th>
                             <th>Apellido</th>
                             <th>Email</th>
                             <th>Rol</th>
-                            <th className="listUser-head-actions">Acciones</th>
+                            <th className="table-head-actions">Acciones</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -62,9 +63,9 @@ export default function Table({
                                         <div>
                                             {!user.adminConfirmed ? (
                                                 canExecute("CONFIRM_USER") ? (
-                                                    <div className="listUser-actions">
+                                                    <div className="table-actions">
                                                         <button
-                                                            className="listUser-button-table button"
+                                                            className="table-button button"
                                                             onClick={() =>
                                                                 handleConfirmAdmin(
                                                                     user._id,
@@ -75,7 +76,7 @@ export default function Table({
                                                             Aceptar
                                                         </button>
                                                         <button
-                                                            className="listUser-button-table listUser-delete button"
+                                                            className="table-button table-delete button"
                                                             onClick={() =>
                                                                 onOpenDenyUserModal(
                                                                     user
@@ -87,12 +88,12 @@ export default function Table({
                                                     </div>
                                                 ) : null
                                             ) : (
-                                                <div className="listUser-actions">
+                                                <div className="table-actions">
                                                     {canExecute(
                                                         "CHANGE_ROLE"
                                                     ) ? (
                                                         <button
-                                                            className="button"
+                                                            className="table-button button"
                                                             onClick={() =>
                                                                 onOpenChangeRoleModal(
                                                                     user
@@ -107,7 +108,7 @@ export default function Table({
                                                     {canExecute("EDIT_USER") ? (
                                                         <a
                                                             href={`edit-user/${user._id}`}
-                                                            className="listUser-button-table button"
+                                                            className="table-button button"
                                                         >
                                                             Editar
                                                         </a>
@@ -121,7 +122,7 @@ export default function Table({
                                                                     user
                                                                 )
                                                             }
-                                                            className="listUser-button-table listUser-delete button"
+                                                            className="table-button table-delete button"
                                                         >
                                                             Eliminar
                                                         </button>
@@ -130,10 +131,10 @@ export default function Table({
                                             )}
                                         </div>
                                     ) : (
-                                        <div className="listUser-actions">
+                                        <div className="table-actions">
                                             {canExecute("ACTIVE_USER") ? (
                                                 <button
-                                                    className="listUser-button-table button"
+                                                    className="table-button button"
                                                     onClick={() =>
                                                         handleActive(user._id)
                                                     }

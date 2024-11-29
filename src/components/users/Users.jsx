@@ -232,7 +232,7 @@ export default function Users() {
     return (
         <>
             <Alert />
-            <div className="listUser">
+            <div className="content">
                 <h1 className="title">Listado de usuarios</h1>
                 <p className="paragraph">
                     En este listado se pueden ver todos los usuarios registrados
@@ -241,11 +241,11 @@ export default function Users() {
                 </p>
 
                 {loading ? (
-                    <div className="listUser-spinner">
+                    <div className="spinner">
                         <Spinner />
                     </div>
                 ) : (
-                    <div className="listUser-users">
+                    <div className="table-container">
                         <Search
                             handleSearch={handleSearch}
                             handleClean={getUsers}
@@ -296,7 +296,7 @@ export default function Users() {
                 user={userDeny}
             />
             {canExecute("CREATE_USER") ? (
-                <a href="create-user" className="listUser-button button">
+                <a href="create-user" className="button-position button">
                     Crear usuario
                 </a>
             ) : null}

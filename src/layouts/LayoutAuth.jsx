@@ -1,17 +1,6 @@
 // CSS (Interns)
-import "@styles/accounts/accounts.css";
-import "@styles/accounts/create-edit.css";
-import "@styles/books/diary.css";
-import "@styles/books/ledger.css";
+// GLOBALS
 import "@styles/navbar.css";
-import "@styles/roles/roles.css";
-import "@styles/roles/create-edit.css";
-import "@styles/seats/createSeat.css";
-import "@styles/seats/seats.css";
-import "@styles/seats/seat.css";
-import "@styles/users/create-edit.css";
-import "@styles/auth/form.css";
-import "@styles/users/users.css";
 import "@styles/pagination.css";
 import "@styles/search.css";
 import "@styles/spinner.css";
@@ -19,6 +8,14 @@ import "@styles/logo.css";
 import "@styles/darkmode.css";
 import "@styles/alert.css";
 import "@styles/export.css";
+import "@styles/form.css";
+import "@styles/table.css";
+import "@styles/modal.css";
+// ROLES
+import "@styles/roles/actions.css";
+// BOOKS
+import "@styles/books/ledger.css";
+// HOME
 import "@styles/home/card.css";
 import "@styles/home/home.css";
 import "@styles/home/stats.css";

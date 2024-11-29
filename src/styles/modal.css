@@ -1,0 +1,26 @@
+.modal-title {
+    text-transform: uppercase;
+    color: var(--textColor);
+}
+
+.modal-data,
+.modal-data p {
+    font-weight: bold;
+    color: var(--textColor);
+}
+
+.modal-data span {
+    font-weight: normal;
+}
+
+.modal-paragraph {
+    color: var(--textColor);
+}
+
+.modal-delete {
+    background-color: var(--colorDelete);
+}
+
+.modal-delete:hover {
+    background-color: var(--colorDeleteDark);
+}

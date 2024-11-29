@@ -19,70 +19,72 @@ export default function TablePreview({
     const { user } = useLoginStore();
 
     return (
-        <div className="diary-seating">
-            <div className="diary-header">
-                <h2 className="diary-subtitle">Asientos</h2>
-            </div>
+        <div className="table-container">
+            <div className="table">
+                <div className="table-header">
+                    <h2 className="table-subtitle">Asientos</h2>
+                </div>
 
-            <table className="diary-table">
-                <thead>
-                    <tr>
-                        <th className="diary-table-col-date">Fecha</th>
-                        <th className="diary-table-col-user">Usuario</th>
-                        <th className="diary-table-col-accounts">Cuentas</th>
-                        <th className="diary-table-col-debe">Debe</th>
-                        <th className="diary-table-col-haber">Haber</th>
-                        <th className="diary-table-col-actions">Acciones</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {seats.map((seat, index) => (
-                        <tr key={index}>
-                            <td className="diary-table-col-date">
-                                {getDateNow()}
-                            </td>
-                            <td className="diary-table-col-user">
-                                {user.email}
-                            </td>
-                            <td
-                                className={`${
-                                    seat.amount.type === "haber"
-                                        ? "diary-haber"
-                                        : ""
-                                } diary-table-col-accounts`}
-                            >
-                                {getNameAccount(seat.account)}
-                            </td>
-                            <td className="diary-table-col-debe">
-                                {seat.amount.type === "debe"
-                                    ? `$${formatBalance(seat.amount.amount)}`
-                                    : ""}
-                            </td>
-                            <td className="diary-table-col-haber">
-                                {seat.amount.type === "haber"
-                                    ? `$${formatBalance(seat.amount.amount)}`
-                                    : ""}
-                            </td>
-                            <td className="createSeat-actions-container">
-                                <button
-                                    type="button"
-                                    onClick={() => handleDelete(seat.id)}
-                                    className="createSeat-delete button"
-                                >
-                                    <FaTrashAlt />
-                                </button>
-                                <button
-                                    type="button"
-                                    onClick={() => handleEdit(seat)}
-                                    className="button"
-                                >
-                                    <FaPencil />
-                                </button>
-                            </td>
+                <table className="table-content table-content-border">
+                    <thead>
+                        <tr>
+                            <th className="table-10">Fecha</th>
+                            <th className="table-20">Usuario</th>
+                            <th className="table-30">Cuentas</th>
+                            <th className="table-12">Debe</th>
+                            <th className="table-12">Haber</th>
+                            <th className="table-15">Acciones</th>
                         </tr>
-                    ))}
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody>
+                        {seats.map((seat, index) => (
+                            <tr key={index}>
+                                <td>{getDateNow()}</td>
+                                <td>{user.email}</td>
+                                <td
+                                    className={`${
+                                        seat.amount.type === "haber"
+                                            ? "table-haber"
+                                            : ""
+                                    }`}
+                                >
+                                    {getNameAccount(seat.account)}
+                                </td>
+                                <td>
+                                    {seat.amount.type === "debe"
+                                        ? `$${formatBalance(
+                                              seat.amount.amount
+                                          )}`
+                                        : ""}
+                                </td>
+                                <td>
+                                    {seat.amount.type === "haber"
+                                        ? `$${formatBalance(
+                                              seat.amount.amount
+                                          )}`
+                                        : ""}
+                                </td>
+                                <td>
+                                    <button
+                                        type="button"
+                                        onClick={() => handleDelete(seat.id)}
+                                        className="margin-right table-delete button"
+                                    >
+                                        <FaTrashAlt />
+                                    </button>
+                                    <button
+                                        type="button"
+                                        onClick={() => handleEdit(seat)}
+                                        className="button"
+                                    >
+                                        <FaPencil />
+                                    </button>
+                                </td>
+                            </tr>
+                        ))}
+                    </tbody>
+                </table>
+            </div>
         </div>
     );
 }

@@ -1,17 +1,17 @@
 // MODAL
 import Modal from "react-responsive-modal";
 
-export default function DeleteUserModal({
-    openDeleteModal,
-    onCloseDeleteUserModal,
-    handleDeleteUser,
-    user,
+export default function DeleteRoleModal({
+    open,
+    onCloseDeleteRoleModal,
+    handleDeleteRole,
+    roleDelete,
 }) {
     return (
         <div>
             <Modal
-                open={openDeleteModal}
-                onClose={onCloseDeleteUserModal}
+                open={open}
+                onClose={onCloseDeleteRoleModal}
                 center
                 classNames={{
                     overlay: "customOverlay",
@@ -19,19 +19,20 @@ export default function DeleteUserModal({
                     closeIcon: "customCloseIcon",
                 }}
             >
-                <form onSubmit={handleDeleteUser}>
+                <form onSubmit={handleDeleteRole}>
                     <h2 className="modal-title">
-                        ¿Estás seguro de eliminar el Usuario?
+                        ¿Estas seguro de eliminar el rol?
                     </h2>
                     <div className="modal-data">
                         <p>
-                            Nombre: <span>{user.name}</span>
+                            Nombre: <span>{roleDelete.name}</span>
                         </p>
                         <p>
-                            Apellido: <span>{user.lastname}</span>
+                            Nombre descriptivo:{" "}
+                            <span>{roleDelete.nameDescriptive}</span>
                         </p>
                         <p>
-                            Email: <span>{user.email}</span>
+                            Descripcion: <span>{roleDelete.description}</span>
                         </p>
                     </div>
 
@@ -39,7 +40,7 @@ export default function DeleteUserModal({
                         type="submit"
                         className="button form-button form-submit modal-delete"
                     >
-                        Eliminar Usuario
+                        Eliminar Rol
                     </button>
                 </form>
             </Modal>

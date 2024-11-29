@@ -24,6 +24,7 @@ import { useLoginStore } from "../../zustand/loginStore";
 // MODAL
 import Modal from "react-responsive-modal";
 import Table from "./Table";
+import DeleteRoleModal from "../modal/DeleteRoleModal";
 
 export default function Roles() {
     // STATES
@@ -96,14 +97,14 @@ export default function Roles() {
     return (
         <>
             <Alert />
-            <div className="roles">
+            <div className="content">
                 <h1 className="title">Listado de Roles</h1>
                 <p className="paragraph">
                     En este Listado se puede ver todos los Roles que existen en
                     el sistema, donde tambien se puede crear nuevos roles
                 </p>
                 {roles.length === 0 ? (
-                    <div className="roles-spinner">
+                    <div className="spinner">
                         <Spinner />
                     </div>
                 ) : (
@@ -114,46 +115,14 @@ export default function Roles() {
                     />
                 )}
             </div>
-            <div>
-                <Modal
-                    open={open}
-                    onClose={onCloseDeleteRoleModal}
-                    center
-                    classNames={{
-                        overlay: "customOverlay",
-                        modal: "customModal",
-                        closeIcon: "customCloseIcon",
-                    }}
-                >
-                    <form onSubmit={handleDeleteRole}>
-                        <h2 className="roles-modal-title">
-                            ¿Estas seguro de eliminar el rol?
-                        </h2>
-                        <div className="roles-modal-rol">
-                            <p>
-                                Nombre: <span>{roleDelete.name}</span>
-                            </p>
-                            <p>
-                                Nombre descriptivo:{" "}
-                                <span>{roleDelete.nameDescriptive}</span>
-                            </p>
-                            <p>
-                                Descripcion:{" "}
-                                <span>{roleDelete.description}</span>
-                            </p>
-                        </div>
-
-                        <button
-                            type="submit"
-                            className="button roles-delete roles-modal-button"
-                        >
-                            Eliminar Rol
-                        </button>
-                    </form>
-                </Modal>
-            </div>
+            <DeleteRoleModal
+                open={open}
+                onCloseDeleteRoleModal={onCloseDeleteRoleModal}
+                handleDeleteRole={handleDeleteRole}
+                roleDelete={roleDelete}
+            />
             {canExecute("CREATE_ROLE") ? (
-                <a href="create-role" className="roles-button button">
+                <a href="create-role" className="button-position button">
                     Crear Rol
                 </a>
             ) : null}

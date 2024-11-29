@@ -8,6 +8,7 @@ import { getActions, getTypeActions } from "../../utils/getData";
 // COMPONENTS
 import Spinner from "../Spinner";
 import Pagination from "../Pagination";
+import Action from "./Action";
 
 // ALERTS
 import { toast } from "react-toastify";
@@ -73,15 +74,6 @@ export default function Create() {
         setCurrentPage(1);
     };
 
-    const handleChecked = (action) => {
-        if (selectedActions.includes(action)) {
-            const updatedActions = selectedActions.filter((a) => a !== action);
-            setSelectedActions(updatedActions);
-        } else {
-            setSelectedActions([...selectedActions, action]);
-        }
-    };
-
     const handleSubmit = async (e) => {
         e.preventDefault();
 
@@ -111,7 +103,7 @@ export default function Create() {
     return (
         <>
             <Alert />
-            <div className="createEditRole">
+            <div className="content">
                 <h1 className="title">Creacion de Rol</h1>
                 <p className="paragraph">
                     Completa el siguiente formulario para crear un nuevo rol,
@@ -120,73 +112,63 @@ export default function Create() {
                     que podrá hacer este rol.
                 </p>
 
-                <form className="createEditRole-form" onSubmit={handleSubmit}>
-                    <div className="form">
-                        {/* NOMBRE */}
-                        <div className="form-group createEditRole-group">
-                            <label className="form-label" htmlFor="name">
-                                Nombre del Rol
-                            </label>
-                            <input
-                                className="form-input createEditRole-input"
-                                type="text"
-                                id="name"
-                                value={name}
-                                onChange={(e) => {
-                                    let inputValue = e.target.value;
+                <form className="form" onSubmit={handleSubmit}>
+                    {/* NOMBRE */}
+                    <div className="form-group">
+                        <label className="form-label" htmlFor="name">
+                            Nombre del Rol
+                        </label>
+                        <input
+                            className="form-input"
+                            type="text"
+                            id="name"
+                            value={name}
+                            onChange={(e) => {
+                                let inputValue = e.target.value;
 
-                                    if (inputValue.startsWith("ROLE_")) {
-                                        const uppercasedValue =
-                                            "ROLE_" +
-                                            inputValue.slice(5).toUpperCase();
-                                        setName(uppercasedValue);
-                                    } else {
-                                        setName("ROLE_");
-                                    }
-                                }}
-                            />
-                        </div>
-                        {/* NOMBRE DESCRIPTIVO */}
-                        <div className="form-group createEditRole-group">
-                            <label
-                                className="form-label"
-                                htmlFor="nameDescriptive"
-                            >
-                                Nombre Descriptivo del Rol
-                            </label>
-                            <input
-                                className="form-input createEditRole-input"
-                                type="text"
-                                id="nameDescriptive"
-                                value={nameDescriptive}
-                                onChange={(e) =>
-                                    setNameDescriptive(e.target.value)
+                                if (inputValue.startsWith("ROLE_")) {
+                                    const uppercasedValue =
+                                        "ROLE_" +
+                                        inputValue.slice(5).toUpperCase();
+                                    setName(uppercasedValue);
+                                } else {
+                                    setName("ROLE_");
                                 }
-                            />
-                        </div>
-                        {/* DESCRIPCIÓN DEL ROL */}
-                        <div className="form-group createEditRole-group">
-                            <label className="form-label" htmlFor="description">
-                                Descripción del Rol
-                            </label>
-                            <textarea
-                                className="form-input createEditRole-input"
-                                id="description"
-                                value={description}
-                                onChange={(e) => setDescription(e.target.value)}
-                            />
-                        </div>
+                            }}
+                        />
+                    </div>
+                    {/* NOMBRE DESCRIPTIVO */}
+                    <div className="form-group">
+                        <label className="form-label" htmlFor="nameDescriptive">
+                            Nombre Descriptivo del Rol
+                        </label>
+                        <input
+                            className="form-input"
+                            type="text"
+                            id="nameDescriptive"
+                            value={nameDescriptive}
+                            onChange={(e) => setNameDescriptive(e.target.value)}
+                        />
+                    </div>
+                    {/* DESCRIPCIÓN DEL ROL */}
+                    <div className="form-group">
+                        <label className="form-label" htmlFor="description">
+                            Descripción del Rol
+                        </label>
+                        <textarea
+                            className="form-input"
+                            id="description"
+                            value={description}
+                            onChange={(e) => setDescription(e.target.value)}
+                        />
                     </div>
                     {/* TIPO DE ACCIONES */}
-                    <div className="createEditRole-typeRole">
-                        <label
-                            className="createEditRole-type-label"
-                            htmlFor="type"
-                        >
+                    <div className="form-group">
+                        <label className="form-label" htmlFor="type">
                             Tipo de Acciones
                         </label>
                         <select
-                            className="createEditRole-type-select"
+                            className="form-select"
                             id="type"
                             value={selectedType}
                             onChange={handleTypeChange}
@@ -202,39 +184,18 @@ export default function Create() {
                         </select>
                     </div>
                     {actions.length === 0 || loading ? (
-                        <div className="createEditRole-spinner">
+                        <div className="spinner">
                             <Spinner />
                         </div>
                     ) : (
-                        <div className="createEditRole-actions">
+                        <div className="actions">
                             {filteredActions.map((action) => (
-                                <div
+                                <Action
                                     key={action._id}
-                                    className="createEditRole-action"
-                                >
-                                    <input
-                                        className="createEditRole-checkbox"
-                                        type="checkbox"
-                                        id={action._id}
-                                        name={action.name}
-                                        checked={
-                                            selectedActions.includes(
-                                                action.name
-                                            )
-                                                ? true
-                                                : false
-                                        }
-                                        onChange={(e) =>
-                                            handleChecked(e.target.name)
-                                        }
-                                    />
-                                    <label
-                                        className="createEditRole-description"
-                                        htmlFor={action._id}
-                                    >
-                                        {action.description}
-                                    </label>
-                                </div>
+                                    action={action}
+                                    selectedActions={selectedActions}
+                                    setSelectedActions={setSelectedActions}
+                                />
                             ))}
                         </div>
                     )}
@@ -244,9 +205,7 @@ export default function Create() {
                         currentPage={currentPage}
                         totalPages={totalPages}
                     />
-                    <button className="createEditRole-button button">
-                        Crear rol
-                    </button>
+                    <button className="form-button button">Crear rol</button>
                 </form>
             </div>
         </>
