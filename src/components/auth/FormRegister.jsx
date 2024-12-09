@@ -59,13 +59,13 @@ export default function FormRegister() {
     };
 
     return (
-        <>
+        <div className="auth">
             <Alert />
             {/* LOGO */}
             <div className="form-logo">
                 <Logo animation={true} name={true} width={80} height={60} />
             </div>
-            <form className="form" onSubmit={handleSubmit}>
+            <form className="form form-auth" onSubmit={handleSubmit}>
                 {/* NAME */}
                 <div className="form-group">
                     <label className="form-label" htmlFor="name">
@@ -145,6 +145,6 @@ export default function FormRegister() {
                     <IoIosArrowForward /> Olvide mi contraseña
                 </a>
             </div>
-        </>
+        </div>
     );
 }

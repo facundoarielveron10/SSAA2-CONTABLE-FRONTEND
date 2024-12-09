@@ -46,13 +46,13 @@ export default function FormLogin() {
     };
 
     return (
-        <>
+        <div className="auth">
             <Alert />
             {/* LOGO */}
             <div className="form-logo">
                 <Logo animation={true} name={true} width={80} height={60} />
             </div>
-            <form className="form" onSubmit={handleSubmit}>
+            <form className="form form-auth" onSubmit={handleSubmit}>
                 {/* TOKEN */}
                 <div className="form-group">
                     <label className="form-label" htmlFor="token">
@@ -80,6 +80,6 @@ export default function FormLogin() {
                 </button>
             </form>
             <div className="form-spinner">{success ? <Spinner /> : null}</div>
-        </>
+        </div>
     );
 }

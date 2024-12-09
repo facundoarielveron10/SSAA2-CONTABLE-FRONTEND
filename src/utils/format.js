@@ -1,5 +1,9 @@
 export const formatBalance = (balance) => {
-    return balance.toLocaleString("es-ES");
+    if (balance) {
+        return balance.toLocaleString("es-ES");
+    }
+
+    return balance;
 };
 
 export const formatDate = (date) => {

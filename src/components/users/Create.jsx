@@ -71,7 +71,7 @@ export default function Create() {
     }, []);
 
     return (
-        <>
+        <div className="auth">
             <Alert />
             <div className="content">
                 <h1 className="title">Creacion de Usuario</h1>
@@ -178,6 +178,6 @@ export default function Create() {
                     </button>
                 </form>
             </div>
-        </>
+        </div>
     );
 }

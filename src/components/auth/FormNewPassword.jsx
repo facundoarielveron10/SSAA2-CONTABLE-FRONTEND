@@ -76,14 +76,17 @@ export default function FormNewPassword() {
     };
 
     return (
-        <>
+        <div className="auth">
             <Alert />
             {/* LOGO */}
             <div className="form-logo">
                 <Logo animation={true} name={true} width={80} height={60} />
             </div>
             {isValidToken ? (
-                <form className="form" onSubmit={handleSubmitNewPassword}>
+                <form
+                    className="form form-auth"
+                    onSubmit={handleSubmitNewPassword}
+                >
                     {/* PASSWORD */}
                     <div className="form-group">
                         <label className="form-label" htmlFor="password">
@@ -157,6 +160,6 @@ export default function FormNewPassword() {
             )}
 
             <div className="form-spinner">{success ? <Spinner /> : null}</div>
-        </>
+        </div>
     );
 }

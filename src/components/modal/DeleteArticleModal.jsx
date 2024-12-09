@@ -1,0 +1,64 @@
+// MODAL
+import Modal from "react-responsive-modal";
+
+// UTILS
+import { formatBalance } from "src/utils/format";
+
+export default function DeleteArticleModal({
+    open,
+    onCloseDeleteArticleModal,
+    handleDeleteArticle,
+    articleDelete,
+}) {
+    return (
+        <div>
+            <Modal
+                open={open}
+                onClose={onCloseDeleteArticleModal}
+                center
+                classNames={{
+                    overlay: "customOverlay",
+                    modal: "customModal",
+                    closeIcon: "customCloseIcon",
+                }}
+            >
+                <form onSubmit={handleDeleteArticle}>
+                    <h2 className="modal-title">
+                        ¿Estas seguro de eliminar el articulo?
+                    </h2>
+                    {articleDelete ? (
+                        <div className="modal-data">
+                            <p>
+                                Nombre: <span>{articleDelete?.name}</span>
+                            </p>
+                            <p>
+                                Descripcion:{" "}
+                                <span>{articleDelete?.description}</span>
+                            </p>
+                            <p>
+                                Precio Unitario:{" "}
+                                <span>
+                                    ${formatBalance(articleDelete?.unitPrice)}
+                                </span>
+                            </p>
+                            <p>
+                                Categoria:{" "}
+                                <span>{articleDelete?.category?.name}</span>
+                            </p>
+                            <p>
+                                Proveedor:{" "}
+                                <span>{articleDelete?.supplier?.name}</span>
+                            </p>
+                        </div>
+                    ) : null}
+                    <button
+                        type="submit"
+                        className="button form-button form-submit modal-delete"
+                    >
+                        Eliminar Rol
+                    </button>
+                </form>
+            </Modal>
+        </div>
+    );
+}

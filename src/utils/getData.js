@@ -15,6 +15,8 @@ export const getTypeActions = () => {
         "Libros",
         "Asientos",
         "Estadisticas",
+        "Articulos",
+        "Categorias",
     ];
 
     return types;
@@ -64,6 +66,20 @@ export const getSections = () => {
             url: `/ledger`,
             permission: "GET_LEDGER",
         },
+        {
+            title: "Articulos",
+            description:
+                "Consulta los articulos esta sección. Aquí podrás ver un resumen de todos los articulos, permitiendo un análisis más detallado de la situación de cada articulo de la organización. Esta herramienta es vital para la elaboración de los mismos.",
+            url: `/articles`,
+            permission: "GET_ARTICLES",
+        },
+        {
+            title: "Categorias",
+            description:
+                "Consulta las categorias esta sección. Aquí podrás ver un resumen de todas las categorias, permitiendo un análisis más detallado de cada categoria de la organización. Esta herramienta es vital para la elaboración de las mismas.",
+            url: `/categories`,
+            permission: "GET_CATEGORIES",
+        },
     ];
 
     return sections;
@@ -72,6 +88,16 @@ export const getSections = () => {
 export const getRoles = async () => {
     try {
         const { data } = await clientAxios.get("/role-action/roles");
+
+        return data;
+    } catch (error) {
+        toast.error(errorResponse(error));
+    }
+};
+
+export const getCategories = async () => {
+    try {
+        const { data } = await clientAxios.get("/category/categories");
 
         return data;
     } catch (error) {

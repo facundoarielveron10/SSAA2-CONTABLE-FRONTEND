@@ -63,14 +63,14 @@ export default function FormLogin() {
     }, [successSubmitted, isSubmitting]);
 
     return (
-        <>
+        <div className="auth">
             {/* ALERTA */}
             <Alert />
             {/* LOGO */}
             <div className="form-logo">
                 <Logo animation={true} name={true} width={80} height={60} />
             </div>
-            <form className="form" onSubmit={handleSubmit}>
+            <form className="form form-auth" onSubmit={handleSubmit}>
                 {/* EMAIL */}
                 <div className="form-group">
                     <label className="form-label" htmlFor="email">
@@ -110,6 +110,6 @@ export default function FormLogin() {
                     <IoIosArrowForward /> Olvide mi contraseña
                 </a>
             </div>
-        </>
+        </div>
     );
 }

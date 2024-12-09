@@ -22,7 +22,6 @@ import clientAxios from "../../config/ClientAxios";
 import { useLoginStore } from "../../zustand/loginStore";
 
 // MODAL
-import Modal from "react-responsive-modal";
 import Table from "./Table";
 import DeleteRoleModal from "../modal/DeleteRoleModal";
 

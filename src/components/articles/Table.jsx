@@ -1,7 +1,14 @@
+// UTILS
+import { formatBalance } from "src/utils/format";
+
 // ZUSTAND
 import { useLoginStore } from "../../zustand/loginStore";
 
-export default function Table({ roles, onOpenDeleteRoleModal, handleActive }) {
+export default function Table({
+    articles,
+    onOpenDeleteArticleModal,
+    handleActive,
+}) {
     // ZUSTAND
     const { canExecute } = useLoginStore();
 
@@ -9,11 +16,11 @@ export default function Table({ roles, onOpenDeleteRoleModal, handleActive }) {
         <div className="table-container">
             <div className="table">
                 <div className="table-header">
-                    <h2 className="table-subtitle">Roles</h2>
+                    <h2 className="table-subtitle">Articulos</h2>
                 </div>
-                {roles.length === 0 ? (
+                {articles.length === 0 ? (
                     <p className="table-no-data">
-                        No hay ningún usuario disponible con este rol
+                        No hay ningún articulo disponible
                     </p>
                 ) : (
                     <table className="table-content">
@@ -21,32 +28,38 @@ export default function Table({ roles, onOpenDeleteRoleModal, handleActive }) {
                             <tr>
                                 <th>Nombre</th>
                                 <th>Descripcion</th>
-                                <th className="table-head-actions">Acciones</th>
+                                <th>Precio Unitario</th>
+                                <th>Categoria</th>
+                                <th>Proveedor</th>
+                                <th>Acciones</th>
                             </tr>
                         </thead>
                         <tbody>
-                            {roles.map((rol) => (
-                                <tr key={rol._id}>
-                                    <td>{rol.nameDescriptive}</td>
-                                    <td>{rol.description}</td>
+                            {articles.map((article) => (
+                                <tr key={article._id}>
+                                    <td>{article.name}</td>
+                                    <td>{article.description}</td>
+                                    <td>${formatBalance(article.unitPrice)}</td>
+                                    <td>{article.category.name}</td>
+                                    <td>{article.supplier.name}</td>
                                     <td>
-                                        {rol.active ? (
+                                        {article.active ? (
                                             <div className="table-actions">
-                                                {canExecute("EDIT_ROLE") ? (
+                                                {canExecute("EDIT_ARTICLES") ? (
                                                     <a
-                                                        href={`edit-role/${rol._id}`}
+                                                        href={`edit-article/${article._id}`}
                                                         className="table-button button"
                                                     >
                                                         Editar
                                                     </a>
                                                 ) : null}
-                                                {canExecute("DELETE_ROLE") &&
-                                                rol.name !== "ROLE_ADMIN" &&
-                                                rol.name !== "ROLE_USER" ? (
+                                                {canExecute(
+                                                    "DELETE_ARTICLES"
+                                                ) ? (
                                                     <button
                                                         onClick={() =>
-                                                            onOpenDeleteRoleModal(
-                                                                rol
+                                                            onOpenDeleteArticleModal(
+                                                                article
                                                             )
                                                         }
                                                         className="table-button table-delete button"
@@ -57,11 +70,13 @@ export default function Table({ roles, onOpenDeleteRoleModal, handleActive }) {
                                             </div>
                                         ) : (
                                             <div className="table-actions">
-                                                {canExecute("ACTIVE_ROLE") ? (
+                                                {canExecute(
+                                                    "ACTIVE_ARTICLES"
+                                                ) ? (
                                                     <button
                                                         onClick={() =>
                                                             handleActive(
-                                                                rol._id
+                                                                article._id
                                                             )
                                                         }
                                                         className="table-button button"

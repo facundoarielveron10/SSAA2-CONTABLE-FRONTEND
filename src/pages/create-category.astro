@@ -1,14 +1,11 @@
 ---
-// CSS
-import '@styles/auth/register.css'
-
 // AUTH
 import { isLoggedIn } from '../utils/verifyAuth';
 
 // COMPONENTS
 import Layout from '../layouts/Layout.astro';
 import LayoutAuth from "../layouts/LayoutAuth.jsx";
-import Create from "../components/users/Create.jsx";
+import Create from "../components/category/Create.jsx"
 
 // REDIRECT
 const token = Astro.cookies.get("AUTH_TOKEN");
@@ -17,10 +14,8 @@ if (!isLoggedIn(token)) {
 }
 ---
 
-<Layout title="Crear Proveedor - SSAA2" container={false}>
-	<LayoutAuth client:only="react" action="CREATE_USER">
-		<div class="register">
-			<Create client:only="react"/>
-		</div>
+<Layout title="Crear Categoria - SSAA2">
+	<LayoutAuth client:only="react" action="CREATE_CATEGORIES">
+		<Create client:only="react"/>
 	</LayoutAuth>
 </Layout>

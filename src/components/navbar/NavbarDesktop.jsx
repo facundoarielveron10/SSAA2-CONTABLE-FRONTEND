@@ -90,6 +90,28 @@ export default function NavbarDesktop({ url }) {
                             Libro Mayor
                         </a>
                     ) : null}
+                    {canExecute("GET_ARTICLES") ? (
+                        <a
+                            href="/articles"
+                            className={`${
+                                url === "/articles" ? "navbar-link-active" : ""
+                            } navbar-link`}
+                        >
+                            Articulos
+                        </a>
+                    ) : null}
+                    {canExecute("GET_CATEGORIES") ? (
+                        <a
+                            href="/categories"
+                            className={`${
+                                url === "/categories"
+                                    ? "navbar-link-active"
+                                    : ""
+                            } navbar-link`}
+                        >
+                            Categorias
+                        </a>
+                    ) : null}
                     <button className="button" onClick={handleLogout}>
                         Cerrar Sesión
                     </button>

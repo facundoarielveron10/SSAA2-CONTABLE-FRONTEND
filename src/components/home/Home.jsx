@@ -17,13 +17,17 @@ export default function Home() {
 
     return (
         <div className="home">
-            <h2 className="title">Estadisticas</h2>
-            <p className="paragraph">
-                En esta seccion se podran visualizar la estadistica de la
-                cantidad de asientos registrados en el año actual, ademas de
-                otros datos importantes
-            </p>
-            <Statistics />
+            {canExecute("GET_STATS") ? (
+                <>
+                    <h2 className="title">Estadisticas</h2>
+                    <p className="paragraph">
+                        En esta seccion se podran visualizar la estadistica de
+                        la cantidad de asientos registrados en el año actual,
+                        ademas de otros datos importantes
+                    </p>
+                    <Statistics />
+                </>
+            ) : null}
             <h1 className="title">Secciones</h1>
             <p className="paragraph">
                 En esta seccion podras encontrar acceso a todas las secciones

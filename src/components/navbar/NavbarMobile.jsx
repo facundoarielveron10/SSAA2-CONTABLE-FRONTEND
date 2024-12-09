@@ -133,6 +133,34 @@ export default function NavbarMobile({ url }) {
                                 </a>
                             </li>
                         ) : null}
+                        {canExecute("GET_ARTICLES") ? (
+                            <li>
+                                <a
+                                    className={`${
+                                        url === "/articles"
+                                            ? "navbar-link-active"
+                                            : ""
+                                    }`}
+                                    href="/articles"
+                                >
+                                    Articulos
+                                </a>
+                            </li>
+                        ) : null}
+                        {canExecute("GET_CATEGORIES") ? (
+                            <li>
+                                <a
+                                    className={`${
+                                        url === "/articles"
+                                            ? "navbar-link-active"
+                                            : ""
+                                    }`}
+                                    href="/categories"
+                                >
+                                    Categorias
+                                </a>
+                            </li>
+                        ) : null}
                         <li>
                             <button
                                 className="navbarMobile-logout"

@@ -87,9 +87,7 @@ export default function Table({ accounts }) {
                                                         >
                                                             Editar
                                                         </a>
-                                                    ) : (
-                                                        "-"
-                                                    )}
+                                                    ) : null}
                                                 </div>
                                             </td>
                                         </tr>

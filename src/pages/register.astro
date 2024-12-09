@@ -1,7 +1,4 @@
 ---
-// CSS
-import '@styles/auth/register.css'
-
 // AUTH
 import { isLoggedIn } from '../utils/verifyAuth';
 
@@ -19,8 +16,6 @@ if (isLoggedIn(token)) {
 
 <Layout title="Registrarse - SSAA2" container={false}>
 	<LayoutNotAuth client:only="react">
-		<div class="register">
-			<FormRegister client:only="react"/>
-		</div>
+		<FormRegister client:only="react"/>
 	</LayoutNotAuth>
 </Layout>

@@ -102,9 +102,7 @@ export default function Table({
                                                         >
                                                             Cambiar Rol
                                                         </button>
-                                                    ) : (
-                                                        "-"
-                                                    )}
+                                                    ) : null}
                                                     {canExecute("EDIT_USER") ? (
                                                         <a
                                                             href={`edit-user/${user._id}`}
@@ -141,9 +139,7 @@ export default function Table({
                                                 >
                                                     Activar
                                                 </button>
-                                            ) : (
-                                                "-"
-                                            )}
+                                            ) : null}
                                         </div>
                                     )}
                                 </td>
