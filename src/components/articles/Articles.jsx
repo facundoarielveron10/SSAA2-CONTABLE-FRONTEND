@@ -44,6 +44,7 @@ export default function Categories() {
     ]);
     const [open, setOpen] = useState(false);
     const [articleDelete, setArticleDelete] = useState({});
+    const [loading, setLoading] = useState(false);
 
     // ZUSTAND
     const { canExecute } = useLoginStore();
@@ -79,7 +80,7 @@ export default function Categories() {
                     En este Listado se puede ver todos los Articulos que existen
                     en el sistema, donde tambien se puede crear nuevos articulos
                 </p>
-                {articles.length === 0 ? (
+                {loading ? (
                     <div className="spinner">
                         <Spinner />
                     </div>

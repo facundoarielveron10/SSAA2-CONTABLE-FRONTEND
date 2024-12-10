@@ -17,6 +17,7 @@ export const getTypeActions = () => {
         "Estadisticas",
         "Articulos",
         "Categorias",
+        "Proveedores",
     ];
 
     return types;
@@ -80,6 +81,13 @@ export const getSections = () => {
             url: `/categories`,
             permission: "GET_CATEGORIES",
         },
+        {
+            title: "Proveedores",
+            description:
+                "Consulta los proveedores esta sección. Aquí podrás ver un resumen de todos los proveedores, permitiendo un análisis más detallado de cada proveedor de la organización. Esta herramienta es vital para la administracion de los mismos.",
+            url: `/suppliers`,
+            permission: "GET_SUPPLIERS",
+        },
     ];
 
     return sections;
@@ -98,6 +106,16 @@ export const getRoles = async () => {
 export const getCategories = async () => {
     try {
         const { data } = await clientAxios.get("/category/categories");
+
+        return data;
+    } catch (error) {
+        toast.error(errorResponse(error));
+    }
+};
+
+export const getSuppliers = async () => {
+    try {
+        const { data } = await clientAxios.get("/supplier/suppliers");
 
         return data;
     } catch (error) {

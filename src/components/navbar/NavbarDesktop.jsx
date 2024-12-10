@@ -112,6 +112,16 @@ export default function NavbarDesktop({ url }) {
                             Categorias
                         </a>
                     ) : null}
+                    {canExecute("GET_SUPPLIERS") ? (
+                        <a
+                            href="/suppliers"
+                            className={`${
+                                url === "/suppliers" ? "navbar-link-active" : ""
+                            } navbar-link`}
+                        >
+                            Proveedores
+                        </a>
+                    ) : null}
                     <button className="button" onClick={handleLogout}>
                         Cerrar Sesión
                     </button>

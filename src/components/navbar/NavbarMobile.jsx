@@ -161,6 +161,20 @@ export default function NavbarMobile({ url }) {
                                 </a>
                             </li>
                         ) : null}
+                        {canExecute("GET_SUPPLIERS") ? (
+                            <li>
+                                <a
+                                    className={`${
+                                        url === "/suppliers"
+                                            ? "navbar-link-active"
+                                            : ""
+                                    }`}
+                                    href="/suppliers"
+                                >
+                                    Proveedores
+                                </a>
+                            </li>
+                        ) : null}
                         <li>
                             <button
                                 className="navbarMobile-logout"

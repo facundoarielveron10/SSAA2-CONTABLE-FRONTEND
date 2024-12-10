@@ -35,6 +35,16 @@ export default function Create() {
         }
 
         try {
+            const { data } = await clientAxios.post(
+                "/supplier/create-supplier",
+                {
+                    name,
+                    address,
+                    phone,
+                    email,
+                }
+            );
+            toast.success(data);
             resetValues();
         } catch (error) {
             toast.error(errorResponse(error));
@@ -99,7 +109,7 @@ export default function Create() {
                         </label>
                         <input
                             className="form-input"
-                            type="text"
+                            type="email"
                             id="email"
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}

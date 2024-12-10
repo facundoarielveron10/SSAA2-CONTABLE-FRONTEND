@@ -4,8 +4,8 @@ import { isLoggedIn } from '../utils/verifyAuth';
 
 // COMPONENTS
 import Layout from '../layouts/Layout.astro';
-import LayoutAuth from "../layouts/LayoutAuth.jsx";
-import Create from "../components/suppliers/Create.jsx"
+import SuppliersComponent from "../components/suppliers/Suppliers";
+import LayoutAuth from '../layouts/LayoutAuth';
 
 // REDIRECT
 const token = Astro.cookies.get("AUTH_TOKEN");
@@ -14,8 +14,8 @@ if (!isLoggedIn(token)) {
 }
 ---
 
-<Layout title="Crear Proveedor - SSAA2">
-	<LayoutAuth client:only="react" action="CREATE_SUPPLIERS">
-		<Create client:only="react"/>
+<Layout title="Proveedores - SSAA2">
+	<LayoutAuth client:only="react" action="GET_SUPPLIERS">
+		<SuppliersComponent client:only="react"/>
 	</LayoutAuth>
 </Layout>

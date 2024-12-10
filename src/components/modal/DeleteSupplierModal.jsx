@@ -4,17 +4,17 @@ import Modal from "react-responsive-modal";
 // UTILS
 import { formatBalance } from "src/utils/format";
 
-export default function DeleteArticleModal({
+export default function DeleteSupplierModal({
     open,
-    onCloseDeleteArticleModal,
-    handleDeleteArticle,
-    articleDelete,
+    onCloseDeleteSupplierModal,
+    handleDeleteSupplier,
+    supplierDelete,
 }) {
     return (
         <div>
             <Modal
                 open={open}
-                onClose={onCloseDeleteArticleModal}
+                onClose={onCloseDeleteSupplierModal}
                 center
                 classNames={{
                     overlay: "customOverlay",
@@ -22,32 +22,24 @@ export default function DeleteArticleModal({
                     closeIcon: "customCloseIcon",
                 }}
             >
-                <form onSubmit={handleDeleteArticle}>
+                <form onSubmit={handleDeleteSupplier}>
                     <h2 className="modal-title">
-                        ¿Estas seguro de eliminar el articulo?
+                        ¿Estas seguro de eliminar el proveedor?
                     </h2>
-                    {articleDelete ? (
+                    {supplierDelete ? (
                         <div className="modal-data">
                             <p>
-                                Nombre: <span>{articleDelete?.name}</span>
+                                Nombre: <span>{supplierDelete?.name}</span>
                             </p>
                             <p>
-                                Descripcion:{" "}
-                                <span>{articleDelete?.description}</span>
+                                Direccion:{" "}
+                                <span>{supplierDelete?.address}</span>
                             </p>
                             <p>
-                                Precio Unitario:{" "}
-                                <span>
-                                    ${formatBalance(articleDelete?.unitPrice)}
-                                </span>
+                                Telefono: <span>{supplierDelete?.phone}</span>
                             </p>
                             <p>
-                                Categoria:{" "}
-                                <span>{articleDelete?.category?.name}</span>
-                            </p>
-                            <p>
-                                Proveedor:{" "}
-                                <span>{articleDelete?.supplier?.name}</span>
+                                Email: <span>{supplierDelete?.email}</span>
                             </p>
                         </div>
                     ) : null}
@@ -55,7 +47,7 @@ export default function DeleteArticleModal({
                         type="submit"
                         className="button form-button form-submit modal-delete"
                     >
-                        Eliminar Articulo
+                        Eliminar Proveedor
                     </button>
                 </form>
             </Modal>
