@@ -6,10 +6,12 @@ import { useEffect, useState } from "react";
 
 // UTILS
 import { errorResponse } from "../../utils/error";
+import { getSuppliers } from "src/utils/getData";
 
 // COMPONENTS
 import Table from "./Table";
 import Spinner from "../Spinner";
+import Pagination from "../Pagination";
 
 // ALERTS
 import { toast } from "react-toastify";
@@ -23,7 +25,6 @@ import { useLoginStore } from "../../zustand/loginStore";
 
 // MODAL
 import DeleteSupplierModal from "../modal/DeleteSupplierModal";
-import { getSuppliers } from "src/utils/getData";
 
 export default function Categories() {
     // STATES
@@ -31,6 +32,9 @@ export default function Categories() {
     const [open, setOpen] = useState(false);
     const [supplierDelete, setSupplierDelete] = useState({});
     const [loading, setLoading] = useState(false);
+    const [limit] = useState(10);
+    const [currentPage, setCurrentPage] = useState(1);
+    const [totalPages, setTotalPages] = useState(1);
 
     // ZUSTAND
     const { canExecute } = useLoginStore();
@@ -39,13 +43,14 @@ export default function Categories() {
     useEffect(() => {
         const getSuppliersData = async () => {
             setLoading(true);
-            const data = await getSuppliers();
-            setSuppliers(data);
+            const data = await getSuppliers(currentPage, limit);
+            setSuppliers(data.suppliers);
+            setTotalPages(data.totalPages);
             setLoading(false);
         };
 
         getSuppliersData();
-    }, []);
+    }, [currentPage]);
 
     // FUNCTIONS
     const onOpenDeleteSupplierModal = (supplier) => {
@@ -96,6 +101,18 @@ export default function Categories() {
         }
     };
 
+    const handleNextPage = () => {
+        if (currentPage < totalPages) {
+            setCurrentPage(currentPage + 1);
+        }
+    };
+
+    const handlePreviousPage = () => {
+        if (currentPage > 1) {
+            setCurrentPage(currentPage - 1);
+        }
+    };
+
     return (
         <>
             <Alert />
@@ -111,11 +128,23 @@ export default function Categories() {
                         <Spinner />
                     </div>
                 ) : (
-                    <Table
-                        suppliers={suppliers}
-                        onOpenDeleteSupplierModal={onOpenDeleteSupplierModal}
-                        handleActive={handleActive}
-                    />
+                    <div>
+                        <Table
+                            suppliers={suppliers}
+                            onOpenDeleteSupplierModal={
+                                onOpenDeleteSupplierModal
+                            }
+                            handleActive={handleActive}
+                        />
+                        {suppliers.length > 0 ? (
+                            <Pagination
+                                handleNextPage={handleNextPage}
+                                handlePreviousPage={handlePreviousPage}
+                                currentPage={currentPage}
+                                totalPages={totalPages}
+                            />
+                        ) : null}
+                    </div>
                 )}
             </div>
             <DeleteSupplierModal

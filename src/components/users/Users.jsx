@@ -9,7 +9,7 @@ import clientAxios from "../../config/ClientAxios";
 
 // UTILS
 import { errorResponse } from "../../utils/error";
-import { getRoles } from "../../utils/getData";
+import { getRoles, getUsers } from "../../utils/getData";
 
 // COMPONENTS
 import Spinner from "../Spinner";
@@ -23,6 +23,8 @@ import Alert from "../Alert";
 
 // ZUSTAND
 import { useLoginStore } from "../../zustand/loginStore";
+
+// MODAL
 import ChangeRoleModal from "../modal/ChangeRoleModal";
 import DeleteUserModal from "../modal/DeleteUserModal";
 import DenyUserModal from "../modal/DenyUserModal";
@@ -54,7 +56,7 @@ export default function Users() {
         const getRolesData = async () => {
             setLoading(true);
             const data = await getRoles();
-            setRoles(data);
+            setRoles(data.roles);
             setLoading(false);
         };
 
@@ -62,7 +64,16 @@ export default function Users() {
     }, []);
 
     useEffect(() => {
-        getUsers();
+        const getUsersData = async () => {
+            setLoading(true);
+            const data = await getUsers(currentPage, limit, selectedRole);
+            setUsers(data.users);
+            setFilteredUsers(data.users);
+            setTotalPages(data.totalPages);
+            setLoading(false);
+        };
+
+        getUsersData();
     }, [currentPage, selectedRole]);
 
     useEffect(() => {
@@ -77,22 +88,6 @@ export default function Users() {
     }, [selectedRole, users]);
 
     // FUNCTIONS
-    const getUsers = async () => {
-        setLoading(true);
-        try {
-            const { data } = await clientAxios.get(
-                `/user/users?page=${currentPage}&limit=${limit}&role=${selectedRole}`
-            );
-            setUsers(data.users);
-            setFilteredUsers(data.users);
-            setTotalPages(data.totalPages);
-        } catch (error) {
-            toast.error(errorResponse(error));
-        } finally {
-            setLoading(false);
-        }
-    };
-
     const handleRoleChange = (e) => {
         const role = e.target.value;
         setSelectedRole(role);

@@ -10,30 +10,47 @@ import clientAxios from "../../config/ClientAxios";
 // ALERTS
 import Alert from "../Alert.jsx";
 import { toast } from "react-toastify";
+import { IoIosAdd, IoIosRemove } from "react-icons/io";
 
-export default function Edit({ id }) {
+export default function Create() {
     // STATES
-    const [name, setName] = useState("Coca Cola 1LT");
+    const [name, setName] = useState("Coca Cola 1Lt");
     const [description, setDescription] = useState(
-        "La bebida gaseosa más famosa del mundo, reconocida por su refrescante sabor y su característico color oscuro. Disfrutada en todas partes y en cualquier ocasión"
+        "Bebida refrescante que se caracteriza por su sabor a cola, el cual proviene de una mezcla de azúcar y aceites de naranja, limón y vainilla"
     );
     const [price, setPrice] = useState(200);
-    const [category, setCategory] = useState("1");
-    const [supplier, setSupplier] = useState("1");
+    const [categories, setCategories] = useState(["1", "2"]);
+    const [suppliers, setSuppliers] = useState(["1", "2"]);
+    const allCategories = [
+        { id: "1", name: "Bebidas" },
+        { id: "2", name: "Gaseosas" },
+        { id: "3", name: "Rodados" },
+        { id: "4", name: "Muebles" },
+    ];
+    const allSuppliers = [
+        { id: "1", name: "Coca-Cola" },
+        { id: "2", name: "The Coca-Cola Company" },
+        { id: "3", name: "Tesla" },
+        { id: "4", name: "Muebleria Juancito" },
+    ];
 
     // FUNCTIONS
     const resetValues = () => {
         setName("");
         setDescription("");
         setPrice(0);
-        setCategory("");
-        setSupplier("");
+        setCategories([""]);
+        setSuppliers([""]);
     };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        if ([name, description, category, supplier].includes("")) {
+        if (
+            [name, description].includes("") ||
+            categories.includes("") ||
+            suppliers.includes("")
+        ) {
             toast.error("Todos los campos son obligatorios");
             return;
         }
@@ -49,8 +66,55 @@ export default function Edit({ id }) {
         setPrice(value === "" ? 0 : Number(value));
     };
 
+    const addCategory = () => {
+        setCategories([...categories, ""]);
+    };
+
+    const addSupplier = () => {
+        setSuppliers([...suppliers, ""]);
+    };
+
+    const removeCategory = (index) => {
+        setCategories(categories.filter((_, i) => i !== index));
+    };
+
+    const removeSupplier = (index) => {
+        setSuppliers(suppliers.filter((_, i) => i !== index));
+    };
+
+    const handleCategoryChange = (value, index) => {
+        const newCategories = [...categories];
+        newCategories[index] = value;
+        setCategories(newCategories);
+    };
+
+    const handleSupplierChange = (value, index) => {
+        const newSuppliers = [...suppliers];
+        newSuppliers[index] = value;
+        setSuppliers(newSuppliers);
+    };
+
+    const filteredCategories = (index) => {
+        return allCategories.filter(
+            (category) =>
+                !categories.includes(category.id) ||
+                categories[index] === category.id
+        );
+    };
+
+    const filteredSuppliers = (index) => {
+        return allSuppliers.filter(
+            (supplier) =>
+                !suppliers.includes(supplier.id) ||
+                suppliers[index] === supplier.id
+        );
+    };
+
+    const allCategoriesSelected = categories.length === allCategories.length;
+    const allSuppliersSelected = suppliers.length === allSuppliers.length;
+
     return (
-        <div>
+        <>
             <Alert />
             <div className="content">
                 <h1 className="title">Edicion de Articulo</h1>
@@ -103,50 +167,114 @@ export default function Edit({ id }) {
                     </div>
                     {/* CATEGORY */}
                     <div className="form-group">
-                        <label className="form-label" htmlFor="category">
-                            Categoria
+                        <label className="form-label" htmlFor="categories">
+                            Categorias
                         </label>
-                        <select
-                            className="form-select"
-                            id="category"
-                            value={category}
-                            onChange={(e) => setAccount(e.target.value)}
-                        >
-                            <option defaultChecked value="">
-                                Selecciona una categoria
-                            </option>
-                            <option value={"1"}>Bebidas</option>
-                            <option value={"2"}>Rodados</option>
-                            <option value={"3"}>Muebles</option>
-                        </select>
+                        {categories.map((category, index) => (
+                            <div key={index} className="form-row">
+                                <select
+                                    className="form-select"
+                                    id={`category-${index}`}
+                                    value={category}
+                                    onChange={(e) =>
+                                        handleCategoryChange(
+                                            e.target.value,
+                                            index
+                                        )
+                                    }
+                                >
+                                    <option defaultChecked value="">
+                                        Selecciona una categoria
+                                    </option>
+                                    {filteredCategories(index).map((cat) => (
+                                        <option key={cat.id} value={cat.id}>
+                                            {cat.name}
+                                        </option>
+                                    ))}
+                                </select>
+                                {categories.length >= 2 ? (
+                                    <button
+                                        type="button"
+                                        onClick={() => removeCategory(index)}
+                                        className="form-remove"
+                                    >
+                                        <IoIosRemove className="form-icon" />
+                                    </button>
+                                ) : null}
+                            </div>
+                        ))}
+                        {!allCategoriesSelected && (
+                            <div className="form-add-container">
+                                <button
+                                    type="button"
+                                    onClick={addCategory}
+                                    className="form-add"
+                                >
+                                    <IoIosAdd className="form-icon" />
+                                </button>
+                            </div>
+                        )}
                     </div>
+
                     {/* SUPPLIER */}
                     <div className="form-group">
-                        <label className="form-label" htmlFor="supplier">
-                            Proveedor
+                        <label className="form-label" htmlFor="suppliers">
+                            Proveedores
                         </label>
-                        <select
-                            className="form-select"
-                            id="supplier"
-                            value={supplier}
-                            onChange={(e) => setSupplier(e.target.value)}
-                        >
-                            <option defaultChecked value="">
-                                Selecciona un proveedor
-                            </option>
-                            <option value={"1"}>Coca-Cola</option>
-                            <option value={"2"}>Tesla</option>
-                            <option value={"3"}>Muebleria Juancito</option>
-                        </select>
+                        {suppliers.map((supplier, index) => (
+                            <div key={index} className="form-row">
+                                <select
+                                    className="form-select"
+                                    id={`supplier-${index}`}
+                                    value={supplier}
+                                    onChange={(e) =>
+                                        handleSupplierChange(
+                                            e.target.value,
+                                            index
+                                        )
+                                    }
+                                >
+                                    <option defaultChecked value="">
+                                        Selecciona un proveedor
+                                    </option>
+                                    {filteredSuppliers(index).map((sup) => (
+                                        <option key={sup.id} value={sup.id}>
+                                            {sup.name}
+                                        </option>
+                                    ))}
+                                </select>
+                                {suppliers.length >= 2 ? (
+                                    <button
+                                        type="button"
+                                        onClick={() => removeSupplier(index)}
+                                        className="form-remove"
+                                    >
+                                        <IoIosRemove className="form-icon" />
+                                    </button>
+                                ) : null}
+                            </div>
+                        ))}
+                        {!allSuppliersSelected && (
+                            <div className="form-add-container">
+                                <button
+                                    type="button"
+                                    onClick={addSupplier}
+                                    className="form-add"
+                                >
+                                    <IoIosAdd className="form-icon" />
+                                </button>
+                            </div>
+                        )}
                     </div>
+
                     <button
                         className="form-button form-submit button"
                         type="submit"
                     >
-                        Editar Proveedor
+                        Editar Articulo
                     </button>
                 </form>
             </div>
-        </div>
+        </>
     );
 }

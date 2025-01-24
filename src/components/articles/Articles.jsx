@@ -24,7 +24,7 @@ import { useLoginStore } from "../../zustand/loginStore";
 // MODAL
 import DeleteArticleModal from "../modal/DeleteArticleModal";
 
-export default function Categories() {
+export default function Articles() {
     // STATES
     const [articles, setArticles] = useState([
         {
@@ -33,12 +33,18 @@ export default function Categories() {
             description:
                 "Bebida refrescante que se caracteriza por su sabor a cola, el cual proviene de una mezcla de azúcar y aceites de naranja, limón y vainilla",
             unitPrice: 200,
-            category: {
-                name: "Bebidas",
-            },
-            supplier: {
-                name: "Coca-Cola",
-            },
+            categories: ["Bebidas", "Gaseosas"],
+            suppliers: ["Coca Cola", "The Coca-Cola Company"],
+            active: true,
+        },
+        {
+            _id: 2,
+            name: "Manaos",
+            description:
+                "Bebida refrescante que se caracteriza por su sabor a cola, el cual proviene de una mezcla de azúcar y aceites de naranja, limón y vainilla",
+            unitPrice: 100,
+            categories: ["Bebidas", "Gaseosas"],
+            suppliers: ["Manaos"],
             active: true,
         },
     ]);
@@ -98,7 +104,7 @@ export default function Categories() {
                 handleDeleteArticle={handleDeleteArticle}
                 articleDelete={articleDelete}
             />
-            {canExecute("CREATE_ARTICLE") ? (
+            {canExecute("CREATE_ARTICLES") ? (
                 <a href="create-article" className="button-position button">
                     Crear Articulo
                 </a>

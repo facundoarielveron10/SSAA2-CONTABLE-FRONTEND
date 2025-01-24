@@ -18,3 +18,23 @@ export const formatDate = (date) => {
 
     return `${day}/${month}/${year} ${hours}:${minutes}hs`;
 };
+
+export const formatArrayToString = (suppliers) => {
+    // Verificamos si suppliers es un string y lo convertimos a un array
+    if (typeof suppliers === "string") {
+        try {
+            suppliers = JSON.parse(suppliers);
+        } catch (error) {
+            throw new Error(
+                "El parámetro suppliers no es un array ni un JSON válido."
+            );
+        }
+    }
+
+    // Verificamos si suppliers es un array
+    if (Array.isArray(suppliers)) {
+        return suppliers.join(", ");
+    } else {
+        throw new Error("El parámetro suppliers no es un array.");
+    }
+};

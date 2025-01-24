@@ -10,6 +10,8 @@ import { getRoles } from "../../utils/getData";
 
 // COMPONENTS
 import Spinner from "../Spinner";
+import Pagination from "../Pagination";
+import Table from "./Table";
 
 // ALERTS
 import { toast } from "react-toastify";
@@ -22,7 +24,6 @@ import clientAxios from "../../config/ClientAxios";
 import { useLoginStore } from "../../zustand/loginStore";
 
 // MODAL
-import Table from "./Table";
 import DeleteRoleModal from "../modal/DeleteRoleModal";
 
 export default function Roles() {
@@ -30,6 +31,10 @@ export default function Roles() {
     const [roles, setRoles] = useState([]);
     const [open, setOpen] = useState(false);
     const [roleDelete, setRoleDelete] = useState({});
+    const [limit] = useState(10);
+    const [currentPage, setCurrentPage] = useState(1);
+    const [totalPages, setTotalPages] = useState(1);
+    const [loading, setLoading] = useState(false);
 
     // ZUSTAND
     const { canExecute, user, logout } = useLoginStore();
@@ -37,12 +42,15 @@ export default function Roles() {
     // EFFECTS
     useEffect(() => {
         const getRolesData = async () => {
-            const data = await getRoles();
-            setRoles(data);
+            setLoading(true);
+            const data = await getRoles(currentPage, limit);
+            setRoles(data.roles);
+            setTotalPages(data.totalPages);
+            setLoading(false);
         };
 
         getRolesData();
-    }, []);
+    }, [currentPage]);
 
     // FUNCTIONS
     const onOpenDeleteRoleModal = (rol) => {
@@ -93,6 +101,18 @@ export default function Roles() {
         }
     };
 
+    const handleNextPage = () => {
+        if (currentPage < totalPages) {
+            setCurrentPage(currentPage + 1);
+        }
+    };
+
+    const handlePreviousPage = () => {
+        if (currentPage > 1) {
+            setCurrentPage(currentPage - 1);
+        }
+    };
+
     return (
         <>
             <Alert />
@@ -102,16 +122,26 @@ export default function Roles() {
                     En este Listado se puede ver todos los Roles que existen en
                     el sistema, donde tambien se puede crear nuevos roles
                 </p>
-                {roles.length === 0 ? (
+                {loading === 0 ? (
                     <div className="spinner">
                         <Spinner />
                     </div>
                 ) : (
-                    <Table
-                        roles={roles}
-                        onOpenDeleteRoleModal={onOpenDeleteRoleModal}
-                        handleActive={handleActive}
-                    />
+                    <div>
+                        <Table
+                            roles={roles}
+                            onOpenDeleteRoleModal={onOpenDeleteRoleModal}
+                            handleActive={handleActive}
+                        />
+                        {roles.length > 0 ? (
+                            <Pagination
+                                handleNextPage={handleNextPage}
+                                handlePreviousPage={handlePreviousPage}
+                                currentPage={currentPage}
+                                totalPages={totalPages}
+                            />
+                        ) : null}
+                    </div>
                 )}
             </div>
             <DeleteRoleModal

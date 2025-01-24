@@ -1,5 +1,5 @@
 // UTILS
-import { formatBalance } from "src/utils/format";
+import { formatBalance, formatArrayToString } from "src/utils/format";
 
 // ZUSTAND
 import { useLoginStore } from "../../zustand/loginStore";
@@ -26,11 +26,11 @@ export default function Table({
                     <table className="table-content">
                         <thead>
                             <tr>
-                                <th>Nombre</th>
-                                <th>Descripcion</th>
-                                <th>Precio Unitario</th>
-                                <th>Categoria</th>
-                                <th>Proveedor</th>
+                                <th className="table-15">Nombre</th>
+                                <th className="table-40">Descripcion</th>
+                                <th className="table-10">Precio Unitario</th>
+                                <th className="table-15">Categorias</th>
+                                <th className="table-15">Proveedores</th>
                                 <th>Acciones</th>
                             </tr>
                         </thead>
@@ -40,8 +40,14 @@ export default function Table({
                                     <td>{article.name}</td>
                                     <td>{article.description}</td>
                                     <td>${formatBalance(article.unitPrice)}</td>
-                                    <td>{article.category.name}</td>
-                                    <td>{article.supplier.name}</td>
+                                    <td>
+                                        {formatArrayToString(
+                                            article.categories
+                                        )}
+                                    </td>
+                                    <td>
+                                        {formatArrayToString(article.suppliers)}
+                                    </td>
                                     <td>
                                         {article.active ? (
                                             <div className="table-actions">

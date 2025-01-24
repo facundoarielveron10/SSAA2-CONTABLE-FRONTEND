@@ -27,7 +27,7 @@ export default function Table({
                         onChange={handleRoleChange}
                     >
                         <option value="">Todos los roles</option>
-                        {roles.map((role) => (
+                        {roles?.map((role) => (
                             <option key={role._id} value={role.name}>
                                 {role.nameDescriptive}
                             </option>

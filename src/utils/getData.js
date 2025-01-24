@@ -93,9 +93,15 @@ export const getSections = () => {
     return sections;
 };
 
-export const getRoles = async () => {
+export const getUsers = async (
+    currentPage = null,
+    limit = null,
+    selectedRole = null
+) => {
     try {
-        const { data } = await clientAxios.get("/role-action/roles");
+        const { data } = await clientAxios.get(
+            `/user/users?page=${currentPage}&limit=${limit}&role=${selectedRole}`
+        );
 
         return data;
     } catch (error) {
@@ -103,9 +109,11 @@ export const getRoles = async () => {
     }
 };
 
-export const getCategories = async () => {
+export const getRoles = async (currentPage = null, limit = null) => {
     try {
-        const { data } = await clientAxios.get("/category/categories");
+        const { data } = await clientAxios.get(
+            `/role-action/roles?page=${currentPage}&limit=${limit}`
+        );
 
         return data;
     } catch (error) {
@@ -113,9 +121,11 @@ export const getCategories = async () => {
     }
 };
 
-export const getSuppliers = async () => {
+export const getCategories = async (currentPage = null, limit = null) => {
     try {
-        const { data } = await clientAxios.get("/supplier/suppliers");
+        const { data } = await clientAxios.get(
+            `/category/categories?page=${currentPage}&limit=${limit}`
+        );
 
         return data;
     } catch (error) {
@@ -123,7 +133,23 @@ export const getSuppliers = async () => {
     }
 };
 
-export const getActions = async (currentPage, limit, selectedType) => {
+export const getSuppliers = async (currentPage = null, limit = null) => {
+    try {
+        const { data } = await clientAxios.get(
+            `/supplier/suppliers?page=${currentPage}&limit=${limit}`
+        );
+
+        return data;
+    } catch (error) {
+        toast.error(errorResponse(error));
+    }
+};
+
+export const getActions = async (
+    currentPage = null,
+    limit = null,
+    selectedType = null
+) => {
     try {
         const { data } = await clientAxios.get(
             `/role-action/actions?page=${currentPage}&limit=${limit}&type=${selectedType}`
@@ -135,14 +161,11 @@ export const getActions = async (currentPage, limit, selectedType) => {
     }
 };
 
-export const getAccounts = async (currentPage, limit) => {
+export const getAccounts = async (currentPage = null, limit = null) => {
     try {
-        const endpoint =
-            currentPage && limit
-                ? `/account/accounts?page=${currentPage}&limit=${limit}`
-                : `/account/accounts`;
-
-        const { data } = await clientAxios.get(endpoint);
+        const { data } = await clientAxios.get(
+            `/account/accounts?page=${currentPage}&limit=${limit}`
+        );
 
         return data;
     } catch (error) {
