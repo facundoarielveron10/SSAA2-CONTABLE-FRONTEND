@@ -23,9 +23,14 @@ import clientAxios from "../../config/ClientAxios";
 // ZUSTAND
 import { useLoginStore } from "../../zustand/loginStore";
 
+// MODAL
+import DeleteCategoryModal from "../modal/DeleteCategoryModal";
+
 export default function Categories() {
     // STATES
     const [categories, setCategories] = useState([]);
+    const [open, setOpen] = useState(false);
+    const [categoryDelete, setCategoryDelete] = useState({});
     const [loading, setLoading] = useState(false);
     const [limit] = useState(10);
     const [currentPage, setCurrentPage] = useState(1);
@@ -34,20 +39,55 @@ export default function Categories() {
     // ZUSTAND
     const { canExecute } = useLoginStore();
 
-    // EFFECTS
-    useEffect(() => {
-        const getCategoriesData = async () => {
-            setLoading(true);
-            const data = await getCategories(currentPage, limit);
-            setCategories(data.categories);
-            setTotalPages(data.totalPages);
-            setLoading(false);
-        };
-
-        getCategoriesData();
-    }, [currentPage]);
-
     // FUNCTIONS
+    const onOpenDeleteCategoryModal = (category) => {
+        setOpen(true);
+        setCategoryDelete(category);
+    };
+
+    const onCloseDeleteCategoryModal = () => {
+        setOpen(false);
+        setCategoryDelete({});
+    };
+
+    const handleDeleteCategory = async () => {
+        setLoading(true);
+        try {
+            const { data } = await clientAxios.post(
+                "/category/delete-category",
+                {
+                    idCategory: categoryDelete._id,
+                }
+            );
+
+            toast.success(data);
+            onCloseDeleteCategoryModal();
+        } catch (error) {
+            toast.error(errorResponse(error));
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    const handleActive = async (id) => {
+        setLoading(true);
+        try {
+            const { data } = await clientAxios.post(
+                "/category/active-category",
+                {
+                    idCategory: id,
+                }
+            );
+
+            toast.success(data);
+            window.location.reload();
+        } catch (error) {
+            toast.error(errorResponse(error));
+        } finally {
+            setLoading(false);
+        }
+    };
+
     const handleNextPage = () => {
         if (currentPage < totalPages) {
             setCurrentPage(currentPage + 1);
@@ -59,6 +99,19 @@ export default function Categories() {
             setCurrentPage(currentPage - 1);
         }
     };
+
+    // EFFECTS
+    useEffect(() => {
+        const getCategoriesData = async () => {
+            setLoading(true);
+            const data = await getCategories(currentPage, limit);
+            setCategories(data?.categories);
+            setTotalPages(data?.totalPages);
+            setLoading(false);
+        };
+
+        getCategoriesData();
+    }, [currentPage]);
 
     return (
         <>
@@ -76,7 +129,13 @@ export default function Categories() {
                     </div>
                 ) : (
                     <div className="table-container">
-                        <Table categories={categories} />
+                        <Table
+                            categories={categories}
+                            onOpenDeleteCategoryModal={
+                                onOpenDeleteCategoryModal
+                            }
+                            handleActive={handleActive}
+                        />
                         {categories.length > 0 ? (
                             <Pagination
                                 handleNextPage={handleNextPage}
@@ -88,6 +147,12 @@ export default function Categories() {
                     </div>
                 )}
             </div>
+            <DeleteCategoryModal
+                open={open}
+                onCloseDeleteCategoryModal={onCloseDeleteCategoryModal}
+                handleDeleteCategory={handleDeleteCategory}
+                categoryDelete={categoryDelete}
+            />
             {canExecute("CREATE_CATEGORIES") ? (
                 <a href="create-category" className="button-position button">
                     Crear Categoria

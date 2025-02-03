@@ -41,13 +41,21 @@ export default function DeleteArticleModal({
                                     ${formatBalance(articleDelete?.unitPrice)}
                                 </span>
                             </p>
-                            <p>
-                                Categoria:{" "}
-                                <span>{articleDelete?.category?.name}</span>
+                            <p className="modal-items">
+                                Categorias:{" "}
+                                {articleDelete?.categories?.map(
+                                    (category, index) => (
+                                        <span key={index}>{category}</span>
+                                    )
+                                )}
                             </p>
-                            <p>
+                            <p className="modal-items">
                                 Proveedor:{" "}
-                                <span>{articleDelete?.supplier?.name}</span>
+                                {articleDelete?.suppliers?.map(
+                                    (supplier, index) => (
+                                        <span key={index}>{supplier}</span>
+                                    )
+                                )}
                             </p>
                         </div>
                     ) : null}

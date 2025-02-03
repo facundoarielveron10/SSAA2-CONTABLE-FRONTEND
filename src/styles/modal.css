@@ -24,3 +24,9 @@
 .modal-delete:hover {
     background-color: var(--colorDeleteDark);
 }
+
+.modal-items {
+    display: flex;
+    flex-direction: row;
+    gap: 0.5rem;
+}

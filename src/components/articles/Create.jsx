@@ -117,12 +117,12 @@ export default function Create() {
     useEffect(() => {
         const getCategoriesData = async () => {
             const data = await getCategories();
-            setAllCategories(data);
+            setAllCategories(data.categories);
         };
 
         const getSuppliersData = async () => {
             const data = await getSuppliers();
-            setAllSuppliers(data);
+            setAllSuppliers(data.suppliers);
         };
 
         getCategoriesData();

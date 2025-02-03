@@ -10,11 +10,11 @@
         "astro": "astro"
     },
     "dependencies": {
-        "@astrojs/node": "^9.0.1",
-        "@astrojs/react": "^4.1.6",
+        "@astrojs/node": "^9.0.2",
+        "@astrojs/react": "^4.2.0",
         "@types/react": "^18.3.11",
         "@types/react-dom": "^18.3.1",
-        "astro": "^5.1.8",
+        "astro": "^5.2.3",
         "axios": "^1.7.7",
         "hamburger-react": "^2.5.1",
         "js-cookie": "^3.0.5",

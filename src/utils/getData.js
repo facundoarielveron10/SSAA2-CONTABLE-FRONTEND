@@ -133,10 +133,37 @@ export const getCategories = async (currentPage = null, limit = null) => {
     }
 };
 
+export const getCategoriesActives = async (
+    currentPage = null,
+    limit = null
+) => {
+    try {
+        const { data } = await clientAxios.get(
+            `/category/categories/actives?page=${currentPage}&limit=${limit}`
+        );
+
+        return data;
+    } catch (error) {
+        toast.error(errorResponse(error));
+    }
+};
+
 export const getSuppliers = async (currentPage = null, limit = null) => {
     try {
         const { data } = await clientAxios.get(
             `/supplier/suppliers?page=${currentPage}&limit=${limit}`
+        );
+
+        return data;
+    } catch (error) {
+        toast.error(errorResponse(error));
+    }
+};
+
+export const getSuppliersActives = async (currentPage = null, limit = null) => {
+    try {
+        const { data } = await clientAxios.get(
+            `/supplier/suppliers/actives?page=${currentPage}&limit=${limit}`
         );
 
         return data;
@@ -165,6 +192,18 @@ export const getAccounts = async (currentPage = null, limit = null) => {
     try {
         const { data } = await clientAxios.get(
             `/account/accounts?page=${currentPage}&limit=${limit}`
+        );
+
+        return data;
+    } catch (error) {
+        toast.error(errorResponse(error));
+    }
+};
+
+export const getArticles = async (currentPage = null, limit = null) => {
+    try {
+        const { data } = await clientAxios.get(
+            `/article/articles?page=${currentPage}&limit=${limit}`
         );
 
         return data;

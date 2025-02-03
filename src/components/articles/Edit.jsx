@@ -1,8 +1,12 @@
 // UTILS
 import { errorResponse } from "../../utils/error";
+import {
+    getCategoriesActives,
+    getSuppliersActives,
+} from "src/utils/getData.js";
 
 // REACT
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 // AXIOS
 import clientAxios from "../../config/ClientAxios";
@@ -10,39 +14,22 @@ import clientAxios from "../../config/ClientAxios";
 // ALERTS
 import Alert from "../Alert.jsx";
 import { toast } from "react-toastify";
+
+// ICONS
 import { IoIosAdd, IoIosRemove } from "react-icons/io";
 
-export default function Create() {
+export default function Edit({ id }) {
     // STATES
-    const [name, setName] = useState("Coca Cola 1Lt");
-    const [description, setDescription] = useState(
-        "Bebida refrescante que se caracteriza por su sabor a cola, el cual proviene de una mezcla de azúcar y aceites de naranja, limón y vainilla"
-    );
-    const [price, setPrice] = useState(200);
-    const [categories, setCategories] = useState(["1", "2"]);
-    const [suppliers, setSuppliers] = useState(["1", "2"]);
-    const allCategories = [
-        { id: "1", name: "Bebidas" },
-        { id: "2", name: "Gaseosas" },
-        { id: "3", name: "Rodados" },
-        { id: "4", name: "Muebles" },
-    ];
-    const allSuppliers = [
-        { id: "1", name: "Coca-Cola" },
-        { id: "2", name: "The Coca-Cola Company" },
-        { id: "3", name: "Tesla" },
-        { id: "4", name: "Muebleria Juancito" },
-    ];
+    const [article, setArticle] = useState({});
+    const [name, setName] = useState("");
+    const [description, setDescription] = useState("");
+    const [price, setPrice] = useState(0);
+    const [categories, setCategories] = useState([""]);
+    const [suppliers, setSuppliers] = useState([""]);
+    const [allCategories, setAllCategories] = useState([]);
+    const [allSuppliers, setAllSuppliers] = useState([]);
 
     // FUNCTIONS
-    const resetValues = () => {
-        setName("");
-        setDescription("");
-        setPrice(0);
-        setCategories([""]);
-        setSuppliers([""]);
-    };
-
     const handleSubmit = async (e) => {
         e.preventDefault();
 
@@ -55,8 +42,43 @@ export default function Create() {
             return;
         }
 
+        if (
+            name === article?.name &&
+            description === article?.description &&
+            price === article?.unitPrice &&
+            categories === article?.categories &&
+            suppliers === article?.suppliers
+        ) {
+            toast.error("No se ha modificado ningun campo");
+            return;
+        }
+
         try {
-            resetValues();
+            const { data } = await clientAxios.post("/article/edit-article", {
+                idArticle: id,
+                newName: name,
+                newDescription: description,
+                newPrice: price,
+                newCategories: categories,
+                newSuppliers: suppliers,
+            });
+
+            toast.success(data);
+        } catch (error) {
+            toast.error(errorResponse(error));
+        }
+    };
+
+    const getArticle = async () => {
+        try {
+            const { data } = await clientAxios.get(`/article/article/${id}`);
+
+            setArticle(data);
+            setName(data?.name);
+            setDescription(data?.description);
+            setPrice(data?.unitPrice);
+            setCategories(data?.categories);
+            setSuppliers(data?.suppliers);
         } catch (error) {
             toast.error(errorResponse(error));
         }
@@ -97,21 +119,38 @@ export default function Create() {
     const filteredCategories = (index) => {
         return allCategories.filter(
             (category) =>
-                !categories.includes(category.id) ||
-                categories[index] === category.id
+                !categories.includes(category._id) ||
+                categories[index] === category._id
         );
     };
 
     const filteredSuppliers = (index) => {
         return allSuppliers.filter(
             (supplier) =>
-                !suppliers.includes(supplier.id) ||
-                suppliers[index] === supplier.id
+                !suppliers.includes(supplier._id) ||
+                suppliers[index] === supplier._id
         );
     };
 
     const allCategoriesSelected = categories.length === allCategories.length;
     const allSuppliersSelected = suppliers.length === allSuppliers.length;
+
+    // EFFECTS
+    useEffect(() => {
+        const getCategoriesData = async () => {
+            const data = await getCategoriesActives();
+            setAllCategories(data.categories);
+        };
+
+        const getSuppliersData = async () => {
+            const data = await getSuppliersActives();
+            setAllSuppliers(data.suppliers);
+        };
+
+        getCategoriesData();
+        getSuppliersData();
+        getArticle();
+    }, []);
 
     return (
         <>
@@ -187,7 +226,7 @@ export default function Create() {
                                         Selecciona una categoria
                                     </option>
                                     {filteredCategories(index).map((cat) => (
-                                        <option key={cat.id} value={cat.id}>
+                                        <option key={cat._id} value={cat._id}>
                                             {cat.name}
                                         </option>
                                     ))}
@@ -238,7 +277,7 @@ export default function Create() {
                                         Selecciona un proveedor
                                     </option>
                                     {filteredSuppliers(index).map((sup) => (
-                                        <option key={sup.id} value={sup.id}>
+                                        <option key={sup._id} value={sup._id}>
                                             {sup.name}
                                         </option>
                                     ))}

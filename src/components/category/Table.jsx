@@ -4,7 +4,11 @@ import { formatBalance } from "src/utils/format";
 // ZUSTAND
 import { useLoginStore } from "../../zustand/loginStore";
 
-export default function Table({ categories }) {
+export default function Table({
+    categories,
+    onOpenDeleteCategoryModal,
+    handleActive,
+}) {
     // ZUSTAND
     const { canExecute } = useLoginStore();
 
@@ -35,16 +39,51 @@ export default function Table({ categories }) {
                                     <td>{category.name}</td>
                                     <td>{category.description}</td>
                                     <td>
-                                        <div className="table-actions">
-                                            {canExecute("EDIT_CATEGORIES") ? (
-                                                <a
-                                                    href={`edit-category/${category._id}`}
-                                                    className="table-button button"
-                                                >
-                                                    Editar
-                                                </a>
-                                            ) : null}
-                                        </div>
+                                        {category.active ? (
+                                            <div className="table-actions">
+                                                {canExecute(
+                                                    "EDIT_CATEGORIES"
+                                                ) ? (
+                                                    <a
+                                                        href={`edit-category/${category._id}`}
+                                                        className="table-button button"
+                                                    >
+                                                        Editar
+                                                    </a>
+                                                ) : null}
+                                                {canExecute(
+                                                    "DELETE_CATEGORIES"
+                                                ) ? (
+                                                    <button
+                                                        onClick={() =>
+                                                            onOpenDeleteCategoryModal(
+                                                                category
+                                                            )
+                                                        }
+                                                        className="table-button table-delete button"
+                                                    >
+                                                        Eliminar
+                                                    </button>
+                                                ) : null}
+                                            </div>
+                                        ) : (
+                                            <div className="table-actions">
+                                                {canExecute(
+                                                    "ACTIVE_CATEGORIES"
+                                                ) ? (
+                                                    <button
+                                                        onClick={() =>
+                                                            handleActive(
+                                                                category._id
+                                                            )
+                                                        }
+                                                        className="table-button button"
+                                                    >
+                                                        Activar
+                                                    </button>
+                                                ) : null}
+                                            </div>
+                                        )}
                                     </td>
                                 </tr>
                             ))}
