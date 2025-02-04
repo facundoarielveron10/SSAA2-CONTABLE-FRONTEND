@@ -212,6 +212,16 @@ export const getArticles = async (currentPage = null, limit = null) => {
     }
 };
 
+export const getStock = async (idArticle) => {
+    try {
+        const { data } = await clientAxios.get(`/stock/stock/${idArticle}`);
+
+        return data;
+    } catch (error) {
+        toast.error(errorResponse(error));
+    }
+};
+
 export const getDateNow = () => {
     const today = new Date();
     const day = String(today.getDate()).padStart(2, "0");

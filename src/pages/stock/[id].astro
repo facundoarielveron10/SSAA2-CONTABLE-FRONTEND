@@ -1,0 +1,24 @@
+---
+// AUTH
+import { isLoggedIn } from '../../utils/verifyAuth';
+
+// COMPONENTS
+import Layout from '../../layouts/Layout.astro';
+import LayoutAuth from "../../layouts/LayoutAuth.jsx";
+import StockArticle from "../../components/articles/Stock.jsx";
+
+// REDIRECT
+const token = Astro.cookies.get("AUTH_TOKEN");
+if (!isLoggedIn(token)) {
+	return Astro.redirect("/login")
+}
+
+// ID
+const {id} = Astro.params;
+---
+
+<Layout title="Stock de Articulo - SSAA2">
+	<LayoutAuth client:only="react" action="GET_STOCK">
+		<StockArticle client:only="react" id={id}/>
+	</LayoutAuth>
+</Layout>

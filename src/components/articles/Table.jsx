@@ -38,7 +38,11 @@ export default function Table({
                             {articles.map((article) => (
                                 <tr key={article._id}>
                                     <td>{article.name}</td>
-                                    <td>{article.description}</td>
+                                    <td className="table-cell">
+                                        <span className="table-cell-text">
+                                            {article.description}
+                                        </span>
+                                    </td>
                                     <td>${formatBalance(article.unitPrice)}</td>
                                     <td>
                                         {formatArrayToString(
@@ -72,6 +76,14 @@ export default function Table({
                                                     >
                                                         Eliminar
                                                     </button>
+                                                ) : null}
+                                                {canExecute("GET_STOCK") ? (
+                                                    <a
+                                                        href={`stock/${article._id}`}
+                                                        className="table-button button"
+                                                    >
+                                                        Stock
+                                                    </a>
                                                 ) : null}
                                             </div>
                                         ) : (

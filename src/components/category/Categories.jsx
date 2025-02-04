@@ -123,7 +123,7 @@ export default function Categories() {
                     existen en el sistema, donde tambien se puede crear nuevas
                     categorias
                 </p>
-                {loading === 0 ? (
+                {loading ? (
                     <div className="spinner">
                         <Spinner />
                     </div>

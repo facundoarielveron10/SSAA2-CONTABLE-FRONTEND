@@ -19,6 +19,8 @@ import "@styles/books/ledger.css";
 import "@styles/home/card.css";
 import "@styles/home/home.css";
 import "@styles/home/stats.css";
+// STOCK
+import "@styles/stock.css";
 
 // CSS (External)
 import "react-datepicker/dist/react-datepicker.css";

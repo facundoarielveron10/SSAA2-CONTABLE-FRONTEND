@@ -199,7 +199,27 @@
     font-size: 1.5rem;
     font-weight: bold;
     text-transform: uppercase;
-    color: var(--textColor);
+    color: var(--primaryColor);
+}
+
+.table-cell {
+    position: relative;
+    max-width: 300px;
+    overflow: hidden;
+}
+
+.table-cell-text {
+    display: block;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 100%;
+}
+
+.table-cell:hover .table-cell-text {
+    white-space: normal;
+    overflow: visible;
+    text-overflow: unset;
 }
 
 .table-10 {
