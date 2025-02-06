@@ -16,7 +16,8 @@ import Alert from "../Alert.jsx";
 import { toast } from "react-toastify";
 
 // ICONS
-import { IoIosAdd, IoIosRemove } from "react-icons/io";
+import { IoIosAdd } from "react-icons/io";
+import { FaRegTrashAlt } from "react-icons/fa";
 
 export default function Edit({ id }) {
     // STATES
@@ -24,8 +25,10 @@ export default function Edit({ id }) {
     const [name, setName] = useState("");
     const [description, setDescription] = useState("");
     const [price, setPrice] = useState(0);
-    const [categories, setCategories] = useState([""]);
-    const [suppliers, setSuppliers] = useState([""]);
+    const [category, setCategory] = useState("");
+    const [categories, setCategories] = useState([]);
+    const [suppliers, setSuppliers] = useState([]);
+    const [supplier, setSupplier] = useState("");
     const [allCategories, setAllCategories] = useState([]);
     const [allSuppliers, setAllSuppliers] = useState([]);
 
@@ -53,14 +56,18 @@ export default function Edit({ id }) {
             return;
         }
 
+        // Extraer solo los IDs de categorías y proveedores
+        const categoryIds = categories.map((category) => category.id);
+        const supplierIds = suppliers.map((supplier) => supplier.id);
+
         try {
             const { data } = await clientAxios.post("/article/edit-article", {
                 idArticle: id,
                 newName: name,
                 newDescription: description,
                 newPrice: price,
-                newCategories: categories,
-                newSuppliers: suppliers,
+                newCategories: categoryIds,
+                newSuppliers: supplierIds,
             });
 
             toast.success(data);
@@ -84,56 +91,67 @@ export default function Edit({ id }) {
         }
     };
 
+    const handleAddCategories = () => {
+        if (!category) {
+            toast.error("Debes seleccionar una categoria");
+            return;
+        }
+
+        const foundCategory = allCategories.find((a) => a?._id === category);
+        const nameCategory = foundCategory
+            ? foundCategory.name
+            : "Nombre no encontrado";
+
+        // Si no existe, lo agregamos
+        const newCategory = {
+            id: category,
+            name: nameCategory,
+        };
+        setCategories([...categories, newCategory]);
+        toast.success("Se ha agregado el articulo correctamente");
+
+        setCategory("");
+    };
+
+    const handleDeleteCategory = (categoryDelete) => {
+        setCategories(
+            categories.filter((category) => category.id !== categoryDelete.id)
+        );
+        toast.success("Categoría eliminada correctamente");
+    };
+
+    const handleAddSupplier = () => {
+        if (!supplier) {
+            toast.error("Debes seleccionar un proveedor");
+            return;
+        }
+
+        const foundSupplier = allSuppliers.find((a) => a?._id === supplier);
+        const nameSupplier = foundSupplier
+            ? foundSupplier.name
+            : "Nombre no encontrado";
+
+        // Si no existe, lo agregamos
+        const newSupplier = {
+            id: supplier,
+            name: nameSupplier,
+        };
+        setSuppliers([...suppliers, newSupplier]);
+        toast.success("Se ha agregado el articulo correctamente");
+
+        setSupplier("");
+    };
+
+    const handleDeleteSupplier = (supplierDelete) => {
+        setSuppliers(
+            suppliers.filter((supplier) => supplier.id !== supplierDelete.id)
+        );
+        toast.success("Proveedor eliminado correctamente");
+    };
+
     const handleChangeValue = (value) => {
         setPrice(value === "" ? 0 : Number(value));
     };
-
-    const addCategory = () => {
-        setCategories([...categories, ""]);
-    };
-
-    const addSupplier = () => {
-        setSuppliers([...suppliers, ""]);
-    };
-
-    const removeCategory = (index) => {
-        setCategories(categories.filter((_, i) => i !== index));
-    };
-
-    const removeSupplier = (index) => {
-        setSuppliers(suppliers.filter((_, i) => i !== index));
-    };
-
-    const handleCategoryChange = (value, index) => {
-        const newCategories = [...categories];
-        newCategories[index] = value;
-        setCategories(newCategories);
-    };
-
-    const handleSupplierChange = (value, index) => {
-        const newSuppliers = [...suppliers];
-        newSuppliers[index] = value;
-        setSuppliers(newSuppliers);
-    };
-
-    const filteredCategories = (index) => {
-        return allCategories.filter(
-            (category) =>
-                !categories.includes(category._id) ||
-                categories[index] === category._id
-        );
-    };
-
-    const filteredSuppliers = (index) => {
-        return allSuppliers.filter(
-            (supplier) =>
-                !suppliers.includes(supplier._id) ||
-                suppliers[index] === supplier._id
-        );
-    };
-
-    const allCategoriesSelected = categories.length === allCategories.length;
-    const allSuppliersSelected = suppliers.length === allSuppliers.length;
 
     // EFFECTS
     useEffect(() => {
@@ -209,50 +227,69 @@ export default function Edit({ id }) {
                         <label className="form-label" htmlFor="categories">
                             Categorias
                         </label>
-                        {categories.map((category, index) => (
-                            <div key={index} className="form-row">
-                                <select
-                                    className="form-select"
-                                    id={`category-${index}`}
-                                    value={category}
-                                    onChange={(e) =>
-                                        handleCategoryChange(
-                                            e.target.value,
-                                            index
-                                        )
-                                    }
-                                >
-                                    <option defaultChecked value="">
-                                        Selecciona una categoria
-                                    </option>
-                                    {filteredCategories(index).map((cat) => (
+                        <div className="form-row">
+                            <select
+                                className="form-select"
+                                id="categories"
+                                value={category}
+                                onChange={(e) => setCategory(e.target.value)}
+                            >
+                                <option defaultChecked value="">
+                                    Selecciona una categoria
+                                </option>
+                                {allCategories
+                                    .filter(
+                                        (cat) =>
+                                            !categories.some(
+                                                (selected) =>
+                                                    selected.id === cat._id
+                                            )
+                                    )
+                                    .map((cat) => (
                                         <option key={cat._id} value={cat._id}>
                                             {cat.name}
                                         </option>
                                     ))}
-                                </select>
-                                {categories.length >= 2 ? (
-                                    <button
-                                        type="button"
-                                        onClick={() => removeCategory(index)}
-                                        className="form-remove"
-                                    >
-                                        <IoIosRemove className="form-icon" />
-                                    </button>
-                                ) : null}
+                            </select>
+                        </div>
+                    </div>
+                    {categories.length > 0 && (
+                        <div className="form-group">
+                            <div className="form-list">
+                                {categories.map((categoryData, index) => (
+                                    <div key={index} className="form-item">
+                                        <p className="form-item-data">
+                                            <span className="form-item-label">
+                                                Categoria:
+                                            </span>{" "}
+                                            {categoryData?.name}
+                                        </p>
+                                        <div className="form-item-actions">
+                                            <button
+                                                type="button"
+                                                onClick={() =>
+                                                    handleDeleteCategory(
+                                                        categoryData
+                                                    )
+                                                }
+                                                className="form-remove"
+                                            >
+                                                <FaRegTrashAlt className="form-item-icon" />
+                                            </button>
+                                        </div>
+                                    </div>
+                                ))}
                             </div>
-                        ))}
-                        {!allCategoriesSelected && (
-                            <div className="form-add-container">
-                                <button
-                                    type="button"
-                                    onClick={addCategory}
-                                    className="form-add"
-                                >
-                                    <IoIosAdd className="form-icon" />
-                                </button>
-                            </div>
-                        )}
+                        </div>
+                    )}
+                    <div className="form-add-container">
+                        <button
+                            type="button"
+                            onClick={handleAddCategories}
+                            className="form-add"
+                        >
+                            <IoIosAdd className="form-icon" />
+                        </button>
                     </div>
 
                     {/* SUPPLIER */}
@@ -260,50 +297,69 @@ export default function Edit({ id }) {
                         <label className="form-label" htmlFor="suppliers">
                             Proveedores
                         </label>
-                        {suppliers.map((supplier, index) => (
-                            <div key={index} className="form-row">
-                                <select
-                                    className="form-select"
-                                    id={`supplier-${index}`}
-                                    value={supplier}
-                                    onChange={(e) =>
-                                        handleSupplierChange(
-                                            e.target.value,
-                                            index
-                                        )
-                                    }
-                                >
-                                    <option defaultChecked value="">
-                                        Selecciona un proveedor
-                                    </option>
-                                    {filteredSuppliers(index).map((sup) => (
+                        <div className="form-row">
+                            <select
+                                className="form-select"
+                                id="suppliers"
+                                value={supplier}
+                                onChange={(e) => setSupplier(e.target.value)}
+                            >
+                                <option defaultChecked value="">
+                                    Selecciona un proveedor
+                                </option>
+                                {allSuppliers
+                                    .filter(
+                                        (sup) =>
+                                            !suppliers.some(
+                                                (selected) =>
+                                                    selected.id === sup._id
+                                            )
+                                    )
+                                    .map((sup) => (
                                         <option key={sup._id} value={sup._id}>
                                             {sup.name}
                                         </option>
                                     ))}
-                                </select>
-                                {suppliers.length >= 2 ? (
-                                    <button
-                                        type="button"
-                                        onClick={() => removeSupplier(index)}
-                                        className="form-remove"
-                                    >
-                                        <IoIosRemove className="form-icon" />
-                                    </button>
-                                ) : null}
-                            </div>
-                        ))}
-                        {!allSuppliersSelected && (
-                            <div className="form-add-container">
-                                <button
-                                    type="button"
-                                    onClick={addSupplier}
-                                    className="form-add"
-                                >
-                                    <IoIosAdd className="form-icon" />
-                                </button>
+                            </select>
+                        </div>
+                        {suppliers.length > 0 && (
+                            <div className="form-group">
+                                <div className="form-list">
+                                    {suppliers.map((supplierData, index) => (
+                                        <div key={index} className="form-item">
+                                            <p className="form-item-data">
+                                                <span className="form-item-label">
+                                                    Proveedor:
+                                                </span>{" "}
+                                                {supplierData?.name}
+                                            </p>
+                                            <div className="form-item-actions">
+                                                <button
+                                                    type="button"
+                                                    onClick={() =>
+                                                        handleDeleteSupplier(
+                                                            supplierData
+                                                        )
+                                                    }
+                                                    className="form-remove"
+                                                >
+                                                    <FaRegTrashAlt className="form-item-icon" />
+                                                </button>
+                                            </div>
+                                        </div>
+                                    ))}
+                                </div>
                             </div>
                         )}
+                        <div className="form-add-container">
+                            <button
+                                type="button"
+                                onClick={handleAddSupplier}
+                                className="form-add"
+                            >
+                                <IoIosAdd className="form-icon" />
+                            </button>
+                        </div>
                     </div>
 
                     <button

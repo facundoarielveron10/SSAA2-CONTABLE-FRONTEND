@@ -36,6 +36,7 @@
     align-items: center;
     justify-content: space-between;
     width: 100%;
+    gap: 1rem;
 }
 
 .form-label {
@@ -59,6 +60,16 @@
     transition: background-color 0.3s;
 }
 
+.form-input-amount {
+    padding: 0.5rem;
+    margin-top: 0.5rem;
+    border: none;
+    border-radius: 4px;
+    background-color: var(--backgroundInput);
+    color: var(--textColor);
+    transition: background-color 0.3s;
+}
+
 .form-row {
     display: flex;
     justify-content: center;
@@ -70,7 +81,7 @@
 
 .form-input-blocked {
     cursor: default;
-    background-color: #1a1919;
+    background-color: var(--backgroundColorDarkLight);
     border: 1px solid #2e2e2e;
 }
 
@@ -104,12 +115,7 @@
     border-radius: 4px;
     background-color: var(--backgroundInput);
     color: var(--textColor);
-    transition: background-color 0.3s;
     width: 100%;
-}
-
-.form-date:hover {
-    background-color: var(--backgroundInputHover);
 }
 
 .form-button {
@@ -157,7 +163,7 @@
 }
 
 .form-submit-blocked:hover {
-    background-color: #1a1919;
+    background-color: var(--backgroundColorDarkLight);
 }
 
 .form-links {
@@ -256,6 +262,11 @@
     height: 30px;
 }
 
+.form-icon-remove {
+    width: 35px;
+    height: 35px;
+}
+
 .form-empty {
     display: flex;
     justify-content: center;
@@ -263,4 +274,59 @@
     font-size: 2rem;
     font-weight: bold;
     text-transform: uppercase;
+}
+
+.form-list {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+    width: 100%;
+}
+
+.form-item {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    background-color: var(--backgroundColorDarkLight);
+    border-radius: 0.2rem;
+    border: 2px solid var(--primaryColor);
+}
+
+.form-item-data {
+    padding: 0 1rem;
+}
+
+.form-item-label {
+    text-transform: uppercase;
+    font-weight: bold;
+    color: var(--primaryColor);
+}
+
+.form-item-actions {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0 1rem;
+    gap: 1rem;
+}
+
+.form-item-icon {
+    width: 22px;
+    height: 22px;
+}
+
+.form-editing {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 0 0 0 1rem;
+}
+
+.form-icon-editing {
+    width: 20px;
+    height: 20px;
+    color: var(--colorEdit);
 }

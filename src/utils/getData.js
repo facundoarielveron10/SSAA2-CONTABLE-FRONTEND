@@ -18,6 +18,7 @@ export const getTypeActions = () => {
         "Articulos",
         "Categorias",
         "Proveedores",
+        "Compras",
     ];
 
     return types;
@@ -87,6 +88,13 @@ export const getSections = () => {
                 "Consulta los proveedores esta sección. Aquí podrás ver un resumen de todos los proveedores, permitiendo un análisis más detallado de cada proveedor de la organización. Esta herramienta es vital para la administracion de los mismos.",
             url: `/suppliers`,
             permission: "GET_SUPPLIERS",
+        },
+        {
+            title: "Pedidos de Compra",
+            description:
+                "Consulta los pedidos de compra esta sección. Aquí podrás ver un resumen de todos los pedidos de compras, permitiendo un análisis más detallado de cada pedido de compra de la organización. Esta herramienta es vital para la administracion de los mismos.",
+            url: `/pucharse-request`,
+            permission: "GET_PUCHARSE_REQUEST",
         },
     ];
 

@@ -5,7 +5,7 @@ import { isLoggedIn } from '../utils/verifyAuth';
 // COMPONENTS
 import Layout from '../layouts/Layout.astro';
 import LayoutAuth from "../layouts/LayoutAuth.jsx";
-import Create from "../components/request/Create.jsx"
+import Create from "../components/request/Create.jsx";
 
 // REDIRECT
 const token = Astro.cookies.get("AUTH_TOKEN");
@@ -15,7 +15,7 @@ if (!isLoggedIn(token)) {
 ---
 
 <Layout title="Pedido de Compra - SSAA2">
-	<LayoutAuth client:only="react" action="CREATE_USER">
+	<LayoutAuth client:only="react" action="CREATE_PUCHARSE_REQUEST">
 		<Create client:only="react"/>
 	</LayoutAuth>
 </Layout>

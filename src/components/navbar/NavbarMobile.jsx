@@ -175,6 +175,20 @@ export default function NavbarMobile({ url }) {
                                 </a>
                             </li>
                         ) : null}
+                        {canExecute("GET_PUCHARSE_REQUEST") ? (
+                            <li>
+                                <a
+                                    className={`${
+                                        url === "/pucharse-request"
+                                            ? "navbar-link-active"
+                                            : ""
+                                    }`}
+                                    href="/pucharse-request"
+                                >
+                                    Pedidos de Compra
+                                </a>
+                            </li>
+                        ) : null}
                         <li>
                             <button
                                 className="navbarMobile-logout"

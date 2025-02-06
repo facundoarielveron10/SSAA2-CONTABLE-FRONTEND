@@ -4,11 +4,14 @@
     --primaryDarkColor: #5501ca;
     --backgroundColor: #0f1214;
     --backgroundColorDark: #0a0a0a;
+    --backgroundColorDarkLight: #1a1919;
     --backgroundCard: #1e1e1e;
     --backgroundInput: #2e2e2e;
     --backgroundTransparent: #0a0a0ab1;
     --colorDelete: #eb1f1f;
     --colorDeleteDark: #b81818;
+    --colorEdit: #1fc9eb;
+    --colorEditDark: #3eb7d0;
     --colorSuccess: #2bd422;
     --colorSuccessDark: #23b91b;
     --textColor: #cccccc;

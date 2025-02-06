@@ -64,7 +64,7 @@ export default function Create() {
     useEffect(() => {
         const getRolesData = async () => {
             const data = await getRoles();
-            setRoles(data);
+            setRoles(data?.roles);
         };
 
         getRolesData();

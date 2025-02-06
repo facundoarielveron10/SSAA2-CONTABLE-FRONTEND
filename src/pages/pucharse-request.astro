@@ -1,0 +1,21 @@
+---
+// AUTH
+import { isLoggedIn } from '../utils/verifyAuth';
+
+// COMPONENTS
+import Layout from '../layouts/Layout.astro';
+import PucharseRequestComponent from "../components/request/PucharseRequest";
+import LayoutAuth from '../layouts/LayoutAuth';
+
+// REDIRECT
+const token = Astro.cookies.get("AUTH_TOKEN");
+if (!isLoggedIn(token)) {
+	return Astro.redirect("/login")
+}
+---
+
+<Layout title="Pedidos de Compras - SSAA2">
+	<LayoutAuth client:only="react" action="GET_PUCHARSE_REQUEST">
+		<PucharseRequestComponent client:only="react"/>
+	</LayoutAuth>
+</Layout>

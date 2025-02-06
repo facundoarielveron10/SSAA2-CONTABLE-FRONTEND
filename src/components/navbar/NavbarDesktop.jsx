@@ -122,6 +122,18 @@ export default function NavbarDesktop({ url }) {
                             Proveedores
                         </a>
                     ) : null}
+                    {canExecute("GET_PUCHARSE_REQUEST") ? (
+                        <a
+                            href="/pucharse-request"
+                            className={`${
+                                url === "/pucharse-request"
+                                    ? "navbar-link-active"
+                                    : ""
+                            } navbar-link`}
+                        >
+                            Pedidos de Compra
+                        </a>
+                    ) : null}
                     <button className="button" onClick={handleLogout}>
                         Cerrar Sesión
                     </button>
