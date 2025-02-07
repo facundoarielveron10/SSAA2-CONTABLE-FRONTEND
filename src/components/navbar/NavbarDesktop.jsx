@@ -122,11 +122,11 @@ export default function NavbarDesktop({ url }) {
                             Proveedores
                         </a>
                     ) : null}
-                    {canExecute("GET_PUCHARSE_REQUEST") ? (
+                    {canExecute("GET_PURCHASE_REQUEST") ? (
                         <a
-                            href="/pucharse-request"
+                            href="/purchase-request"
                             className={`${
-                                url === "/pucharse-request"
+                                url === "/purchase-request"
                                     ? "navbar-link-active"
                                     : ""
                             } navbar-link`}

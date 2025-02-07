@@ -21,6 +21,9 @@ import clientAxios from "src/config/ClientAxios";
 // COMPONENTS
 import Spinner from "../Spinner";
 
+// ZUSTAND
+import { useLoginStore } from "src/zustand/loginStore";
+
 export default function Statistics() {
     // YEARS
     const currentYear = new Date().getFullYear();
@@ -77,6 +80,9 @@ export default function Statistics() {
         getStats();
     }, [year]);
 
+    // ZUSTAND
+    const { primaryColor } = useLoginStore();
+
     return loading ? (
         <Spinner />
     ) : (
@@ -129,7 +135,7 @@ export default function Statistics() {
                         <YAxis />
                         <Tooltip />
                         <Legend />
-                        <Bar dataKey="Asientos" fill="#6200ee" />
+                        <Bar dataKey="Asientos" fill={primaryColor} />
                     </BarChart>
                     <p className="stats-seats-total">
                         <span>{totalSeats}</span> Asientos Registrados Totales

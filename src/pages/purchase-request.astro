@@ -4,7 +4,7 @@ import { isLoggedIn } from '../utils/verifyAuth';
 
 // COMPONENTS
 import Layout from '../layouts/Layout.astro';
-import PucharseRequestComponent from "../components/request/PucharseRequest";
+import PurcharseRequestComponent from "../components/request/PurcharseRequest";
 import LayoutAuth from '../layouts/LayoutAuth';
 
 // REDIRECT
@@ -15,7 +15,7 @@ if (!isLoggedIn(token)) {
 ---
 
 <Layout title="Pedidos de Compras - SSAA2">
-	<LayoutAuth client:only="react" action="GET_PUCHARSE_REQUEST">
-		<PucharseRequestComponent client:only="react"/>
+	<LayoutAuth client:only="react" action="GET_PURCHASE_REQUEST">
+		<PurcharseRequestComponent client:only="react"/>
 	</LayoutAuth>
 </Layout>

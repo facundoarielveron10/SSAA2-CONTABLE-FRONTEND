@@ -21,6 +21,8 @@ import "@styles/home/home.css";
 import "@styles/home/stats.css";
 // STOCK
 import "@styles/stock.css";
+// COLORS
+import "@styles/colors.css";
 
 // CSS (External)
 import "react-datepicker/dist/react-datepicker.css";
@@ -32,6 +34,7 @@ import { useEffect } from "react";
 // COMPONENTS
 import Navbar from "../components/navbar/Navbar.jsx";
 import DarkMode from "../components/DarkMode.jsx";
+import Colors from "src/components/Colors.jsx";
 
 // ZUSTAND
 import { useLoginStore } from "../zustand/loginStore";
@@ -70,6 +73,8 @@ export default function LayoutAuth({ children, action }) {
         <>
             <Navbar />
             <DarkMode />
+            <Colors />
+
             {children}
         </>
     );

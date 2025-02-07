@@ -14,7 +14,11 @@
     font-optical-sizing: auto;
     font-weight: 900;
     font-style: normal;
-    background: linear-gradient(126deg, #8018c4 0%, #6200ee 50%, #4d0bc6 100%);
+    background: linear-gradient(
+        126deg,
+        var(--primaryColor) 0%,
+        var(--primaryDarkColor) 100%
+    );
     background-clip: text;
     -webkit-background-clip: text;
     color: transparent;

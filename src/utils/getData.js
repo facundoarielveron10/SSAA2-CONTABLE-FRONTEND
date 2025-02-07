@@ -93,8 +93,8 @@ export const getSections = () => {
             title: "Pedidos de Compra",
             description:
                 "Consulta los pedidos de compra esta sección. Aquí podrás ver un resumen de todos los pedidos de compras, permitiendo un análisis más detallado de cada pedido de compra de la organización. Esta herramienta es vital para la administracion de los mismos.",
-            url: `/pucharse-request`,
-            permission: "GET_PUCHARSE_REQUEST",
+            url: `/purchase-request`,
+            permission: "GET_PURCHASE_REQUEST",
         },
     ];
 
@@ -223,6 +223,30 @@ export const getArticles = async (currentPage = null, limit = null) => {
 export const getStock = async (idArticle) => {
     try {
         const { data } = await clientAxios.get(`/stock/stock/${idArticle}`);
+
+        return data;
+    } catch (error) {
+        toast.error(errorResponse(error));
+    }
+};
+
+export const getPurcharseRequest = async (currentPage = null, limit = null) => {
+    try {
+        const { data } = await clientAxios.get(
+            `/purchasing/purchase-request?page=${currentPage}&limit=${limit}`
+        );
+
+        return data;
+    } catch (error) {
+        toast.error(errorResponse(error));
+    }
+};
+
+export const getArticlesPurchaseRequest = async (idPurchaseRequest) => {
+    try {
+        const { data } = await clientAxios.get(
+            `/purchasing/purchase-request/${idPurchaseRequest}`
+        );
 
         return data;
     } catch (error) {

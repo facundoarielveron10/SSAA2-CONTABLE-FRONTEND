@@ -122,7 +122,7 @@ export default function Roles() {
                     En este Listado se puede ver todos los Roles que existen en
                     el sistema, donde tambien se puede crear nuevos roles
                 </p>
-                {loading === 0 ? (
+                {loading ? (
                     <div className="spinner">
                         <Spinner />
                     </div>

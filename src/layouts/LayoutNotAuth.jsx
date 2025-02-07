@@ -2,6 +2,7 @@
 import "@styles/form.css";
 import "@styles/logo.css";
 import "@styles/darkmode.css";
+import "@styles/colors.css";
 import "@styles/alert.css";
 import "@styles/spinner.css";
 
@@ -13,6 +14,7 @@ import { useEffect } from "react";
 
 // COMPONENTS
 import DarkMode from "../components/DarkMode";
+import Colors from "../components/Colors";
 
 // ZUSTAND
 import { useLoginStore } from "../zustand/loginStore";
@@ -28,6 +30,7 @@ export default function LayoutNotAuth({ children }) {
     return (
         <>
             <DarkMode />
+            <Colors />
             {children}
         </>
     );

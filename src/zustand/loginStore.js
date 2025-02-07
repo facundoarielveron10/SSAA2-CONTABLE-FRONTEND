@@ -20,6 +20,8 @@ export const useLoginStore = create(
             isSubmitting: false,
             successSubmitted: false,
             errorSubmitting: undefined,
+            primaryColor: "#6200ee",
+            primaryDarkColor: "#5501ca",
             submitLogin: async (email, password) => {
                 try {
                     set({ isSubmitting: true });
@@ -85,9 +87,30 @@ export const useLoginStore = create(
                 document.body.setAttribute("theme", theme);
             },
             initializeTheme: () => {
-                const { darkMode } = get();
+                const { darkMode, primaryColor, primaryDarkColor } = get();
                 const theme = darkMode ? "dark" : "light";
                 document.body.setAttribute("theme", theme);
+
+                document.documentElement.style.setProperty(
+                    "--primaryColor",
+                    primaryColor
+                );
+                document.documentElement.style.setProperty(
+                    "--primaryDarkColor",
+                    primaryDarkColor
+                );
+            },
+            setPrimaryColors: (color, darkColor) => {
+                set({ primaryColor: color, primaryDarkColor: darkColor });
+
+                document.documentElement.style.setProperty(
+                    "--primaryColor",
+                    color
+                );
+                document.documentElement.style.setProperty(
+                    "--primaryDarkColor",
+                    darkColor
+                );
             },
         }),
         {
@@ -96,6 +119,8 @@ export const useLoginStore = create(
                 jwt: state.jwt,
                 user: state.user,
                 darkMode: state.darkMode,
+                primaryColor: state.primaryColor,
+                primaryDarkColor: state.primaryDarkColor,
             }),
         }
     )

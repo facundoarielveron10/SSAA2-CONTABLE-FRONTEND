@@ -18,7 +18,7 @@ import { IoIosAdd } from "react-icons/io";
 // COMPONENTS
 import DatePicker from "react-datepicker";
 import { FaPencil } from "react-icons/fa6";
-import { FaRegTrashAlt, FaTrash } from "react-icons/fa";
+import { FaRegTrashAlt } from "react-icons/fa";
 
 export default function Create() {
     // STATES
@@ -57,7 +57,7 @@ export default function Create() {
 
         try {
             const { data } = await clientAxios.post(
-                "/purchasing/create-pucharse-request",
+                "/purchasing/create-purchase-request",
                 {
                     description,
                     requiredDate,

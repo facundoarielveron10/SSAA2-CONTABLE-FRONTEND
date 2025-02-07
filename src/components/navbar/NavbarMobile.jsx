@@ -175,15 +175,15 @@ export default function NavbarMobile({ url }) {
                                 </a>
                             </li>
                         ) : null}
-                        {canExecute("GET_PUCHARSE_REQUEST") ? (
+                        {canExecute("GET_PURCHASE_REQUEST") ? (
                             <li>
                                 <a
                                     className={`${
-                                        url === "/pucharse-request"
+                                        url === "/purchase-request"
                                             ? "navbar-link-active"
                                             : ""
                                     }`}
-                                    href="/pucharse-request"
+                                    href="/purchase-request"
                                 >
                                     Pedidos de Compra
                                 </a>

@@ -2,24 +2,23 @@
 import { useEffect, useState } from "react";
 
 // UTILS
+import { getPurcharseRequest } from "src/utils/getData";
 
 // COMPONENTS
 import Spinner from "../Spinner";
 import Pagination from "../Pagination";
 
 // ALERTS
-import { toast } from "react-toastify";
 import Alert from "../Alert";
-
-// AXIOS
-import clientAxios from "../../config/ClientAxios";
 
 // ZUSTAND
 import { useLoginStore } from "../../zustand/loginStore";
+import Table from "./Table";
 
-export default function Articles() {
+export default function PurcharseRequest() {
     // STATES
     const [loading, setLoading] = useState(false);
+    const [purchaseRequests, setPurchaseRequests] = useState([]);
     const [limit] = useState(10);
     const [currentPage, setCurrentPage] = useState(1);
     const [totalPages, setTotalPages] = useState(1);
@@ -28,7 +27,17 @@ export default function Articles() {
     const { canExecute } = useLoginStore();
 
     // EFFECTS
-    useEffect(() => {}, [currentPage]);
+    useEffect(() => {
+        const getPurchaseRequestData = async () => {
+            setLoading(true);
+            const data = await getPurcharseRequest(currentPage, limit);
+            setPurchaseRequests(data.purchaseRequests);
+            setTotalPages(data.totalPages);
+            setLoading(false);
+        };
+
+        getPurchaseRequestData();
+    }, [currentPage]);
 
     // FUNCTIONS
     const handleNextPage = () => {
@@ -58,12 +67,22 @@ export default function Articles() {
                         <Spinner />
                     </div>
                 ) : (
-                    <div></div>
+                    <div>
+                        <Table purchaseRequests={purchaseRequests} />
+                        {purchaseRequests.length > 0 ? (
+                            <Pagination
+                                handleNextPage={handleNextPage}
+                                handlePreviousPage={handlePreviousPage}
+                                currentPage={currentPage}
+                                totalPages={totalPages}
+                            />
+                        ) : null}
+                    </div>
                 )}
             </div>
-            {canExecute("CREATE_PUCHARSE_REQUEST") ? (
+            {canExecute("CREATE_PURCHASE_REQUEST") ? (
                 <a
-                    href="create-pucharse-request"
+                    href="create-purchase-request"
                     className="button-position button"
                 >
                     Realizar Pedido de Compra
