@@ -230,6 +230,16 @@ export const getStock = async (idArticle) => {
     }
 };
 
+export const getPricesArticle = async (idArticle) => {
+    try {
+        const { data } = await clientAxios.get(`/article/prices/${idArticle}`);
+
+        return data;
+    } catch (error) {
+        toast.error(errorResponse(error));
+    }
+};
+
 export const getPurcharseRequest = async (currentPage = null, limit = null) => {
     try {
         const { data } = await clientAxios.get(

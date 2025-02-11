@@ -26,12 +26,11 @@ export default function Table({
                     <table className="table-content">
                         <thead>
                             <tr>
-                                <th className="table-15">Nombre</th>
-                                <th className="table-40">Descripcion</th>
-                                <th className="table-10">Precio Unitario</th>
-                                <th className="table-15">Categorias</th>
-                                <th className="table-15">Proveedores</th>
-                                <th>Acciones</th>
+                                <th className="table-20">Nombre</th>
+                                <th className="table-20">Descripcion</th>
+                                <th className="table-20">Categorias</th>
+                                <th className="table-30">Proveedores</th>
+                                <th className="table-10">Acciones</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -43,7 +42,7 @@ export default function Table({
                                             {article.description}
                                         </span>
                                     </td>
-                                    <td>${formatBalance(article.unitPrice)}</td>
+
                                     <td>
                                         {formatArrayToString(
                                             article.categories
@@ -83,6 +82,14 @@ export default function Table({
                                                         className="table-button button"
                                                     >
                                                         Stock
+                                                    </a>
+                                                ) : null}
+                                                {canExecute("GET_ARTICLES") ? (
+                                                    <a
+                                                        href={`prices/${article._id}`}
+                                                        className="table-button button"
+                                                    >
+                                                        Precios
                                                     </a>
                                                 ) : null}
                                             </div>

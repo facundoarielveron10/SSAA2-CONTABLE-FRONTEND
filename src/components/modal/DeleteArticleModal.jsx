@@ -35,12 +35,6 @@ export default function DeleteArticleModal({
                                 Descripcion:{" "}
                                 <span>{articleDelete?.description}</span>
                             </p>
-                            <p>
-                                Precio Unitario:{" "}
-                                <span>
-                                    ${formatBalance(articleDelete?.unitPrice)}
-                                </span>
-                            </p>
                             <p className="modal-items">
                                 Categorias:{" "}
                                 {articleDelete?.categories?.map(

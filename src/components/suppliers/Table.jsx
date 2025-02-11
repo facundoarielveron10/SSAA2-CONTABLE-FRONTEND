@@ -25,9 +25,9 @@ export default function Table({
                             <tr>
                                 <th className="table-10">Nombre</th>
                                 <th className="table-40">Direccion</th>
-                                <th>Telefono</th>
-                                <th>Email</th>
-                                <th>Acciones</th>
+                                <th className="table-20">Telefono</th>
+                                <th className="table-20">Email</th>
+                                <th className="table-10">Acciones</th>
                             </tr>
                         </thead>
                         <tbody>

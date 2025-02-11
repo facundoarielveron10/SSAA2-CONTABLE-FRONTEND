@@ -1,6 +1,3 @@
-// UTILS
-import { formatBalance } from "src/utils/format";
-
 export default function TableArticles({ articles }) {
     return (
         <div className="table-container">
@@ -18,7 +15,6 @@ export default function TableArticles({ articles }) {
                             <tr>
                                 <th className="table-20">Nombre</th>
                                 <th className="table-40">Descripcion</th>
-                                <th className="table-20">Precio Unitario</th>
                                 <th className="table-20">Cantidad</th>
                             </tr>
                         </thead>
@@ -27,12 +23,6 @@ export default function TableArticles({ articles }) {
                                 <tr key={index}>
                                     <td>{article?.article?.name}</td>
                                     <td>{article?.article?.description}</td>
-                                    <td>
-                                        $
-                                        {formatBalance(
-                                            article?.article?.unitPrice
-                                        )}
-                                    </td>
                                     <td>{article?.amount}</td>
                                 </tr>
                             ))}

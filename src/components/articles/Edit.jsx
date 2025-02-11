@@ -24,7 +24,6 @@ export default function Edit({ id }) {
     const [article, setArticle] = useState({});
     const [name, setName] = useState("");
     const [description, setDescription] = useState("");
-    const [price, setPrice] = useState(0);
     const [category, setCategory] = useState("");
     const [categories, setCategories] = useState([]);
     const [suppliers, setSuppliers] = useState([]);
@@ -48,7 +47,6 @@ export default function Edit({ id }) {
         if (
             name === article?.name &&
             description === article?.description &&
-            price === article?.unitPrice &&
             categories === article?.categories &&
             suppliers === article?.suppliers
         ) {
@@ -58,16 +56,15 @@ export default function Edit({ id }) {
 
         // Extraer solo los IDs de categorías y proveedores
         const categoryIds = categories.map((category) => category.id);
-        const supplierIds = suppliers.map((supplier) => supplier.id);
+        const supplierData = suppliers.map(({ id, price }) => ({ id, price }));
 
         try {
             const { data } = await clientAxios.post("/article/edit-article", {
                 idArticle: id,
                 newName: name,
                 newDescription: description,
-                newPrice: price,
                 newCategories: categoryIds,
-                newSuppliers: supplierIds,
+                newSuppliersData: supplierData,
             });
 
             toast.success(data);
@@ -83,7 +80,6 @@ export default function Edit({ id }) {
             setArticle(data);
             setName(data?.name);
             setDescription(data?.description);
-            setPrice(data?.unitPrice);
             setCategories(data?.categories);
             setSuppliers(data?.suppliers);
         } catch (error) {
@@ -135,6 +131,7 @@ export default function Edit({ id }) {
         const newSupplier = {
             id: supplier,
             name: nameSupplier,
+            price: 1,
         };
         setSuppliers([...suppliers, newSupplier]);
         toast.success("Se ha agregado el articulo correctamente");
@@ -149,8 +146,13 @@ export default function Edit({ id }) {
         toast.success("Proveedor eliminado correctamente");
     };
 
-    const handleChangeValue = (value) => {
-        setPrice(value === "" ? 0 : Number(value));
+    const handlePriceChange = (id, price) => {
+        const validPrice = Math.max(0, Number(price));
+        setSuppliers((prevSuppliers) =>
+            prevSuppliers.map((sup) =>
+                sup.id === id ? { ...sup, price: validPrice } : sup
+            )
+        );
     };
 
     // EFFECTS
@@ -206,20 +208,6 @@ export default function Edit({ id }) {
                             id="description"
                             value={description}
                             onChange={(e) => setDescription(e.target.value)}
-                        />
-                    </div>
-                    {/* UNIT PRICE */}
-                    <div className="form-group">
-                        <label className="form-label" htmlFor="price">
-                            Precio unitario
-                        </label>
-                        <input
-                            className="form-input"
-                            type="number"
-                            id="price"
-                            min={0}
-                            value={price}
-                            onChange={(e) => handleChangeValue(e.target.value)}
                         />
                     </div>
                     {/* CATEGORY */}
@@ -326,25 +314,51 @@ export default function Edit({ id }) {
                             <div className="form-group">
                                 <div className="form-list">
                                     {suppliers.map((supplierData, index) => (
-                                        <div key={index} className="form-item">
-                                            <p className="form-item-data">
-                                                <span className="form-item-label">
-                                                    Proveedor:
-                                                </span>{" "}
-                                                {supplierData?.name}
-                                            </p>
-                                            <div className="form-item-actions">
-                                                <button
-                                                    type="button"
-                                                    onClick={() =>
-                                                        handleDeleteSupplier(
-                                                            supplierData
+                                        <div
+                                            className="form-supplier"
+                                            key={index}
+                                        >
+                                            <div className="form-item">
+                                                <p className="form-item-data">
+                                                    <span className="form-item-label">
+                                                        Proveedor:
+                                                    </span>{" "}
+                                                    {supplierData?.name}
+                                                </p>
+                                                <div className="form-item-actions">
+                                                    <button
+                                                        type="button"
+                                                        onClick={() =>
+                                                            handleDeleteSupplier(
+                                                                supplierData
+                                                            )
+                                                        }
+                                                        className="form-remove"
+                                                    >
+                                                        <FaRegTrashAlt className="form-item-icon" />
+                                                    </button>
+                                                </div>
+                                            </div>
+                                            <div className="form-supplier-input">
+                                                <label
+                                                    htmlFor={`price-${index}`}
+                                                    className="form-label"
+                                                >
+                                                    Precio
+                                                </label>
+                                                <input
+                                                    id={`price-${index}`}
+                                                    className="form-input"
+                                                    type="number"
+                                                    value={supplierData.price}
+                                                    onChange={(e) =>
+                                                        handlePriceChange(
+                                                            supplierData.id,
+                                                            e.target.value
                                                         )
                                                     }
-                                                    className="form-remove"
-                                                >
-                                                    <FaRegTrashAlt className="form-item-icon" />
-                                                </button>
+                                                    min={0}
+                                                />
                                             </div>
                                         </div>
                                     ))}
