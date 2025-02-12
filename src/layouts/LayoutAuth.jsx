@@ -23,6 +23,8 @@ import "@styles/home/stats.css";
 import "@styles/stock.css";
 // COLORS
 import "@styles/colors.css";
+// ORDERS
+import "@styles/order/order.css";
 
 // CSS (External)
 import "react-datepicker/dist/react-datepicker.css";

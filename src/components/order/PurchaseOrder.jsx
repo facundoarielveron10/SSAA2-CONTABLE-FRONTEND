@@ -7,18 +7,18 @@ import { getPurcharseRequest } from "src/utils/getData";
 // COMPONENTS
 import Spinner from "../Spinner";
 import Pagination from "../Pagination";
+import Table from "./Table";
 
 // ALERTS
 import Alert from "../Alert";
 
 // ZUSTAND
 import { useLoginStore } from "../../zustand/loginStore";
-import Table from "./Table";
 
-export default function PurcharseRequest() {
+export default function PurchaseOrder() {
     // STATES
     const [loading, setLoading] = useState(false);
-    const [purchaseRequests, setPurchaseRequests] = useState([]);
+    const [purchaseOrders, setPurchaseOrders] = useState([]);
     const [limit] = useState(10);
     const [currentPage, setCurrentPage] = useState(1);
     const [totalPages, setTotalPages] = useState(1);
@@ -27,17 +27,7 @@ export default function PurcharseRequest() {
     const { canExecute } = useLoginStore();
 
     // EFFECTS
-    useEffect(() => {
-        const getPurchaseRequestData = async () => {
-            setLoading(true);
-            const data = await getPurcharseRequest(currentPage, limit);
-            setPurchaseRequests(data.purchaseRequests);
-            setTotalPages(data.totalPages);
-            setLoading(false);
-        };
-
-        getPurchaseRequestData();
-    }, [currentPage]);
+    useEffect(() => {}, [currentPage]);
 
     // FUNCTIONS
     const handleNextPage = () => {
@@ -56,11 +46,11 @@ export default function PurcharseRequest() {
         <>
             <Alert />
             <div className="content">
-                <h1 className="title">Pedidos de Compras</h1>
+                <h1 className="title">Ordenes de Compras</h1>
                 <p className="paragraph">
-                    En este Listado se puede ver todos los Pedidos de Compras
+                    En este Listado se puede ver todos las Ordenes de Compras
                     que existen en el sistema, donde tambien se puede realizar
-                    nuevos pedidos de compras
+                    nuevas ordenes de compras
                 </p>
                 {loading ? (
                     <div className="spinner">
@@ -68,8 +58,8 @@ export default function PurcharseRequest() {
                     </div>
                 ) : (
                     <div>
-                        <Table purchaseRequests={purchaseRequests} />
-                        {purchaseRequests.length > 0 ? (
+                        <Table purchaseOrders={purchaseOrders} />
+                        {purchaseOrders.length > 0 ? (
                             <Pagination
                                 handleNextPage={handleNextPage}
                                 handlePreviousPage={handlePreviousPage}
@@ -80,12 +70,12 @@ export default function PurcharseRequest() {
                     </div>
                 )}
             </div>
-            {canExecute("CREATE_PURCHASE_REQUEST") ? (
+            {canExecute("CREATE_PURCHASE_ORDERS") ? (
                 <a
-                    href="create-purchase-request"
+                    href="create-purchase-order"
                     className="button-position button"
                 >
-                    Realizar Pedido de Compra
+                    Realizar Orden de Compra
                 </a>
             ) : null}
         </>

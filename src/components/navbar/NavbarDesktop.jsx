@@ -134,6 +134,18 @@ export default function NavbarDesktop({ url }) {
                             Pedidos de Compra
                         </a>
                     ) : null}
+                    {canExecute("GET_PURCHASE_ORDERS") ? (
+                        <a
+                            href="/purchase-order"
+                            className={`${
+                                url === "/purchase-order"
+                                    ? "navbar-link-active"
+                                    : ""
+                            } navbar-link`}
+                        >
+                            Ordenes de Compras
+                        </a>
+                    ) : null}
                     <button className="button" onClick={handleLogout}>
                         Cerrar Sesión
                     </button>
