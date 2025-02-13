@@ -252,6 +252,21 @@ export const getPurcharseRequest = async (currentPage = null, limit = null) => {
     }
 };
 
+export const getPurchaseRequestWithArticles = async (
+    currentPage = null,
+    limit = null
+) => {
+    try {
+        const { data } = await clientAxios.get(
+            `/purchasing/purchase-request/articles?page=${currentPage}&limit=${limit}`
+        );
+
+        return data;
+    } catch (error) {
+        toast.error(errorResponse(error));
+    }
+};
+
 export const getArticlesPurchaseRequest = async (idPurchaseRequest) => {
     try {
         const { data } = await clientAxios.get(

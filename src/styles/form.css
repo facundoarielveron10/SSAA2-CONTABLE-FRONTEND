@@ -23,6 +23,7 @@
 }
 
 .form-subtitle {
+    text-align: center;
     text-transform: uppercase;
     color: var(--primaryColor);
 }

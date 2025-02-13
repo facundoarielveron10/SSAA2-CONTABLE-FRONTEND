@@ -1,25 +1,27 @@
 // REACT
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 // ALERT
 import { toast } from "react-toastify";
 import Alert from "../Alert";
 
+// UTILS
+import { getPurchaseRequestWithArticles } from "src/utils/getData";
+
+// COMPONENTS
+import Spinner from "../Spinner";
+import CardPurchaseRequest from "./CardPurchaseRequest";
+
 export default function Create() {
     // STATES
+    const [loading, setLoading] = useState(false);
     const [step, setStep] = useState(1);
-    const [formData, setFormData] = useState({
-        step1: {},
-        step2: {},
-        step3: {},
-    });
+    const [purchaseRequest, setPurchaseRequest] = useState([]);
+    const [purchaseRequestSelected, setPurchaseRequestSelected] = useState([]);
 
     // FUNCTIONS
     const validateStep = () => {
-        const currentData = formData[`step${step}`];
-        if (step === 1 && !currentData.name) return false;
-        if (step === 2 && !currentData.details) return false;
-        if (step === 3 && !currentData.extra) return false;
+        if (step === 1 && purchaseRequestSelected.length === 0) return false;
         return true;
     };
 
@@ -43,20 +45,33 @@ export default function Create() {
         setStep(num);
     };
 
-    const handleChange = (e) => {
-        setFormData({
-            ...formData,
-            [`step${step}`]: {
-                ...formData[`step${step}`],
-                [e.target.name]: e.target.value,
-            },
-        });
-    };
-
     const handleSubmit = (e) => {
         e.preventDefault();
         toast.success("Orden de compra creada exitosamente");
     };
+
+    const handlePurchaseSelect = (checked, purchase) => {
+        if (checked) {
+            setPurchaseRequestSelected([...purchaseRequestSelected, purchase]);
+        } else {
+            const newPurchaseRequestSelected = purchaseRequestSelected.filter(
+                (p) => p !== purchase
+            );
+            setPurchaseRequestSelected(newPurchaseRequestSelected);
+        }
+    };
+
+    // EFFECTS
+    useEffect(() => {
+        const getPurchaseRequestWithArticlesData = async () => {
+            setLoading(true);
+            const data = await getPurchaseRequestWithArticles();
+            setPurchaseRequest(data?.purchaseRequests);
+            setLoading(false);
+        };
+
+        getPurchaseRequestWithArticlesData();
+    }, []);
 
     return (
         <>
@@ -81,24 +96,18 @@ export default function Create() {
 
                     <form className="form" onSubmit={handleSubmit}>
                         {step === 1 && (
-                            <Step1
-                                data={formData.step1}
-                                onChange={handleChange}
+                            <PurchaseRequest
+                                loading={loading}
+                                purchaseRequest={purchaseRequest}
+                                purchaseRequestSelected={
+                                    purchaseRequestSelected
+                                }
+                                handlePurchaseSelect={handlePurchaseSelect}
                             />
                         )}
-                        {step === 2 && (
-                            <Step2
-                                data={formData.step2}
-                                onChange={handleChange}
-                            />
-                        )}
-                        {step === 3 && (
-                            <Step3
-                                data={formData.step3}
-                                onChange={handleChange}
-                            />
-                        )}
-                        {step === 4 && <Summary data={formData} />}
+                        {step === 2 && <Step2 />}
+                        {step === 3 && <Step3 />}
+                        {step === 4 && <Summary />}
 
                         <div className="order-buttons">
                             {step > 1 && (
@@ -131,15 +140,36 @@ export default function Create() {
     );
 }
 
-function Step1({ data, onChange }) {
+function PurchaseRequest({
+    loading,
+    purchaseRequest,
+    purchaseRequestSelected,
+    handlePurchaseSelect,
+}) {
     return (
         <div>
             <h2 className="form-subtitle">Pedidos de Compras</h2>
+            {loading ? (
+                <div className="spinner">
+                    <Spinner />
+                </div>
+            ) : (
+                <div className="order-requests">
+                    {purchaseRequest?.map((purchase) => (
+                        <CardPurchaseRequest
+                            key={purchase?._id}
+                            purchase={purchase}
+                            purchaseRequestSelected={purchaseRequestSelected}
+                            handlePurchaseSelect={handlePurchaseSelect}
+                        />
+                    ))}
+                </div>
+            )}
         </div>
     );
 }
 
-function Step2({ data, onChange }) {
+function Step2() {
     return (
         <div>
             <h2 className="form-subtitle">Proveedores</h2>
@@ -147,7 +177,7 @@ function Step2({ data, onChange }) {
     );
 }
 
-function Step3({ data, onChange }) {
+function Step3() {
     return (
         <div>
             <h2 className="form-subtitle">Orden de Compra</h2>
@@ -155,7 +185,7 @@ function Step3({ data, onChange }) {
     );
 }
 
-function Summary({ data }) {
+function Summary() {
     return (
         <div>
             <h2 className="form-subtitle">Resumen</h2>
