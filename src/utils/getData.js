@@ -180,6 +180,21 @@ export const getSuppliersActives = async (currentPage = null, limit = null) => {
     }
 };
 
+export const getSuppliersForArticles = async (articles) => {
+    try {
+        const { data } = await clientAxios.post(
+            "/supplier/suppliers/articles",
+            {
+                articles,
+            }
+        );
+
+        return data;
+    } catch (error) {
+        toast.error(errorResponse(error));
+    }
+};
+
 export const getActions = async (
     currentPage = null,
     limit = null,

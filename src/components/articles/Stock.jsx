@@ -9,25 +9,15 @@ import Table from "./TableStock";
 import { getStock } from "src/utils/getData";
 
 // ALERTS
-import { toast } from "react-toastify";
 import Alert from "../Alert";
 
-// AXIOS
-import clientAxios from "../../config/ClientAxios";
-
-// ZUSTAND
-import { useLoginStore } from "../../zustand/loginStore";
-
 // ICONS
-import { TbTruckDelivery, TbBox, TbLock } from "react-icons/tb";
+import { TbBox, TbLock } from "react-icons/tb";
 
 export default function Stock({ id }) {
     // STATES
     const [loading, setLoading] = useState(false);
     const [stock, setStock] = useState([]);
-
-    // ZUSTAND
-    const { canExecute } = useLoginStore();
 
     // EFFECTS
     useEffect(() => {

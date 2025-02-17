@@ -6,11 +6,15 @@ import { toast } from "react-toastify";
 import Alert from "../Alert";
 
 // UTILS
-import { getPurchaseRequestWithArticles } from "src/utils/getData";
+import {
+    getPurchaseRequestWithArticles,
+    getSuppliersForArticles,
+} from "src/utils/getData";
 
 // COMPONENTS
 import Spinner from "../Spinner";
 import CardPurchaseRequest from "./CardPurchaseRequest";
+import SelectsSupplier from "./SelectsSupplier";
 
 export default function Create() {
     // STATES
@@ -18,10 +22,18 @@ export default function Create() {
     const [step, setStep] = useState(1);
     const [purchaseRequest, setPurchaseRequest] = useState([]);
     const [purchaseRequestSelected, setPurchaseRequestSelected] = useState([]);
+    const [suppliers, setSuppliers] = useState([]);
+    const [suppliersSelected, setSuppliersSelected] = useState([]);
 
     // FUNCTIONS
     const validateStep = () => {
         if (step === 1 && purchaseRequestSelected.length === 0) return false;
+        if (
+            step === 2 &&
+            (suppliersSelected.length === 0 ||
+                suppliersSelected.length < suppliers.length)
+        )
+            return false;
         return true;
     };
 
@@ -61,6 +73,20 @@ export default function Create() {
         }
     };
 
+    const handleSupplierSelect = (articleId, supplier) => {
+        setSuppliersSelected((prev) => {
+            const existingSelection = prev.find(
+                (item) => item.articleId === articleId
+            );
+            if (existingSelection) {
+                return prev.map((item) =>
+                    item.articleId === articleId ? { ...item, supplier } : item
+                );
+            }
+            return [...prev, { articleId, supplier }];
+        });
+    };
+
     // EFFECTS
     useEffect(() => {
         const getPurchaseRequestWithArticlesData = async () => {
@@ -72,6 +98,39 @@ export default function Create() {
 
         getPurchaseRequestWithArticlesData();
     }, []);
+
+    useEffect(() => {
+        const getSuppliersForArticlesData = async () => {
+            setLoading(true);
+            if (step === 2 && purchaseRequestSelected.length > 0) {
+                const articles = purchaseRequestSelected.flatMap((pr) =>
+                    pr.articles.map((article) => article._id.trim())
+                );
+
+                const data = await getSuppliersForArticles(articles);
+
+                setSuppliers(data);
+            }
+
+            setLoading(false);
+        };
+
+        getSuppliersForArticlesData();
+    }, [step]);
+
+    useEffect(() => {
+        const selectedArticleIds = new Set(
+            purchaseRequestSelected.flatMap((pr) =>
+                pr.articles.map((article) => article._id)
+            )
+        );
+
+        setSuppliersSelected((prevSuppliersSelected) =>
+            prevSuppliersSelected.filter((supplier) =>
+                selectedArticleIds.has(supplier.articleId)
+            )
+        );
+    }, [purchaseRequestSelected]);
 
     return (
         <>
@@ -105,7 +164,14 @@ export default function Create() {
                                 handlePurchaseSelect={handlePurchaseSelect}
                             />
                         )}
-                        {step === 2 && <Step2 />}
+                        {step === 2 && (
+                            <Suppliers
+                                loading={loading}
+                                suppliers={suppliers}
+                                suppliersSelected={suppliersSelected}
+                                handleSupplierSelect={handleSupplierSelect}
+                            />
+                        )}
                         {step === 3 && <Step3 />}
                         {step === 4 && <Summary />}
 
@@ -147,14 +213,14 @@ function PurchaseRequest({
     handlePurchaseSelect,
 }) {
     return (
-        <div>
+        <>
             <h2 className="form-subtitle">Pedidos de Compras</h2>
             {loading ? (
                 <div className="spinner">
                     <Spinner />
                 </div>
             ) : (
-                <div className="order-requests">
+                <div className="order-list">
                     {purchaseRequest?.map((purchase) => (
                         <CardPurchaseRequest
                             key={purchase?._id}
@@ -165,15 +231,36 @@ function PurchaseRequest({
                     ))}
                 </div>
             )}
-        </div>
+        </>
     );
 }
 
-function Step2() {
+function Suppliers({
+    loading,
+    suppliers,
+    suppliersSelected,
+    handleSupplierSelect,
+}) {
     return (
-        <div>
+        <>
             <h2 className="form-subtitle">Proveedores</h2>
-        </div>
+            {loading ? (
+                <div className="spinner">
+                    <Spinner />
+                </div>
+            ) : (
+                <div className="order-selects">
+                    {suppliers?.map((supplier) => (
+                        <SelectsSupplier
+                            key={supplier?._id}
+                            supplier={supplier}
+                            suppliersSelected={suppliersSelected}
+                            handleSupplierSelect={handleSupplierSelect}
+                        />
+                    ))}
+                </div>
+            )}
+        </>
     );
 }
 

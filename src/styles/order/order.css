@@ -72,7 +72,7 @@
     margin-bottom: 1rem;
 }
 
-.order-requests {
+.order-list {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     align-items: center;
@@ -80,7 +80,7 @@
     gap: 1.5rem;
 }
 
-.order-request {
+.order-card {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -91,7 +91,7 @@
     box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
 }
 
-.order-request-details {
+.order-card-details {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -99,15 +99,17 @@
     width: 100%;
 }
 
-.order-request-details p {
+.order-card-details p {
     display: flex;
     justify-content: center;
     align-items: center;
     gap: 0.2rem;
-    margin: 0.5rem;
 }
 
-.order-request-description {
+.order-card-description {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     background-color: var(--backgroundColor);
     padding: 0.5rem;
     border-radius: 0.4rem;
@@ -116,13 +118,13 @@
     font-weight: bold;
 }
 
-.order-request-priority-container {
+.order-card-priority-container {
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
-.order-request-priority {
+.order-card-priority {
     padding: 0.3rem 0.5rem;
     border-radius: 0.2rem;
     text-transform: uppercase;
@@ -131,31 +133,31 @@
     cursor: default;
 }
 
-.order-request-priority-high {
+.order-card-priority-high {
     background-color: var(--colorDelete);
 }
 
-.order-request-priority-high:hover {
+.order-card-priority-high:hover {
     background-color: var(--colorDeleteDark);
 }
 
-.order-request-priority-medium {
+.order-card-priority-medium {
     background-color: var(--colorMedium);
 }
 
-.order-request-priority-medium:hover {
+.order-card-priority-medium:hover {
     background-color: var(--colorMediumDark);
 }
 
-.order-request-priority-low {
+.order-card-priority-low {
     background-color: var(--colorSuccess);
 }
 
-.order-request-priority-low:hover {
+.order-card-priority-low:hover {
     background-color: var(--colorSuccessDark);
 }
 
-.order-request-email {
+.order-card-email {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -165,21 +167,35 @@
     transition: all 300ms;
 }
 
-.order-request-email:hover {
+.order-card-email:hover {
     color: var(--colorEditDark);
 }
 
-.order-request-articles {
+.order-card-price {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    color: var(--colorSuccess);
+    font-weight: bold;
+    font-size: 1.4rem;
+    text-transform: uppercase;
+    text-align: center;
+    margin: 0;
+}
+
+.order-card-articles {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     width: 100%;
     gap: 0.5rem;
-    margin-top: 0.5rem;
+    margin: 1rem 0;
 }
 
-.order-request-article {
+.order-card-article {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -191,19 +207,58 @@
     gap: 0.5rem;
 }
 
-.order-request-article p {
+.order-card-article p {
     margin: 0;
 }
 
-.order-request-article-name {
+.order-card-article-name {
     text-align: center;
     text-transform: uppercase;
     font-weight: bold;
 }
 
-.order-request-article-amount {
+.order-card-article-amount {
     display: flex;
     justify-content: center;
     align-items: center;
     gap: 0.5rem;
+}
+
+.order-selects {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+    width: 100%;
+}
+
+.order-select {
+    display: flex;
+    justify-content: space-between;
+    background-color: var(--backgroundCardDark);
+    border-radius: 0.2rem;
+    padding: 0.5rem 1rem;
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
+    width: 100%;
+}
+
+.order-select-article {
+    width: 50%;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+.order-select-supplier {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+    width: 50%;
+}
+
+.order-select-price {
+    color: var(--colorSuccess);
+    font-weight: bold;
+    font-size: 1.5rem;
 }
