@@ -15,6 +15,7 @@ import {
 import Spinner from "../Spinner";
 import CardPurchaseRequest from "./CardPurchaseRequest";
 import SelectsSupplier from "./SelectsSupplier";
+import PurchaseOrderDetails from "./PurchaseOrderDetails";
 
 export default function Create() {
     // STATES
@@ -24,6 +25,13 @@ export default function Create() {
     const [purchaseRequestSelected, setPurchaseRequestSelected] = useState([]);
     const [suppliers, setSuppliers] = useState([]);
     const [suppliersSelected, setSuppliersSelected] = useState([]);
+    const [orderDetails, setOrderDetails] = useState({
+        description: "",
+        comment: "",
+        currency: "",
+        deliveryDate: "",
+        paymentMethod: "",
+    });
 
     // FUNCTIONS
     const validateStep = () => {
@@ -85,6 +93,13 @@ export default function Create() {
             }
             return [...prev, { articleId, supplier }];
         });
+    };
+
+    const handleOrderDetails = (orderDetail, detail) => {
+        setOrderDetails((prevState) => ({
+            ...prevState,
+            [detail]: orderDetail,
+        }));
     };
 
     // EFFECTS
@@ -172,7 +187,13 @@ export default function Create() {
                                 handleSupplierSelect={handleSupplierSelect}
                             />
                         )}
-                        {step === 3 && <Step3 />}
+                        {step === 3 && (
+                            <PurchaseOrder
+                                loading={loading}
+                                orderDetails={orderDetails}
+                                handleOrderDetails={handleOrderDetails}
+                            />
+                        )}
                         {step === 4 && <Summary />}
 
                         <div className="order-buttons">
@@ -264,11 +285,23 @@ function Suppliers({
     );
 }
 
-function Step3() {
+function PurchaseOrder({ loading, orderDetails, handleOrderDetails }) {
     return (
-        <div>
+        <>
             <h2 className="form-subtitle">Orden de Compra</h2>
-        </div>
+            {loading ? (
+                <div className="spinner">
+                    <Spinner />
+                </div>
+            ) : (
+                <div className="order-details">
+                    <PurchaseOrderDetails
+                        orderDetails={orderDetails}
+                        handleOrderDetails={handleOrderDetails}
+                    />
+                </div>
+            )}
+        </>
     );
 }
 
