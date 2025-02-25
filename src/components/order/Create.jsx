@@ -16,6 +16,7 @@ import Spinner from "../Spinner";
 import CardPurchaseRequest from "./CardPurchaseRequest";
 import SelectsSupplier from "./SelectsSupplier";
 import PurchaseOrderDetails from "./PurchaseOrderDetails";
+import Accordion from "../Accordion";
 
 export default function Create() {
     // STATES
@@ -25,13 +26,10 @@ export default function Create() {
     const [purchaseRequestSelected, setPurchaseRequestSelected] = useState([]);
     const [suppliers, setSuppliers] = useState([]);
     const [suppliersSelected, setSuppliersSelected] = useState([]);
-    const [orderDetails, setOrderDetails] = useState({
-        description: "",
-        comment: "",
-        currency: "",
-        deliveryDate: "",
-        paymentMethod: "",
-    });
+    const [orderDetails, setOrderDetails] = useState({});
+    const [unifiedOrderDetails, setUnifiedOrderDetails] = useState(false);
+    const [openSupplier, setOpenSupplier] = useState(null); // Proveedor expandido
+    
 
     // FUNCTIONS
     const validateStep = () => {
@@ -82,6 +80,7 @@ export default function Create() {
     };
 
     const handleSupplierSelect = (articleId, supplier) => {
+        console.log(articleId, supplier)
         setSuppliersSelected((prev) => {
             const existingSelection = prev.find(
                 (item) => item.articleId === articleId
@@ -94,12 +93,30 @@ export default function Create() {
             return [...prev, { articleId, supplier }];
         });
     };
+    
+    const handleOrderDetails = (detail, value, supplierId = null) => {
+        console.log(`Supplier ID:`, supplierId);
+        console.log(`Detail:`, detail);
+        console.log(`Value:`, value);
+        setOrderDetails((prevState) => {
+            if (unifiedOrderDetails) {
+                // Un solo detalle para todos los proveedores
+                return { ...prevState, [detail]: value };
+            } else {
+                // Detalles específicos por proveedor
+                return {
+                    ...prevState,
+                    [supplierId]: {
+                        ...(prevState[supplierId] || {}),
+                        [detail]: value,
+                    },
+                };
+            }
+        });
+    };
 
-    const handleOrderDetails = (orderDetail, detail) => {
-        setOrderDetails((prevState) => ({
-            ...prevState,
-            [detail]: orderDetail,
-        }));
+    const toggleSupplier = (supplierId) => {
+        setOpenSupplier(openSupplier === supplierId ? null : supplierId);
     };
 
     // EFFECTS
@@ -147,6 +164,8 @@ export default function Create() {
         );
     }, [purchaseRequestSelected]);
 
+    console.log(`Order Detail:`, orderDetails);
+
     return (
         <>
             <Alert />
@@ -188,11 +207,33 @@ export default function Create() {
                             />
                         )}
                         {step === 3 && (
-                            <PurchaseOrder
-                                loading={loading}
-                                orderDetails={orderDetails}
-                                handleOrderDetails={handleOrderDetails}
-                            />
+                            <div>
+                                <div className="form-group">
+                                    <input
+                                        type="checkbox"
+                                        id="unifiedOrderDetails"
+                                        checked={unifiedOrderDetails}
+                                        onChange={(e) => {
+                                            setUnifiedOrderDetails(e.target.checked);
+                                            setOpenSupplier(null); // Resetear acordeón si se unifican los detalles
+                                        }}
+                                    />
+                                    <label htmlFor="unifiedOrderDetails">
+                                        Usar un único detalle para todos los proveedores
+                                    </label>
+                                </div>
+                                <PurchaseOrder
+                                    loading={loading}
+                                    orderDetails={orderDetails}
+                                    handleOrderDetails={handleOrderDetails}
+                                    setUnifiedOrderDetails={setUnifiedOrderDetails}
+                                    unifiedOrderDetails={unifiedOrderDetails}
+                                    suppliersSelected={suppliersSelected}
+                                    openSupplier={openSupplier}
+                                    setOpenSupplier={setOpenSupplier}
+                                    toggleSupplier={toggleSupplier}
+                                />
+                            </div>
                         )}
                         {step === 4 && <Summary />}
 
@@ -285,7 +326,7 @@ function Suppliers({
     );
 }
 
-function PurchaseOrder({ loading, orderDetails, handleOrderDetails }) {
+function PurchaseOrder({ loading, orderDetails, handleOrderDetails, unifiedOrderDetails, suppliersSelected, openSupplier, toggleSupplier}) {
     return (
         <>
             <h2 className="form-subtitle">Orden de Compra</h2>
@@ -295,10 +336,30 @@ function PurchaseOrder({ loading, orderDetails, handleOrderDetails }) {
                 </div>
             ) : (
                 <div className="order-details">
-                    <PurchaseOrderDetails
-                        orderDetails={orderDetails}
-                        handleOrderDetails={handleOrderDetails}
-                    />
+                    {unifiedOrderDetails ? (
+                        <PurchaseOrderDetails
+                            orderDetails={orderDetails}
+                            handleOrderDetails={(detail, value) => handleOrderDetails(detail, value)}
+                        />
+                    ) : (
+                        <div>
+                        {suppliersSelected.map((supplier) => (
+                            <Accordion 
+                                key={supplier.supplier._id}
+                                handleClick={() => toggleSupplier(supplier.supplier._id)}
+                                active={openSupplier === supplier.supplier._id}
+                                title={supplier.supplier.name}
+                            >
+                                <PurchaseOrderDetails
+                                    orderDetails={orderDetails[supplier.supplier._id] || {}}
+                                    handleOrderDetails={(detail, value) =>
+                                        handleOrderDetails(detail, value, supplier.supplier._id)
+                                    }
+                                />
+                            </Accordion>
+                        ))}
+                        </div>
+                    )}
                 </div>
             )}
         </>
