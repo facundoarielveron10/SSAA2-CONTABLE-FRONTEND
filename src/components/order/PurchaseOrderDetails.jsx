@@ -1,3 +1,5 @@
+import DatePicker from "react-datepicker";
+
 export default function PurchaseOrderDetails({
     orderDetails,
     handleOrderDetails,
@@ -11,38 +13,23 @@ export default function PurchaseOrderDetails({
                 <textarea
                     className="form-input"
                     id="description"
-                    value={orderDetails?.description}
+                    value={orderDetails?.description || ""}
                     onChange={(e) =>
                         handleOrderDetails(e.target.id, e.target.value)
                     }
                 />
             </div>
             <div className="form-group">
-                <label className="form-label" htmlFor="comment">
-                    Comentario
-                </label>
-                <textarea
-                    className="form-input"
-                    id="comment"
-                    value={orderDetails?.comment}
-                    onChange={(e) =>
-                        handleOrderDetails(e.target.id, e.target.value)
-                    }
-                />
-            </div>
-            <div className="form-group">
-                <label className="form-label" htmlFor="comment">
-                    Fecha de entrega
-                </label>
-                <input
-                    className="form-input"
-                    type="date"
-                    id="deliveryDate"
-                    value={orderDetails?.deliveryDate}
-                    onChange={(e) =>
-                        handleOrderDetails(e.target.id, e.target.value)
-                    }
-                />
+                <div className="form-date-container">
+                    <DatePicker
+                        selected={orderDetails?.deliveryDate || ""}
+                        onChange={(date) => handleOrderDetails("deliveryDate",date)}
+                        dateFormat="dd/MM/yyyy"
+                        isClearable
+                        placeholderText="Selecciona una fecha"
+                        className="form-date"
+                    />
+                </div>
             </div>
             <div className="form-group">
                 <label className="form-label" htmlFor="comment">
@@ -52,7 +39,7 @@ export default function PurchaseOrderDetails({
                     className="form-input"
                     type="text"
                     id="address"
-                    value={orderDetails?.address}
+                    value={orderDetails?.address || ""}
                     onChange={(e) =>
                         handleOrderDetails(e.target.id, e.target.value)
                     }
@@ -92,11 +79,11 @@ export default function PurchaseOrderDetails({
                     <option defaultChecked value="">
                         Selecciona el medio de pago
                     </option>
-                    <option value="cash">Efectivo</option>
-                    <option value="transfer">Transferencia Bancaria</option>
-                    <option value="check">Cheque</option>
-                    <option value="credit">Tarjeta de Credito</option>
-                    <option value="debit">Tarjeta de Debito</option>
+                    <option value="Efectivo">Efectivo</option>
+                    <option value="Transferencia Bancaria">Transferencia Bancaria</option>
+                    <option value="Cheque">Cheque</option>
+                    <option value="Tarjeta de Credito">Tarjeta de Credito</option>
+                    <option value="Tarjeta de Debito">Tarjeta de Debito</option>
                 </select>
             </div>
         </div>

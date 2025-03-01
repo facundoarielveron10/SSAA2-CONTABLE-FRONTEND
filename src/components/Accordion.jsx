@@ -1,12 +1,12 @@
-const Accordion = ({key, handleClick, title, active, children}) => {
+const Accordion = ({id, handleClick, title, active, children}) => {
   return (
     <div className="accordion">
-            <div key={key} className="accordion-item">
+            <div className="accordion-item">
                 {/* Botón para abrir/cerrar el acordeón */}
                 <button
                     type="button"
                     className="accordion-header"
-                    onClick={() => handleClick(key)}
+                    onClick={() => handleClick(id)}
                 >
                     {title}
                     <span>{active ? "▲" : "▼"}</span>

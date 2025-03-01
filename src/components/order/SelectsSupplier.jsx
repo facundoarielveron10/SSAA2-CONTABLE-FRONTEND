@@ -1,15 +1,29 @@
+import { useEffect, useState } from "react";
+
 export default function SelectsSupplier({
     supplier,
     suppliersSelected,
     handleSupplierSelect,
 }) {
-    // SUPPLIER
-    const selectedSupplier =
-        suppliersSelected.find((s) => s.articleId === supplier.article._id)
-            ?.supplier || null;
 
-    // PRICE
-    const selectedSupplierPrice = selectedSupplier?.price || "No disponible";
+    const [selectedSupplier, setSelectedSupplier] = useState(null);
+    const [selectedSupplierPrice, setSelectedSupplierPrice] = useState("No disponible");
+
+    useEffect(() => {
+        suppliersSelected.forEach(s => {
+            let articleSearch = s.articles.find(a => a._id === supplier.article._id);
+            if(articleSearch){
+                setSelectedSupplierPrice(articleSearch.price);
+                setSelectedSupplier(s.supplier);
+            }
+        });
+    }, []);
+
+    const handleSelect = (article, supplier) => {
+        setSelectedSupplier(supplier);
+        setSelectedSupplierPrice(supplier.price);
+        handleSupplierSelect(article, supplier);
+    }
 
     return (
         <div className="order-select">
@@ -22,7 +36,7 @@ export default function SelectsSupplier({
                         const selected = supplier.suppliers.find(
                             (s) => s._id === e.target.value
                         );
-                        handleSupplierSelect(supplier.article._id, selected);
+                        handleSelect(supplier.article, selected);
                     }}
                 >
                     <option disabled value="">

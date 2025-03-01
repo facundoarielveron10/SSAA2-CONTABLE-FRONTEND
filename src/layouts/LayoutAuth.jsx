@@ -26,6 +26,10 @@ import "@styles/colors.css";
 // ORDERS
 import "@styles/order/order.css";
 
+//SUMMARY
+import "@styles/summary.css";
+
+
 // CSS (External)
 import "react-datepicker/dist/react-datepicker.css";
 import "react-toastify/dist/ReactToastify.css";
