@@ -23,7 +23,7 @@ export default function TableArticles({ articles }) {
                                 <tr key={index}>
                                     <td>{article?.article?.name}</td>
                                     <td>{article?.article?.description}</td>
-                                    <td>{article?.amount}</td>
+                                    <td>{article?.quantity}</td>
                                 </tr>
                             ))}
                         </tbody>

@@ -1,3 +1,4 @@
+// REACT
 import { useEffect, useState } from "react";
 
 export default function SelectsSupplier({
@@ -5,25 +6,30 @@ export default function SelectsSupplier({
     suppliersSelected,
     handleSupplierSelect,
 }) {
-
+    // STATES
     const [selectedSupplier, setSelectedSupplier] = useState(null);
-    const [selectedSupplierPrice, setSelectedSupplierPrice] = useState("No disponible");
+    const [selectedSupplierPrice, setSelectedSupplierPrice] =
+        useState("No disponible");
 
+    // EFFECTS
     useEffect(() => {
-        suppliersSelected.forEach(s => {
-            let articleSearch = s.articles.find(a => a._id === supplier.article._id);
-            if(articleSearch){
+        suppliersSelected.forEach((s) => {
+            let articleSearch = s.articles.find(
+                (a) => a._id === supplier.article._id
+            );
+            if (articleSearch) {
                 setSelectedSupplierPrice(articleSearch.price);
                 setSelectedSupplier(s.supplier);
             }
         });
     }, []);
 
+    // FUNCTIONS
     const handleSelect = (article, supplier) => {
         setSelectedSupplier(supplier);
         setSelectedSupplierPrice(supplier.price);
         handleSupplierSelect(article, supplier);
-    }
+    };
 
     return (
         <div className="order-select">

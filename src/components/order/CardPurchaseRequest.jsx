@@ -79,7 +79,7 @@ export default function CardPurchaseRequest({
                             {article?.name}
                         </p>
                         <p className="order-card-article-amount">
-                            {article?.amount}
+                            {article?.quantity}
                             <FaBoxes />
                         </p>
                     </div>

@@ -23,8 +23,11 @@ export default function PurchaseOrderDetails({
                 <div className="form-date-container">
                     <DatePicker
                         selected={orderDetails?.deliveryDate || ""}
-                        onChange={(date) => handleOrderDetails("deliveryDate",date)}
+                        onChange={(date) =>
+                            handleOrderDetails("deliveryDate", date)
+                        }
                         dateFormat="dd/MM/yyyy"
+                        minDate={new Date()}
                         isClearable
                         placeholderText="Selecciona una fecha"
                         className="form-date"
@@ -80,9 +83,13 @@ export default function PurchaseOrderDetails({
                         Selecciona el medio de pago
                     </option>
                     <option value="Efectivo">Efectivo</option>
-                    <option value="Transferencia Bancaria">Transferencia Bancaria</option>
+                    <option value="Transferencia Bancaria">
+                        Transferencia Bancaria
+                    </option>
                     <option value="Cheque">Cheque</option>
-                    <option value="Tarjeta de Credito">Tarjeta de Credito</option>
+                    <option value="Tarjeta de Credito">
+                        Tarjeta de Credito
+                    </option>
                     <option value="Tarjeta de Debito">Tarjeta de Debito</option>
                 </select>
             </div>

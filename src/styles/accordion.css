@@ -1,0 +1,39 @@
+.accordion {
+    width: 100%;
+    border-radius: 5px;
+    overflow: hidden;
+}
+
+.accordion-item {
+    border-bottom: 1px solid var(--backgroundColorDark);
+}
+
+.accordion-header {
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    text-align: left;
+    font-size: 16px;
+    font-weight: bold;
+    padding: 1rem;
+    border: none;
+    background: var(--backgroundColorDarkLight);
+    color: var(--textColor);
+    transition: all 300ms;
+}
+
+.accordion-header:hover {
+    background: var(--backgroundColorDark);
+}
+
+.accordion-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 1rem;
+    background: var(--backgroundColorDarkLight);
+    animation: fadeIn 300ms ease-in-out;
+}

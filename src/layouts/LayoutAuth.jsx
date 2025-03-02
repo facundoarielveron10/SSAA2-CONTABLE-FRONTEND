@@ -11,6 +11,7 @@ import "@styles/export.css";
 import "@styles/form.css";
 import "@styles/table.css";
 import "@styles/modal.css";
+import "@styles/accordion.css";
 // ROLES
 import "@styles/roles/actions.css";
 // BOOKS
@@ -25,10 +26,7 @@ import "@styles/stock.css";
 import "@styles/colors.css";
 // ORDERS
 import "@styles/order/order.css";
-
-//SUMMARY
-import "@styles/summary.css";
-
+import "@styles/order/summary.css";
 
 // CSS (External)
 import "react-datepicker/dist/react-datepicker.css";

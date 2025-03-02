@@ -263,6 +263,15 @@
     font-size: 1.5rem;
 }
 
+.order-label {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-transform: uppercase;
+    margin-bottom: 1rem;
+}
+
 .order-details {
     display: flex;
     flex-direction: column;
@@ -278,4 +287,16 @@
     align-items: center;
     justify-content: center;
     width: 90%;
+}
+
+.order-detail-selects {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+.order-detail-select {
+    width: 100%;
 }
