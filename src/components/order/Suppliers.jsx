@@ -16,7 +16,7 @@ export default function Suppliers({
                     <Spinner />
                 </div>
             ) : (
-                <div className="order-selects">
+                <div className="supplier-container">
                     {suppliers?.map((supplier) => (
                         <SelectsSupplier
                             key={supplier?._id}

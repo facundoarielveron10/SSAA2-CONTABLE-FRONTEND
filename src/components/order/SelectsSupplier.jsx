@@ -32,9 +32,9 @@ export default function SelectsSupplier({
     };
 
     return (
-        <div className="order-select">
-            <p className="order-select-article">{supplier?.article?.name}</p>
-            <div className="order-select-supplier">
+        <div className="supplier-content">
+            <p className="supplier-article">{supplier?.article?.name}</p>
+            <div className="supplier">
                 <select
                     className="form-select"
                     value={selectedSupplier?._id || ""}
@@ -58,7 +58,7 @@ export default function SelectsSupplier({
                     ))}
                 </select>
                 {selectedSupplier && (
-                    <span className="order-select-price">
+                    <span className="supplier-price">
                         ${selectedSupplierPrice}
                     </span>
                 )}

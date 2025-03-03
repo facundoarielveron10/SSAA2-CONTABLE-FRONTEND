@@ -1,6 +1,4 @@
-export default function Summary({ orders }) {
-    console.log(orders);
-
+export default function Summary({ orders, handleSubmit }) {
     return (
         <div className="summary-container">
             <h2 className="form-subtitle">📦 Resumen de Pedido</h2>
@@ -58,6 +56,14 @@ export default function Summary({ orders }) {
                 ))
             ) : (
                 <p className="summary-empty">No hay pedidos registrados.</p>
+            )}
+            {orders.length > 0 && (
+                <button
+                    className="summary-button button"
+                    onClick={handleSubmit}
+                >
+                    Confirmar Orden
+                </button>
             )}
         </div>
     );

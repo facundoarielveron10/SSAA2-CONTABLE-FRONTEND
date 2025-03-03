@@ -222,6 +222,23 @@
     text-overflow: unset;
 }
 
+.table-pin {
+    color: #fff;
+    padding: 0.5rem;
+    border-radius: 5px;
+    text-transform: uppercase;
+    font-weight: bold;
+    font-size: 0.8rem;
+}
+
+.table-pin-completed {
+    background-color: var(--colorSuccess);
+}
+
+.table-pin-pending {
+    background-color: #6b6b6b;
+}
+
 .table-10 {
     width: 10%;
 }

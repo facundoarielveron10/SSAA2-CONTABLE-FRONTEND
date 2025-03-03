@@ -19,8 +19,8 @@ export default function CardPurchaseRequest({
     handlePurchaseSelect,
 }) {
     return (
-        <div className="order-card">
-            <div className="order-card-details">
+        <div className="purchase-request">
+            <div className="purchase-request-details">
                 <Checkbox
                     id={`purchase-${purchase?._id}`}
                     checked={purchaseRequestSelected.includes(purchase)}
@@ -28,14 +28,14 @@ export default function CardPurchaseRequest({
                         handlePurchaseSelect(e.target.checked, purchase)
                     }
                 />
-                <p className="order-card-description">
+                <p className="purchase-request-description">
                     {purchase?.description}
                 </p>
                 <p>
                     <MdOutlineDateRange />
                     {formatDate(purchase?.requiredDate)}
                 </p>
-                <div className="order-card-priority-container">
+                <div className="purchase-request-priority-container">
                     {purchase?.priority === "Alta" ? (
                         <FcHighPriority />
                     ) : purchase?.priority === "Media" ? (
@@ -44,13 +44,13 @@ export default function CardPurchaseRequest({
                         <FcLowPriority />
                     ) : null}
                     <p
-                        className={`order-card-priority ${
+                        className={`purchase-request-priority ${
                             purchase?.priority === "Alta"
-                                ? "order-card-priority-high"
+                                ? "purchase-request-priority-high"
                                 : purchase?.priority === "Media"
-                                ? "order-card-priority-medium"
+                                ? "purchase-request-priority-medium"
                                 : purchase?.priority === "Baja"
-                                ? "order-card-priority-low"
+                                ? "purchase-request-priority-low"
                                 : null
                         }`}
                     >
@@ -65,20 +65,20 @@ export default function CardPurchaseRequest({
                     ) : null}
                 </div>
                 <a
-                    className="order-card-email"
+                    className="purchase-request-email"
                     href={`mailto:${purchase?.user?.email}`}
                 >
                     <MdOutlineEmail />
                     {purchase?.user?.email}
                 </a>
             </div>
-            <div className="order-card-articles">
+            <div className="purchase-request-articles">
                 {purchase?.articles?.map((article, index) => (
-                    <div key={index} className="order-card-article">
-                        <p className="order-card-article-name">
+                    <div key={index} className="purchase-request-article">
+                        <p className="purchase-request-article-name">
                             {article?.name}
                         </p>
-                        <p className="order-card-article-amount">
+                        <p className="purchase-request-article-amount">
                             {article?.quantity}
                             <FaBoxes />
                         </p>

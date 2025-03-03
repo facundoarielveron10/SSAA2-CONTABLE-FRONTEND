@@ -1,0 +1,38 @@
+.supplier-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+    width: 100%;
+}
+
+.supplier-content {
+    display: flex;
+    justify-content: space-between;
+    background-color: var(--backgroundCardDark);
+    border-radius: 0.2rem;
+    padding: 0.5rem 1rem;
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
+    width: 100%;
+}
+
+.supplier-article {
+    width: 50%;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+.supplier {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+    width: 50%;
+}
+
+.supplier-price {
+    color: var(--colorSuccess);
+    font-weight: bold;
+    font-size: 1.5rem;
+}

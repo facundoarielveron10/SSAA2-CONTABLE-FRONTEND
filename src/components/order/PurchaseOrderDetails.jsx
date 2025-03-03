@@ -1,3 +1,4 @@
+// COMPONENTS
 import DatePicker from "react-datepicker";
 
 export default function PurchaseOrderDetails({
@@ -35,7 +36,7 @@ export default function PurchaseOrderDetails({
                 </div>
             </div>
             <div className="form-group">
-                <label className="form-label" htmlFor="comment">
+                <label className="form-label" htmlFor="address">
                     Dirección de entrega
                 </label>
                 <input
@@ -55,7 +56,7 @@ export default function PurchaseOrderDetails({
                 <select
                     className="form-select"
                     id="currency"
-                    value={orderDetails?.currency}
+                    value={orderDetails?.currency || ""}
                     onChange={(e) =>
                         handleOrderDetails(e.target.id, e.target.value)
                     }
@@ -68,13 +69,13 @@ export default function PurchaseOrderDetails({
                 </select>
             </div>
             <div className="form-group">
-                <label className="form-label" htmlFor="currency">
+                <label className="form-label" htmlFor="paymentMethod">
                     Medio de Pago
                 </label>
                 <select
                     className="form-select"
                     id="paymentMethod"
-                    value={orderDetails?.paymentMethod}
+                    value={orderDetails?.paymentMethod || ""}
                     onChange={(e) =>
                         handleOrderDetails(e.target.id, e.target.value)
                     }

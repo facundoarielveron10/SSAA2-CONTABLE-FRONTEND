@@ -1,4 +1,5 @@
 // COMPONENTS
+import Spinner from "../Spinner";
 import CardPurchaseRequest from "./CardPurchaseRequest";
 
 export default function PurchaseRequest({
@@ -15,7 +16,7 @@ export default function PurchaseRequest({
                     <Spinner />
                 </div>
             ) : (
-                <div className="order-list">
+                <div className="purchase-request-list">
                     {purchaseRequest?.map((purchase) => (
                         <CardPurchaseRequest
                             key={purchase?._id}

@@ -22,10 +22,11 @@ export default function Table({ purchaseRequests }) {
                     <table className="table-content">
                         <thead>
                             <tr>
-                                <th className="table-40">Descripcion</th>
+                                <th className="table-25">Descripcion</th>
                                 <th className="table-10">Usuario</th>
-                                <th className="table-15">Fecha Requerida</th>
-                                <th className="table-15">Prioridad</th>
+                                <th className="table-20">Fecha Requerida</th>
+                                <th className="table-10">Prioridad</th>
+                                <th className="table-15">Completada</th>
                                 <th className="table-20">Acciones</th>
                             </tr>
                         </thead>
@@ -40,6 +41,19 @@ export default function Table({ purchaseRequests }) {
                                         )}
                                     </td>
                                     <td>{purchaseRequest?.priority}</td>
+                                    <td>
+                                        <span
+                                            className={`table-pin ${
+                                                purchaseRequest?.completed
+                                                    ? "table-pin-completed"
+                                                    : "table-pin-pending"
+                                            }`}
+                                        >
+                                            {purchaseRequest?.completed
+                                                ? "Completa"
+                                                : "Pendiente"}
+                                        </span>
+                                    </td>
                                     <td>
                                         {canExecute("GET_PURCHASE_REQUEST") ? (
                                             <a

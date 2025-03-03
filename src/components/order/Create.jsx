@@ -7,7 +7,7 @@ import Alert from "../Alert";
 
 // UTILS
 import {
-    getPurchaseRequestWithArticles,
+    getPurchaseRequestNotCompletedWithArticles,
     getSuppliersForArticles,
 } from "src/utils/getData";
 import { formatDate } from "src/utils/format";
@@ -16,12 +16,18 @@ import { formatDate } from "src/utils/format";
 import PurchaseRequest from "./PurchaseRequest";
 import Suppliers from "./Suppliers";
 import Order from "./Order";
-import Summary from "./Sumary";
+import Summary from "./Summary";
+import clientAxios from "src/config/ClientAxios";
 
 export default function Create() {
     // STATES
     const [loading, setLoading] = useState(false);
     const [step, setStep] = useState(1);
+    const [stepStatus, setStepStatus] = useState({
+        1: { completed: false },
+        2: { completed: false },
+        3: { completed: false },
+    });
     // -- PURCHASE REQUEST
     const [purchaseRequest, setPurchaseRequest] = useState([]);
     const [purchaseRequestSelected, setPurchaseRequestSelected] = useState([]);
@@ -37,50 +43,44 @@ export default function Create() {
     // FUNCTIONS
     // -- FUNCTIONS VALIDATION
     const validateStep = () => {
-        if (step === 1 && purchaseRequestSelected.length === 0) return false;
-        if (
+        let isValid = false;
+
+        if (step === 1 && purchaseRequestSelected.length > 0) {
+            isValid = true;
+        } else if (
             step === 2 &&
-            (suppliersSelected.length === 0 ||
-                getTotalArticlesCount(suppliersSelected) < suppliers.length)
-        )
-            return false;
-        if (step === 3) {
-            if (suppliersSelected.length === 0) return false;
-            if (!validateOrderDetails(orderDetails)) return false;
+            suppliersSelected.length > 0 &&
+            getTotalArticlesCount(suppliersSelected) >= suppliers.length
+        ) {
+            isValid = true;
+        } else if (step === 3 && validateOrderDetails(orderDetails)) {
+            isValid = true;
         }
-        return true;
+
+        if (isValid) {
+            setStepStatus((prevStatus) => ({
+                ...prevStatus,
+                [step]: { completed: true },
+            }));
+        }
+
+        return isValid;
     };
 
     const validateOrderDetails = (data) => {
-        const requiredFields = [
-            "description",
-            "deliveryDate",
-            "address",
-            "currency",
-            "paymentMethod",
-        ];
-
-        if (data.unified) {
-            // Si unified es true, validar los campos principales del objeto
-            return requiredFields.every(
-                (field) => data[field] && data[field].toString().trim() !== ""
-            );
-        } else {
-            // Si unified es false, validar los campos dentro de cada supplier
-            return Object.keys(data).some((key) => {
-                if (key !== "unified") {
-                    const supplierData = data[key];
-                    if (typeof supplierData === "object") {
-                        return requiredFields.every(
-                            (field) =>
-                                supplierData[field] &&
-                                supplierData[field].toString().trim() !== ""
-                        );
-                    }
-                }
-                return false;
-            });
-        }
+        return Object.values(data).every(
+            (order) =>
+                typeof order.description === "string" &&
+                order.description.trim() !== "" &&
+                order.deliveryDate instanceof Date &&
+                !isNaN(order.deliveryDate.getTime()) &&
+                typeof order.address === "string" &&
+                order.address.trim() !== "" &&
+                typeof order.currency === "string" &&
+                order.currency.trim() !== "" &&
+                typeof order.paymentMethod === "string" &&
+                order.paymentMethod.trim() !== ""
+        );
     };
 
     const getTotalArticlesCount = (suppliersSelected) => {
@@ -103,12 +103,20 @@ export default function Create() {
         if (step > 1) setStep(step - 1);
     };
 
-    const handleStepClick = (num) => {
-        if (num > step && !validateStep()) {
-            toast.error("Debes completar todos los campos antes de continuar");
-            return;
-        }
-        setStep(num);
+    const resetValues = () => {
+        setStep(1);
+        setStepStatus({
+            1: { completed: false },
+            2: { completed: false },
+            3: { completed: false },
+        });
+        setPurchaseRequestSelected([]);
+        setSuppliersSelected([]);
+        setOrderDetails({});
+        setUnifiedOrderDetails(false);
+        setOrders([]);
+        getPurchaseRequestNotCompletedWithArticlesData();
+        getSuppliersForArticlesData();
     };
 
     // -- FUNCTIONS PURCHASE REQUEST
@@ -167,25 +175,45 @@ export default function Create() {
     const handleOrderDetails = (
         detail,
         value,
-        supplierId = null,
-        unifiedOrderDetails = null
+        supplierId,
+        unifiedOrderDetails
     ) => {
-        setOrderDetails((prevState) => {
+        setOrderDetails((prevDetails) => {
+            const updatedDetails = { ...prevDetails };
+
             if (unifiedOrderDetails) {
-                // Un solo detalle para todos los proveedores
-                return { ...prevState, [detail]: value, unified: true };
-            } else {
-                // Detalles específicos por proveedor
-                return {
-                    ...prevState,
-                    [supplierId]: {
-                        ...(prevState[supplierId] || {}),
+                // Actualiza todos los proveedores
+                Object.keys(updatedDetails).forEach((key) => {
+                    updatedDetails[key] = {
+                        ...updatedDetails[key],
                         [detail]: value,
-                    },
-                    unified: false,
+                    };
+                });
+            } else {
+                // Actualiza solo el proveedor indicado
+                updatedDetails[supplierId] = {
+                    ...updatedDetails[supplierId],
+                    [detail]: value,
                 };
             }
+            return updatedDetails;
         });
+    };
+
+    const handleUnifiedOrderDetails = (checked) => {
+        setUnifiedOrderDetails(checked);
+        const newOrderDetails = suppliersSelected.reduce((acc, supplier) => {
+            acc[supplier.supplier._id] = {
+                description: "",
+                deliveryDate: "",
+                address: "",
+                currency: "",
+                paymentMethod: "",
+            };
+            return acc;
+        }, {});
+
+        setOrderDetails(newOrderDetails);
     };
 
     // -- FUNCTIONS ORDERS
@@ -243,43 +271,57 @@ export default function Create() {
     };
 
     // -- FUNCTIONS SUBMIT
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         try {
             e.preventDefault();
-            toast.success("Orden de compra creada exitosamente");
-        } catch (error) {}
+
+            const request = purchaseRequestSelected.map((item) => ({
+                _id: item._id,
+            }));
+
+            const { data } = await clientAxios.post("/order/create-order", {
+                orders: orders,
+                request: request,
+            });
+
+            toast.success(data);
+            resetValues();
+        } catch (error) {
+            toast.error(errorResponse(error));
+        }
+    };
+
+    // -- FUNCTIONS EFFECTS
+    const getPurchaseRequestNotCompletedWithArticlesData = async () => {
+        setLoading(true);
+        const data = await getPurchaseRequestNotCompletedWithArticles();
+        setPurchaseRequest(data?.purchaseRequests);
+        setLoading(false);
+    };
+
+    const getSuppliersForArticlesData = async () => {
+        setLoading(true);
+        if (step === 2 && purchaseRequestSelected.length > 0) {
+            const articles = purchaseRequestSelected.flatMap((pr) =>
+                pr.articles.map((article) => article._id.trim())
+            );
+
+            const data = await getSuppliersForArticles(articles);
+
+            setSuppliers(data);
+        }
+
+        setLoading(false);
     };
 
     // EFFECTS
     // -- EFFECTS PURCHASE REQUEST
     useEffect(() => {
-        const getPurchaseRequestWithArticlesData = async () => {
-            setLoading(true);
-            const data = await getPurchaseRequestWithArticles();
-            setPurchaseRequest(data?.purchaseRequests);
-            setLoading(false);
-        };
-
-        getPurchaseRequestWithArticlesData();
+        getPurchaseRequestNotCompletedWithArticlesData();
     }, []);
 
     // -- EFFECTS SUPPLIERS
     useEffect(() => {
-        const getSuppliersForArticlesData = async () => {
-            setLoading(true);
-            if (step === 2 && purchaseRequestSelected.length > 0) {
-                const articles = purchaseRequestSelected.flatMap((pr) =>
-                    pr.articles.map((article) => article._id.trim())
-                );
-
-                const data = await getSuppliersForArticles(articles);
-
-                setSuppliers(data);
-            }
-
-            setLoading(false);
-        };
-
         getSuppliersForArticlesData();
         if (step === 4) {
             setLoading(true);
@@ -312,16 +354,14 @@ export default function Create() {
             <Alert />
             <div className="content">
                 <h1 className="title">Realizar Orden de Compra</h1>
-                <div className="order">
-                    <div className="order-steps">
+                <div className="create-order">
+                    <div className="create-order-steps">
                         {[1, 2, 3, 4].map((num) => (
                             <div
                                 key={num}
-                                className={`order-step ${
-                                    step >= num ? "order-active" : ""
+                                className={`create-order-step ${
+                                    step >= num ? "create-order-active" : ""
                                 }`}
-                                onClick={() => handleStepClick(num)}
-                                style={{ cursor: "pointer" }}
                             >
                                 {num}
                             </div>
@@ -351,15 +391,24 @@ export default function Create() {
                             <Order
                                 loading={loading}
                                 orderDetails={orderDetails}
+                                setOrderDetails={setOrderDetails}
+                                stepStatus={stepStatus}
                                 handleOrderDetails={handleOrderDetails}
                                 suppliersSelected={suppliersSelected}
-                                setUnifiedOrderDetails={setUnifiedOrderDetails}
+                                handleUnifiedOrderDetails={
+                                    handleUnifiedOrderDetails
+                                }
                                 unifiedOrderDetails={unifiedOrderDetails}
                             />
                         )}
-                        {step === 4 && <Summary orders={orders} />}
+                        {step === 4 && (
+                            <Summary
+                                orders={orders}
+                                handleSubmit={handleSubmit}
+                            />
+                        )}
 
-                        <div className="order-buttons">
+                        <div className="create-order-buttons">
                             {step > 1 && (
                                 <button
                                     className="button"
@@ -369,17 +418,13 @@ export default function Create() {
                                     Anterior
                                 </button>
                             )}
-                            {step < 4 ? (
+                            {step < 4 && (
                                 <button
                                     className="button"
                                     type="button"
                                     onClick={handleNext}
                                 >
                                     Siguiente
-                                </button>
-                            ) : (
-                                <button className="button" type="submit">
-                                    Confirmar Orden
                                 </button>
                             )}
                         </div>

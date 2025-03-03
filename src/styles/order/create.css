@@ -1,0 +1,65 @@
+.create-order {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 2rem;
+    margin-top: 1rem;
+}
+
+.create-order-steps {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    position: relative;
+    margin-bottom: 2rem;
+}
+
+.create-order-steps::before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 0;
+    width: 100%;
+    height: 4px;
+    background: var(--primaryColor);
+    z-index: 0;
+    transform: translateY(-50%);
+}
+
+.create-order-step {
+    position: relative;
+    width: 50px;
+    height: 50px;
+    background: var(--primaryDarkColor);
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #000;
+    z-index: 1;
+    transition: all 0.3s ease-in-out;
+}
+
+.create-order-step.create-order-active {
+    background: var(--primaryColor);
+    color: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+.create-order-step:hover {
+    background: var(--primaryDarkColor);
+    color: #fff;
+    cursor: default;
+}
+
+.create-order-buttons {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+    margin-top: 2rem;
+}

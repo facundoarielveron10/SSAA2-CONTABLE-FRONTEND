@@ -3,16 +3,17 @@ import { useEffect, useState } from "react";
 
 // COMPONENTS
 import PurchaseOrderDetails from "./PurchaseOrderDetails";
-import Accordion from "../Accordion";
 import Checkbox from "../Checkbox";
 import PurchaseOrderDetailsMultiple from "./PurchaseOrderDetailsMultiple";
 
 export default function Order({
     loading,
     orderDetails,
+    setOrderDetails,
+    stepStatus,
     handleOrderDetails,
     suppliersSelected,
-    setUnifiedOrderDetails,
+    handleUnifiedOrderDetails,
     unifiedOrderDetails,
 }) {
     // STATES
@@ -22,8 +23,28 @@ export default function Order({
     // EFFECTS
     useEffect(() => {
         if (suppliersSelected.length === 1) {
-            setUnifiedOrderDetails(true);
             setShowCheckbox(false);
+            handleUnifiedOrderDetails(true);
+        }
+    }, []);
+
+    useEffect(() => {
+        if (!stepStatus[3].completed) {
+            const newOrderDetails = suppliersSelected.reduce(
+                (acc, supplier) => {
+                    acc[supplier.supplier._id] = {
+                        description: "",
+                        deliveryDate: "",
+                        address: "",
+                        currency: "",
+                        paymentMethod: "",
+                    };
+                    return acc;
+                },
+                {}
+            );
+
+            setOrderDetails(newOrderDetails);
         }
     }, []);
 
@@ -50,7 +71,7 @@ export default function Order({
                                 id={"unified"}
                                 checked={unifiedOrderDetails}
                                 onChange={(e) => {
-                                    setUnifiedOrderDetails(e.target.checked);
+                                    handleUnifiedOrderDetails(e.target.checked);
                                     setOpenSupplier(null);
                                 }}
                             />
@@ -58,7 +79,12 @@ export default function Order({
                     )}
                     {unifiedOrderDetails ? (
                         <PurchaseOrderDetails
-                            orderDetails={orderDetails}
+                            // Se extrae el detalle común (por ejemplo, el del primer proveedor)
+                            orderDetails={
+                                Object.keys(orderDetails).length
+                                    ? orderDetails[Object.keys(orderDetails)[0]]
+                                    : {}
+                            }
                             handleOrderDetails={(detail, value) =>
                                 handleOrderDetails(
                                     detail,

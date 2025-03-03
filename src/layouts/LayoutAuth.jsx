@@ -25,6 +25,9 @@ import "@styles/stock.css";
 // COLORS
 import "@styles/colors.css";
 // ORDERS
+import "@styles/order/create.css";
+import "@styles/order/purchase-request.css";
+import "@styles/order/supplier.css";
 import "@styles/order/order.css";
 import "@styles/order/summary.css";
 

@@ -282,6 +282,21 @@ export const getPurchaseRequestWithArticles = async (
     }
 };
 
+export const getPurchaseRequestNotCompletedWithArticles = async (
+    currentPage = null,
+    limit = null
+) => {
+    try {
+        const { data } = await clientAxios.get(
+            `/purchasing/purchase-request/articles/not-completed?page=${currentPage}&limit=${limit}`
+        );
+
+        return data;
+    } catch (error) {
+        toast.error(errorResponse(error));
+    }
+};
+
 export const getArticlesPurchaseRequest = async (idPurchaseRequest) => {
     try {
         const { data } = await clientAxios.get(
