@@ -309,6 +309,30 @@ export const getArticlesPurchaseRequest = async (idPurchaseRequest) => {
     }
 };
 
+export const getPurchaseOrders = async (currentPage = null, limit = null) => {
+    try {
+        const { data } = await clientAxios.get(
+            `/order/purchase-orders?page=${currentPage}&limit=${limit}`
+        );
+
+        return data;
+    } catch (error) {
+        toast.error(errorResponse(error));
+    }
+};
+
+export const getDetailsPurchaseOrder = async (idPurchaseOrder) => {
+    try {
+        const { data } = await clientAxios.get(
+            `/order/details/${idPurchaseOrder}`
+        );
+
+        return data;
+    } catch (error) {
+        toast.error(errorResponse(error));
+    }
+};
+
 export const getDateNow = () => {
     const today = new Date();
     const day = String(today.getDate()).padStart(2, "0");

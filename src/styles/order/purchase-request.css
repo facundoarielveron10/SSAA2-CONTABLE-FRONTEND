@@ -149,3 +149,13 @@
     align-items: center;
     gap: 0.5rem;
 }
+
+.purchase-request-no-data {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    text-transform: uppercase;
+    font-weight: bold;
+}

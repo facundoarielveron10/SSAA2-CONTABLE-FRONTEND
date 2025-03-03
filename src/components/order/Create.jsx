@@ -11,12 +11,15 @@ import {
     getSuppliersForArticles,
 } from "src/utils/getData";
 import { formatDate } from "src/utils/format";
+import { errorResponse } from "src/utils/error";
 
 // COMPONENTS
 import PurchaseRequest from "./PurchaseRequest";
 import Suppliers from "./Suppliers";
 import Order from "./Order";
 import Summary from "./Summary";
+
+// AXIOS
 import clientAxios from "src/config/ClientAxios";
 
 export default function Create() {
@@ -409,7 +412,7 @@ export default function Create() {
                         )}
 
                         <div className="create-order-buttons">
-                            {step > 1 && (
+                            {step > 1 && purchaseRequest.length > 0 && (
                                 <button
                                     className="button"
                                     type="button"
@@ -418,7 +421,7 @@ export default function Create() {
                                     Anterior
                                 </button>
                             )}
-                            {step < 4 && (
+                            {step < 4 && purchaseRequest.length > 0 && (
                                 <button
                                     className="button"
                                     type="button"

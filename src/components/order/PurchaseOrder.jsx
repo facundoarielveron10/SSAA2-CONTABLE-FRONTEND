@@ -2,7 +2,7 @@
 import { useEffect, useState } from "react";
 
 // UTILS
-import { getPurcharseRequest } from "src/utils/getData";
+import { getPurchaseOrders } from "src/utils/getData";
 
 // COMPONENTS
 import Spinner from "../Spinner";
@@ -27,7 +27,17 @@ export default function PurchaseOrder() {
     const { canExecute } = useLoginStore();
 
     // EFFECTS
-    useEffect(() => {}, [currentPage]);
+    useEffect(() => {
+        const getPurchaseOrdersData = async () => {
+            setLoading(true);
+            const data = await getPurchaseOrders(currentPage, limit);
+            setPurchaseOrders(data?.orders);
+            setTotalPages(data?.totalPages);
+            setLoading(false);
+        };
+
+        getPurchaseOrdersData();
+    }, [currentPage]);
 
     // FUNCTIONS
     const handleNextPage = () => {

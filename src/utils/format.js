@@ -19,6 +19,16 @@ export const formatDate = (date) => {
     return `${day}/${month}/${year} ${hours}:${minutes}hs`;
 };
 
+export const formatDateNotHours = (date) => {
+    const dateFormat = new Date(date);
+
+    const day = String(dateFormat.getDate()).padStart(2, "0");
+    const month = String(dateFormat.getMonth() + 1).padStart(2, "0");
+    const year = dateFormat.getFullYear();
+
+    return `${day}/${month}/${year}`;
+};
+
 export const formatArrayToString = (data) => {
     // Verificamos si data es un string y lo convertimos a un array
     if (typeof data === "string") {

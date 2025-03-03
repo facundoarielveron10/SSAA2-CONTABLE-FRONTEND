@@ -15,6 +15,10 @@ export default function PurchaseRequest({
                 <div className="spinner">
                     <Spinner />
                 </div>
+            ) : purchaseRequest?.length === 0 ? (
+                <p className="purchase-request-no-data">
+                    No hay pedidos de compras disponibles
+                </p>
             ) : (
                 <div className="purchase-request-list">
                     {purchaseRequest?.map((purchase) => (

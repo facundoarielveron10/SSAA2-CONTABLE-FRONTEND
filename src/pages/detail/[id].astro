@@ -1,0 +1,24 @@
+---
+// AUTH
+import { isLoggedIn } from '../../utils/verifyAuth';
+
+// COMPONENTS
+import Layout from '../../layouts/Layout.astro';
+import LayoutAuth from '../../layouts/LayoutAuth';
+import Details from 'src/components/order/Details';
+
+// REDIRECT
+const token = Astro.cookies.get("AUTH_TOKEN");
+if (!isLoggedIn(token)) {
+	return Astro.redirect("/login")
+}
+
+// ID
+const {id} = Astro.params;
+---
+
+<Layout title="Detalles de Orden de Compra - SSAA2">
+	<LayoutAuth client:only="react" action="SHOW_DETAILS_ORDER">
+		<Details client:only="react" id={id}/>
+	</LayoutAuth>
+</Layout>
