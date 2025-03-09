@@ -4,7 +4,7 @@ import { formatDateNotHours } from "src/utils/format";
 // ZUSTAND
 import { useLoginStore } from "../../zustand/loginStore";
 
-export default function Table({ purchaseOrders }) {
+export default function Table({ purchaseOrders, onOpenCompleteOrderModal }) {
     // ZUSTAND
     const { canExecute } = useLoginStore();
 
@@ -61,8 +61,8 @@ export default function Table({ purchaseOrders }) {
                                             !purchaseOrder?.completed ? (
                                                 <button
                                                     onClick={() =>
-                                                        console.log(
-                                                            "Completar Orden"
+                                                        onOpenCompleteOrderModal(
+                                                            purchaseOrder?._id
                                                         )
                                                     }
                                                     className="table-button button"

@@ -16,12 +16,8 @@ export default function TableStock({ stock }) {
                     <table className="table-content">
                         <thead>
                             <tr>
-                                <th className="table-25">Cantidad</th>
-                                <th className="table-30">Fecha de Entrega</th>
-                                <th className="table-30">
-                                    Fecha de Vencimiento
-                                </th>
-                                <th className="table-15">Estado</th>
+                                <th>Cantidad</th>
+                                <th>Fecha de Entrega</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -30,21 +26,6 @@ export default function TableStock({ stock }) {
                                     <td>{stockData?.stock} Articulos</td>
                                     <td>
                                         {formatDate(stockData?.arrivalDate)}
-                                    </td>
-                                    <td>
-                                        {formatDate(stockData?.expirationDate)}
-                                    </td>
-                                    <td>
-                                        <span
-                                            className={`stock-tag ${
-                                                stockData?.state ===
-                                                "DISPONIBLE"
-                                                    ? "stock-available"
-                                                    : "stock-expired"
-                                            }`}
-                                        >
-                                            {stockData?.state}
-                                        </span>
                                     </td>
                                 </tr>
                             ))}

@@ -21,7 +21,8 @@ export default function Detail({ details }) {
                                 <th>Articulo</th>
                                 <th>Descripcion del Articulo</th>
                                 <th>Cantidad</th>
-                                <th>Precio</th>
+                                <th>Precio Unitario</th>
+                                <th>Subtotal</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -31,6 +32,7 @@ export default function Detail({ details }) {
                                     <td>{detail?.article?.description}</td>
                                     <td>{detail?.quantity}</td>
                                     <td>${formatBalance(detail?.price)}</td>
+                                    <td>${formatBalance(detail?.subtotal)}</td>
                                 </tr>
                             ))}
                         </tbody>

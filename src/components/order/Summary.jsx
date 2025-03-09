@@ -1,4 +1,26 @@
+// REACT
+import { useEffect } from "react";
+
+// UTILS
+import { formatBalance } from "src/utils/format";
+
 export default function Summary({ orders, handleSubmit }) {
+    // FUNCTIONS
+    const calculateTotalPrice = () => {
+        orders.forEach((order) => {
+            const total = order.articles.reduce((accumulator, article) => {
+                return accumulator + article.price * article.quantity;
+            }, 0);
+            order.totalPrice = total;
+        });
+        return orders;
+    };
+
+    // EFFECTS
+    useEffect(() => {
+        calculateTotalPrice();
+    }, [orders]);
+    console.log(orders);
     return (
         <div className="summary-container">
             <h2 className="form-subtitle">📦 Resumen de Pedido</h2>
@@ -47,6 +69,12 @@ export default function Summary({ orders, handleSubmit }) {
                             </span>
                             <span className="summary-value">
                                 {order.paymentMethod}
+                            </span>
+                        </div>
+                        <div className="summary-group">
+                            <span className="summary-label">💲Total:</span>
+                            <span className="summary-value">
+                                ${formatBalance(order?.totalPrice)}
                             </span>
                         </div>
                         {index !== orders.length - 1 && (

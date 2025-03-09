@@ -1,6 +1,3 @@
-// CSS
-import "react-responsive-modal/styles.css";
-
 // REACT
 import { useEffect, useState } from "react";
 

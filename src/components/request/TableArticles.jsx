@@ -1,4 +1,5 @@
 export default function TableArticles({ articles }) {
+    console.log(articles);
     return (
         <div className="table-container">
             <div className="table">

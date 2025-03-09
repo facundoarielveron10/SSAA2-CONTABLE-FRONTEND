@@ -76,38 +76,7 @@ export default function Stock({ id }) {
                     <div className="stock">
                         {stock.length > 0 ? (
                             <>
-                                <div className="stock-amount">
-                                    <div className="stats-card">
-                                        <div className="stats-card-data">
-                                            <p>
-                                                {
-                                                    getStockAvailable()
-                                                        ?.amountAvailable
-                                                }{" "}
-                                                Articulos Disponibles
-                                            </p>
-                                            <TbBox fontSize={30} />
-                                        </div>
-                                    </div>
-                                    <div className="stats-card">
-                                        <div className="stats-card-data">
-                                            <p>
-                                                {
-                                                    getStockExpired()
-                                                        ?.amountExpired
-                                                }{" "}
-                                                Articulos Vencidos
-                                            </p>
-                                            <TbLock fontSize={30} />
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className="stock-orders">
-                                    <h1 className="title">
-                                        Stocks Solicitados
-                                    </h1>
-                                    <Table stock={stock} />
-                                </div>
+                                <Table stock={stock} />
                             </>
                         ) : (
                             <div>

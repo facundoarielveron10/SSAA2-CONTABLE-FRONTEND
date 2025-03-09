@@ -21,8 +21,12 @@ export default function PurchaseOrderDetails({
                 />
             </div>
             <div className="form-group">
+                <label className="form-label" htmlFor="deliveryDate">
+                    Fecha de entrega
+                </label>
                 <div className="form-date-container">
                     <DatePicker
+                        id="deliveryDate"
                         selected={orderDetails?.deliveryDate || ""}
                         onChange={(date) =>
                             handleOrderDetails("deliveryDate", date)
@@ -87,7 +91,6 @@ export default function PurchaseOrderDetails({
                     <option value="Transferencia Bancaria">
                         Transferencia Bancaria
                     </option>
-                    <option value="Cheque">Cheque</option>
                     <option value="Tarjeta de Credito">
                         Tarjeta de Credito
                     </option>
